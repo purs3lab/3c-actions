@@ -46,6 +46,11 @@ jobs:
           chmod -R 777 ${{github.workspace}}/depsfolder
           chmod -R 777 ${{env.builddir}}
 
+  upload_3c:
+    name: Upload 3C
+    needs: build_3c
+    runs-on: self-hosted
+    steps:
       - name: Upload Build files
         uses: actions/upload-artifact@v2
         with:
