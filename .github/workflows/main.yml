@@ -41,7 +41,7 @@ jobs:
         run: |
           cd ${{env.builddir}}
           cmake -G Ninja -DLLVM_TARGETS_TO_BUILD=X86 -DLLVM_ENABLE_RTTI=ON -DCMAKE_BUILD_TYPE="MinSizeRel" -DLLVM_ENABLE_PROJECTS="clang;clang-tools-extra" ${{github.workspace}}/depsfolder/checkedc-clang/llvm
-          ninja -j 32 3c clang llvm-config FileCheck not count c-index-test clang-diff clang-format opt clang-check
+          ninja 3c clang llvm-config FileCheck not count c-index-test clang-diff clang-format opt clang-check
           chmod -R 777 ${{github.workspace}}/depsfolder
           chmod -R 777 ${{env.builddir}}
 
@@ -61,7 +61,7 @@ jobs:
       - name: 3C tests
         run: |
           cd ${{env.builddir}}
-          ninja -j 32 check-clang-3c
+          ninja check-clang-3c
 
   # Convert out benchmark programs
   test_vsftpd:
