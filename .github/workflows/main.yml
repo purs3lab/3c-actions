@@ -56,7 +56,7 @@ jobs:
         with:
           name: 3c-build
           path: ${{env.builddir}}
-          retention-days: 3
+          retention-days: 1
 
   # Run Test for 3C
   test_3c:
