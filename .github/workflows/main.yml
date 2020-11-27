@@ -154,6 +154,7 @@ jobs:
           tar -xvzf ${{env.benchmark_tar_dir}}/lua-5.4.1.tar.gz
           cd lua-5.4.1
           bear make linux
+          cd src ; clang-rename-10 -pl -i --qualified-name=main --new-name=luac_main luac.c ; cd ..
       - name: Test Lua
         run: |
           cd ${{github.workspace}}/depsfolder/checkedc-clang/clang/tools/3c/utils/port_tools
