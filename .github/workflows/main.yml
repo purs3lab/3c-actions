@@ -170,14 +170,14 @@ jobs:
           cd ${{env.benchmark_conv_dir}}
           tar -xvzf ${{env.benchmark_tar_dir}}/tiff-4.1.0.tar.gz
           cd tiff-4.1.0
-          cd build
-          cmake -DCMAKE_C_FLAGS="-w" ..
-          bear make
+          cmake -DCMAKE_C_FLAGS="-w" .
+          bear make tiff
+          cd tools ;  for i in *.c  ; do clang-rename-10 -pl -i --qualified-name=main --new-name=$(basename -s .c $i)_main $i ; done ; cd ..
 
       - name: Test LibTiff
         run: |
           cd ${{github.workspace}}/depsfolder/checkedc-clang/clang/tools/3c/utils/port_tools
-          python convert_project.py --skip '/.*/tif_stream.cxx' --skip '.*/test/.*\.c' --includeDir ${{github.workspace}}/depsfolder/checkedc-clang/llvm/projects/checkedc-wrapper/checkedc/include -p ${{env.builddir}}/bin/3c -pr ${{env.benchmark_conv_dir}}/tiff-4.1.0/build
+          python convert_project.py --skip '/.*/tif_stream.cxx' --skip '.*/test/.*\.c' --skip '.*/contrib/.*\.c' --includeDir ${{github.workspace}}/depsfolder/checkedc-clang/llvm/projects/checkedc-wrapper/checkedc/include -p ${{env.builddir}}/bin/3c -pr ${{env.benchmark_conv_dir}}/tiff-4.1.0
 
   test_zlib:
     name: Test ZLib
