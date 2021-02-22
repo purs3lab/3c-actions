@@ -135,13 +135,17 @@ jobs:
           tar -xvzf ${{env.benchmark_tar_dir}}/libarchive-3.4.3.tar.gz
           cd libarchive-3.4.3
           cd build
-          cmake -DCMAKE_C_FLAGS="-w" ..
+          cmake -DCMAKE_C_FLAGS="-w -D_GNU_SOURCE" ..
           bear make
 
       - name: Test LibArchive
         run: |
           cd ${{github.workspace}}/depsfolder/checkedc-clang/clang/tools/3c/utils/port_tools
-          python convert_project.py --skip '/.*/test/.*' --skip '/.*/test_utils/.*' --includeDir ${{github.workspace}}/depsfolder/checkedc-clang/llvm/projects/checkedc-wrapper/checkedc/include -p ${{env.builddir}}/bin/3c -pr ${{env.benchmark_conv_dir}}/libarchive-3.4.3/build
+          python convert_project.py\
+            --skip '/.*/(test|test_utils|tar|cat|cpio|examples|contrib|libarchive_fe)/.*'\
+            --includeDir ${{github.workspace}}/depsfolder/checkedc-clang/llvm/projects/checkedc-wrapper/checkedc/include\
+            -p ${{env.builddir}}/bin/3c\
+            -pr ${{env.benchmark_conv_dir}}/libarchive-3.4.3/build
 
   test_lua:
     name: Test Lua
