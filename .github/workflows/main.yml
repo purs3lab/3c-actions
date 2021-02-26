@@ -16,6 +16,8 @@ env:
   builddir: "${{github.workspace}}/b/ninja"
   benchmark_conv_dir: "${{github.workspace}}/benchmark_conv"
   branch_for_scheduled_run: "main"
+  include_dir: "${{github.workspace}}/depsfolder/checkedc-clang/llvm/projects/checkedc-wrapper/checkedc/include"
+  port_tools: "${{github.workspace}}/depsfolder/checkedc-clang/clang/tools/3c/utils/port_tools"
 
 jobs:
 
@@ -53,7 +55,11 @@ jobs:
       - name: Build 3c
         run: |
           cd ${{env.builddir}}
-          cmake -G Ninja -DLLVM_TARGETS_TO_BUILD=X86 -DLLVM_ENABLE_RTTI=ON -DCMAKE_BUILD_TYPE="Debug" -DLLVM_ENABLE_PROJECTS="clang;clang-tools-extra" ${{github.workspace}}/depsfolder/checkedc-clang/llvm
+          cmake -G Ninja\
+            -DLLVM_TARGETS_TO_BUILD=X86\
+            -DCMAKE_BUILD_TYPE="Debug"\
+            -DLLVM_ENABLE_PROJECTS="clang"\
+            ${{github.workspace}}/depsfolder/checkedc-clang/llvm
           ninja 3c clang
           chmod -R 777 ${{github.workspace}}/depsfolder
           chmod -R 777 ${{env.builddir}}
@@ -84,8 +90,11 @@ jobs:
 
       - name: Convert vsftpd
         run: |
-          cd ${{github.workspace}}/depsfolder/checkedc-clang/clang/tools/3c/utils/port_tools
-          python convert_project.py --includeDir ${{github.workspace}}/depsfolder/checkedc-clang/llvm/projects/checkedc-wrapper/checkedc/include -p ${{env.builddir}}/bin/3c -pr ${{env.benchmark_conv_dir}}/vsftpd-3.0.3
+          cd ${{env.port_tools}}
+          python convert_project.py\
+            --includeDir ${{env.include_dir}}\
+            -p ${{env.builddir}}/bin/3c\
+            -pr ${{env.benchmark_conv_dir}}/vsftpd-3.0.3
 
   test_ptrdist:
     name: Test PtrDist
@@ -97,32 +106,49 @@ jobs:
           cd ${{env.benchmark_conv_dir}}
           tar -xvzf ${{env.benchmark_tar_dir}}/ptrdist-1.1.tar.gz
           cd ptrdist-1.1
-          for i in anagram bc ft ks yacr2 ; do cd $i ; bear make LOCAL_CFLAGS="-std=c99" ; cd .. ; done
+          for i in anagram bc ft ks yacr2 ; do\
+            (cd $i ; bear make LOCAL_CFLAGS="-std=c99 -Wno-error")\
+          done
 
       - name: Test anagram
         run: |
-          cd ${{github.workspace}}/depsfolder/checkedc-clang/clang/tools/3c/utils/port_tools
-          python convert_project.py --includeDir ${{github.workspace}}/depsfolder/checkedc-clang/llvm/projects/checkedc-wrapper/checkedc/include -p ${{env.builddir}}/bin/3c -pr ${{env.benchmark_conv_dir}}/ptrdist-1.1/anagram
+          cd ${{env.port_tools}}
+          python convert_project.py\
+            --includeDir ${{env.include_dir}}\
+            -p ${{env.builddir}}/bin/3c\
+            -pr ${{env.benchmark_conv_dir}}/ptrdist-1.1/anagram
 
       - name: Test bc
         run: |
-          cd ${{github.workspace}}/depsfolder/checkedc-clang/clang/tools/3c/utils/port_tools
-          python convert_project.py --includeDir ${{github.workspace}}/depsfolder/checkedc-clang/llvm/projects/checkedc-wrapper/checkedc/include -p ${{env.builddir}}/bin/3c -pr ${{env.benchmark_conv_dir}}/ptrdist-1.1/bc
+          cd ${{env.port_tools}}
+          python convert_project.py\
+            --includeDir ${{env.include_dir}}\
+            -p ${{env.builddir}}/bin/3c\
+            -pr ${{env.benchmark_conv_dir}}/ptrdist-1.1/bc
 
       - name: Test ft
         run: |
-          cd ${{github.workspace}}/depsfolder/checkedc-clang/clang/tools/3c/utils/port_tools
-          python convert_project.py --includeDir ${{github.workspace}}/depsfolder/checkedc-clang/llvm/projects/checkedc-wrapper/checkedc/include -p ${{env.builddir}}/bin/3c -pr ${{env.benchmark_conv_dir}}/ptrdist-1.1/ft
+          cd ${{env.port_tools}}
+          python convert_project.py\
+            --includeDir ${{env.include_dir}}\
+            -p ${{env.builddir}}/bin/3c\
+            -pr ${{env.benchmark_conv_dir}}/ptrdist-1.1/ft
 
       - name: Test ks
         run: |
-          cd ${{github.workspace}}/depsfolder/checkedc-clang/clang/tools/3c/utils/port_tools
-          python convert_project.py --includeDir ${{github.workspace}}/depsfolder/checkedc-clang/llvm/projects/checkedc-wrapper/checkedc/include -p ${{env.builddir}}/bin/3c -pr ${{env.benchmark_conv_dir}}/ptrdist-1.1/ks
+          cd ${{env.port_tools}}
+          python convert_project.py\
+            --includeDir ${{env.include_dir}}\
+            -p ${{env.builddir}}/bin/3c\
+            -pr ${{env.benchmark_conv_dir}}/ptrdist-1.1/ks
 
       - name: Test yacr2
         run: |
-          cd ${{github.workspace}}/depsfolder/checkedc-clang/clang/tools/3c/utils/port_tools
-          python convert_project.py --includeDir ${{github.workspace}}/depsfolder/checkedc-clang/llvm/projects/checkedc-wrapper/checkedc/include -p ${{env.builddir}}/bin/3c -pr ${{env.benchmark_conv_dir}}/ptrdist-1.1/yacr2
+          cd ${{env.port_tools}}
+          python convert_project.py\
+            --includeDir ${{env.include_dir}}\
+            -p ${{env.builddir}}/bin/3c\
+            -pr ${{env.benchmark_conv_dir}}/ptrdist-1.1/yacr2
 
   test_libarchive:
     name: Test LibArchive
@@ -140,10 +166,10 @@ jobs:
 
       - name: Test LibArchive
         run: |
-          cd ${{github.workspace}}/depsfolder/checkedc-clang/clang/tools/3c/utils/port_tools
+          cd ${{env.port_tools}}
           python convert_project.py\
             --skip '/.*/(test|test_utils|tar|cat|cpio|examples|contrib|libarchive_fe)/.*'\
-            --includeDir ${{github.workspace}}/depsfolder/checkedc-clang/llvm/projects/checkedc-wrapper/checkedc/include\
+            --includeDir ${{env.include_dir}}\
             -p ${{env.builddir}}/bin/3c\
             -pr ${{env.benchmark_conv_dir}}/libarchive-3.4.3/build
 
@@ -158,11 +184,18 @@ jobs:
           tar -xvzf ${{env.benchmark_tar_dir}}/lua-5.4.1.tar.gz
           cd lua-5.4.1
           bear make linux
-          cd src ; clang-rename-10 -pl -i --qualified-name=main --new-name=luac_main luac.c ; cd ..
+          ( cd src ;\
+            clang-rename-10 -pl -i\
+              --qualified-name=main\
+              --new-name=luac_main\
+              luac.c )
       - name: Test Lua
         run: |
-          cd ${{github.workspace}}/depsfolder/checkedc-clang/clang/tools/3c/utils/port_tools
-          python convert_project.py --includeDir ${{github.workspace}}/depsfolder/checkedc-clang/llvm/projects/checkedc-wrapper/checkedc/include -p ${{env.builddir}}/bin/3c -pr ${{env.benchmark_conv_dir}}/lua-5.4.1
+          cd ${{env.port_tools}}
+          python convert_project.py\
+            --includeDir ${{env.include_dir}}\
+            -p ${{env.builddir}}/bin/3c\
+            -pr ${{env.benchmark_conv_dir}}/lua-5.4.1
 
   test_libtiff:
     name: Test LibTiff
@@ -176,12 +209,22 @@ jobs:
           cd tiff-4.1.0
           cmake -DCMAKE_C_FLAGS="-w" .
           bear make tiff
-          cd tools ;  for i in *.c  ; do clang-rename-10 -pl -i --qualified-name=main --new-name=$(basename -s .c $i)_main $i ; done ; cd ..
-
+          ( cd tools ;\
+            for i in *.c ; do\
+              clang-rename-10 -pl -i\
+                --qualified-name=main\
+                --new-name=$(basename -s .c $i)_main $i ;\
+            done)
       - name: Test LibTiff
         run: |
-          cd ${{github.workspace}}/depsfolder/checkedc-clang/clang/tools/3c/utils/port_tools
-          python convert_project.py --skip '/.*/tif_stream.cxx' --skip '.*/test/.*\.c' --skip '.*/contrib/.*\.c' --includeDir ${{github.workspace}}/depsfolder/checkedc-clang/llvm/projects/checkedc-wrapper/checkedc/include -p ${{env.builddir}}/bin/3c -pr ${{env.benchmark_conv_dir}}/tiff-4.1.0
+          cd ${{env.port_tools}}
+          python convert_project.py\
+            --skip '/.*/tif_stream.cxx'\
+            --skip '.*/test/.*\.c'\
+            --skip '.*/contrib/.*\.c'\
+            --includeDir ${{env.include_dir}}\
+            -p ${{env.builddir}}/bin/3c\
+            -pr ${{env.benchmark_conv_dir}}/tiff-4.1.0
 
   test_zlib:
     name: Test ZLib
@@ -200,5 +243,9 @@ jobs:
 
       - name: Test zlib
         run: |
-          cd ${{github.workspace}}/depsfolder/checkedc-clang/clang/tools/3c/utils/port_tools
-          python convert_project.py --skip '/.*/test/.*' --includeDir ${{github.workspace}}/depsfolder/checkedc-clang/llvm/projects/checkedc-wrapper/checkedc/include -p ${{env.builddir}}/bin/3c -pr ${{env.benchmark_conv_dir}}/zlib-1.2.11/build
+          cd ${{env.port_tools}}
+          python convert_project.py\
+            --skip '/.*/test/.*'\
+            --includeDir ${{env.include_dir}}\
+            -p ${{env.builddir}}/bin/3c\
+            -pr ${{env.benchmark_conv_dir}}/zlib-1.2.11/build
