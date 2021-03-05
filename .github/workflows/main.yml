@@ -58,6 +58,8 @@ jobs:
           cmake -G Ninja \
             -DLLVM_TARGETS_TO_BUILD=X86 \
             -DCMAKE_BUILD_TYPE="Debug" \
+            -DLLVM_OPTIMIZED_TABLEGEN=ON \
+            -DLLVM_USE_SPLIT_DWARF=ON \
             -DLLVM_ENABLE_PROJECTS="clang" \
             ${{github.workspace}}/depsfolder/checkedc-clang/llvm
           ninja 3c clang
