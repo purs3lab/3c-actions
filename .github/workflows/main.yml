@@ -107,7 +107,7 @@ jobs:
           tar -xvzf ${{env.benchmark_tar_dir}}/ptrdist-1.1.tar.gz
           cd ptrdist-1.1
           for i in anagram bc ft ks yacr2 ; do\
-            (cd $i ; bear make LOCAL_CFLAGS="-std=c99")\
+            (cd $i ; bear make LOCAL_CFLAGS="-D_ISOC99_SOURCE") \
           done
 
       - name: Test anagram
