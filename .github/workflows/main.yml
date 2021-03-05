@@ -57,9 +57,8 @@ jobs:
           cd ${{env.builddir}}
           cmake -G Ninja\
             -DLLVM_TARGETS_TO_BUILD=X86\
-            -DLLVM_ENABLE_RTTI=ON\
             -DCMAKE_BUILD_TYPE="Debug"\
-            -DLLVM_ENABLE_PROJECTS="clang;clang-tools-extra"\
+            -DLLVM_ENABLE_PROJECTS="clang"\
             ${{github.workspace}}/depsfolder/checkedc-clang/llvm
           ninja 3c clang
           chmod -R 777 ${{github.workspace}}/depsfolder
