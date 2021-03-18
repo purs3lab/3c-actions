@@ -594,7 +594,7 @@ jobs:
           cp -r out.checked/* .
           rm -r out.checked
           cd build
-          make -k
+          make -k zlib zlibstatic
 
   test_zlib_alltypes:
     name: Test ZLib (-alltypes)
@@ -629,4 +629,4 @@ jobs:
           cp -r out.checked/* .
           rm -r out.checked
           cd build
-          make -k || true
+          make -k zlib zlibstatic || true

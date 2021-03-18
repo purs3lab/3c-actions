@@ -150,7 +150,7 @@ benchmarks = [
         {cmake_checkedc} -DCMAKE_C_FLAGS="-w" ..
         bear make
         '''),
-        build_converted_cmd='make -k',
+        build_converted_cmd='make -k zlib zlibstatic',
         convert_extra="--skip '/.*/test/.*' \\",
         components=[BenchmarkComponent(build_dir='build')]),
 ]
