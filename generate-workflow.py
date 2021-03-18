@@ -93,7 +93,7 @@ benchmarks = [
         {cmake_checkedc} -DCMAKE_C_FLAGS="-w -D_GNU_SOURCE" ..
         bear make
         '''),
-        build_converted_cmd='make -k',
+        build_converted_cmd='make -k archive',
         convert_extra=textwrap.dedent('''\
         --skip '/.*/(test|test_utils|tar|cat|cpio|examples|contrib|libarchive_fe)/.*' \\
         '''),
@@ -113,7 +113,13 @@ benchmarks = [
             --new-name=luac_main \\
             luac.c )
         '''),
-        build_converted_cmd=f'{make_checkedc} -k linux'),
+        build_converted_cmd=textwrap.dedent(f'''\
+        clang-rename-10 -pl -i \\
+          --qualified-name=luac_main \\
+          --new-name=main \\
+          luac.c )
+        {make_checkedc} -k linux
+        ''')),
 
     # LibTiff
     BenchmarkInfo(
@@ -150,7 +156,7 @@ benchmarks = [
         {cmake_checkedc} -DCMAKE_C_FLAGS="-w" ..
         bear make
         '''),
-        build_converted_cmd='make -k zlib zlibstatic',
+        build_converted_cmd='make -k zlib',
         convert_extra="--skip '/.*/test/.*' \\",
         components=[BenchmarkComponent(build_dir='build')]),
 ]

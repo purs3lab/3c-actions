@@ -382,7 +382,7 @@ jobs:
           cp -r out.checked/* .
           rm -r out.checked
           cd build
-          make -k
+          make -k archive
 
   test_libarchive_alltypes:
     name: Test LibArchive (-alltypes)
@@ -416,7 +416,7 @@ jobs:
           cp -r out.checked/* .
           rm -r out.checked
           cd build
-          make -k || true
+          make -k archive || true
 
   test_lua_no_alltypes:
     name: Test Lua (no -alltypes)
@@ -449,6 +449,10 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/no-alltypes/lua-5.4.1
           cp -r out.checked/* .
           rm -r out.checked
+          clang-rename-10 -pl -i \
+            --qualified-name=luac_main \
+            --new-name=main \
+            luac.c )
           make CC="${{env.builddir}}/bin/clang" -k linux
 
   test_lua_alltypes:
@@ -483,6 +487,10 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/alltypes/lua-5.4.1
           cp -r out.checked/* .
           rm -r out.checked
+          clang-rename-10 -pl -i \
+            --qualified-name=luac_main \
+            --new-name=main \
+            luac.c )
           make CC="${{env.builddir}}/bin/clang" -k linux || true
 
   test_libtiff_no_alltypes:
@@ -594,7 +602,7 @@ jobs:
           cp -r out.checked/* .
           rm -r out.checked
           cd build
-          make -k zlib zlibstatic
+          make -k zlib
 
   test_zlib_alltypes:
     name: Test ZLib (-alltypes)
@@ -629,4 +637,4 @@ jobs:
           cp -r out.checked/* .
           rm -r out.checked
           cd build
-          make -k zlib zlibstatic || true
+          make -k zlib || true
