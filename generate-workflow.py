@@ -113,12 +113,12 @@ benchmarks = [
             --new-name=luac_main \\
             luac.c )
         '''),
+        # Undo the rename using sed because the system install of clang-rename
+        # can't handle checked pointers. This works since "luac_main" only
+        # appears in the locations where it was added as a result of the
+        # original rename.
         build_converted_cmd=textwrap.dedent(f'''\
-        ( cd src ; \\
-          clang-rename-10 -pl -i \\
-            --qualified-name=luac_main \\
-            --new-name=main \\
-            luac.c )
+        sed -i "s/luac_main/main/" src/luac.c \\
         {make_checkedc} -k linux
         ''')),
 
