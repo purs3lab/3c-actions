@@ -114,10 +114,11 @@ benchmarks = [
             luac.c )
         '''),
         build_converted_cmd=textwrap.dedent(f'''\
-        clang-rename-10 -pl -i \\
-          --qualified-name=luac_main \\
-          --new-name=main \\
-          luac.c )
+        ( cd src ; \\
+          clang-rename-10 -pl -i \\
+            --qualified-name=luac_main \\
+            --new-name=main \\
+            luac.c )
         {make_checkedc} -k linux
         ''')),
 
