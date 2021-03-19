@@ -449,7 +449,7 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/no-alltypes/lua-5.4.1
           cp -r out.checked/* .
           rm -r out.checked
-          sed -i "s/luac_main/main/" src/luac.c \
+          sed -i "s/luac_main/main/" src/luac.c
           make CC="${{env.builddir}}/bin/clang" -k linux
 
   test_lua_alltypes:
@@ -484,7 +484,7 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/alltypes/lua-5.4.1
           cp -r out.checked/* .
           rm -r out.checked
-          sed -i "s/luac_main/main/" src/luac.c \
+          sed -i "s/luac_main/main/" src/luac.c
           make CC="${{env.builddir}}/bin/clang" -k linux || true
 
   test_libtiff_no_alltypes:

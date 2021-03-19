@@ -118,7 +118,7 @@ benchmarks = [
         # appears in the locations where it was added as a result of the
         # original rename.
         build_converted_cmd=textwrap.dedent(f'''\
-        sed -i "s/luac_main/main/" src/luac.c \\
+        sed -i "s/luac_main/main/" src/luac.c
         {make_checkedc} -k linux
         ''')),
 
