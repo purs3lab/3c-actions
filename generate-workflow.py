@@ -301,7 +301,8 @@ def ensure_trailing_newline(s: str):
 with open('.github/workflows/main.yml', 'w') as out:
     out.write(HEADER)
     for binfo in benchmarks:
-        for alltypes in (False, True):
+        # alltypes doesn't make a difference when not running 3C.
+        for alltypes in (False,):
             at_dir = ('${{env.benchmark_conv_dir}}/' +
                       ('alltypes' if alltypes else 'no-alltypes'))
             at_job = 'alltypes' if alltypes else 'no_alltypes'
@@ -347,6 +348,9 @@ with open('.github/workflows/main.yml', 'w') as out:
                 # yapf: disable
                 convert_flags = textwrap.indent(
                     convert_extra +
+                    # Test for Microsoft: Build before and after updating
+                    # includes, without actually running 3C.
+                    '-dr \\\n' +
                     '--includeDir ${{env.include_dir}} \\\n' +
                     '--prog_name ${{env.builddir}}/bin/3c \\\n' +
                     at_flag +
@@ -370,10 +374,10 @@ with open('.github/workflows/main.yml', 'w') as out:
                         at_ignore_step,
                         # convert_project.py sets -output-dir=out.checked as
                         # standard.
+                        #
+                        # out.checked won't have been created; don't fail here.
                         textwrap.dedent(f'''\
                         cd {component_dir}
-                        cp -r out.checked/* .
-                        rm -r out.checked
                         ''') +
                         #
                         (f'cd {component.build_dir}\n'
