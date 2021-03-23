@@ -630,3 +630,62 @@ jobs:
           rm -r out.checked
           cd build
           make -k || true
+
+  test_icecast_no_alltypes:
+    name: Test Icecast (no -alltypes)
+    needs: build_3c
+    runs-on: self-hosted
+    steps:
+      - name: Build Icecast
+        run: |
+          mkdir -p ${{env.benchmark_conv_dir}}/no-alltypes
+          cd ${{env.benchmark_conv_dir}}/no-alltypes
+          tar -xvzf ${{env.benchmark_tar_dir}}/icecast-2.4.4.tar.gz
+          cd icecast-2.4.4
+          CC="${{env.builddir}}/bin/clang" ./configure
+          bear make
+
+      - name: Convert Icecast
+        run: |
+          cd ${{env.benchmark_conv_dir}}/no-alltypes/icecast-2.4.4
+          ${{env.port_tools}}/convert_project.py \
+            --includeDir ${{env.include_dir}} \
+            --prog_name ${{env.builddir}}/bin/3c \
+            --project_path .
+
+      - name: Build converted Icecast
+        run: |
+          cd ${{env.benchmark_conv_dir}}/no-alltypes/icecast-2.4.4
+          cp -r out.checked/* .
+          rm -r out.checked
+          make -k
+
+  test_icecast_alltypes:
+    name: Test Icecast (-alltypes)
+    needs: build_3c
+    runs-on: self-hosted
+    steps:
+      - name: Build Icecast
+        run: |
+          mkdir -p ${{env.benchmark_conv_dir}}/alltypes
+          cd ${{env.benchmark_conv_dir}}/alltypes
+          tar -xvzf ${{env.benchmark_tar_dir}}/icecast-2.4.4.tar.gz
+          cd icecast-2.4.4
+          CC="${{env.builddir}}/bin/clang" ./configure
+          bear make
+
+      - name: Convert Icecast
+        run: |
+          cd ${{env.benchmark_conv_dir}}/alltypes/icecast-2.4.4
+          ${{env.port_tools}}/convert_project.py \
+            --includeDir ${{env.include_dir}} \
+            --prog_name ${{env.builddir}}/bin/3c \
+            --extra-3c-arg=-alltypes \
+            --project_path .
+
+      - name: Build converted Icecast (ignore failure)
+        run: |
+          cd ${{env.benchmark_conv_dir}}/alltypes/icecast-2.4.4
+          cp -r out.checked/* .
+          rm -r out.checked
+          make -k || true
