@@ -91,7 +91,7 @@ benchmarks = [
         build_cmds=textwrap.dedent(f'''\
         cd build
         {cmake_checkedc} -DCMAKE_C_FLAGS="-w -D_GNU_SOURCE" ..
-        bear make
+        bear make archive
         '''),
         build_converted_cmd='make -k archive',
         convert_extra=textwrap.dedent('''\
@@ -155,7 +155,7 @@ benchmarks = [
         mkdir build
         cd build
         {cmake_checkedc} -DCMAKE_C_FLAGS="-w" ..
-        bear make
+        bear make zlib
         '''),
         build_converted_cmd='make -k zlib',
         convert_extra="--skip '/.*/test/.*' \\",
