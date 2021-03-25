@@ -364,7 +364,7 @@ jobs:
           cd libarchive-3.4.3
           cd build
           cmake -DCMAKE_C_COMPILER=${{env.builddir}}/bin/clang -DCMAKE_C_FLAGS="-w -D_GNU_SOURCE" ..
-          bear make
+          bear make archive
 
       - name: Convert LibArchive
         run: |
@@ -397,7 +397,7 @@ jobs:
           cd libarchive-3.4.3
           cd build
           cmake -DCMAKE_C_COMPILER=${{env.builddir}}/bin/clang -DCMAKE_C_FLAGS="-w -D_GNU_SOURCE" ..
-          bear make
+          bear make archive
 
       - name: Convert LibArchive
         run: |
@@ -578,7 +578,7 @@ jobs:
           mkdir build
           cd build
           cmake -DCMAKE_C_COMPILER=${{env.builddir}}/bin/clang -DCMAKE_C_FLAGS="-w" ..
-          bear make
+          bear make zlib
 
       - name: Convert ZLib
         run: |
@@ -612,7 +612,7 @@ jobs:
           mkdir build
           cd build
           cmake -DCMAKE_C_COMPILER=${{env.builddir}}/bin/clang -DCMAKE_C_FLAGS="-w" ..
-          bear make
+          bear make zlib
 
       - name: Convert ZLib
         run: |
