@@ -364,7 +364,7 @@ jobs:
           cd libarchive-3.4.3
           cd build
           cmake -DCMAKE_C_COMPILER=${{env.builddir}}/bin/clang -DCMAKE_C_FLAGS="-w -D_GNU_SOURCE" ..
-          bear make
+          bear make archive
 
       - name: Convert LibArchive
         run: |
@@ -382,7 +382,7 @@ jobs:
           cp -r out.checked/* .
           rm -r out.checked
           cd build
-          make -k
+          make -k archive
 
   test_libarchive_alltypes:
     name: Test LibArchive (-alltypes)
@@ -397,7 +397,7 @@ jobs:
           cd libarchive-3.4.3
           cd build
           cmake -DCMAKE_C_COMPILER=${{env.builddir}}/bin/clang -DCMAKE_C_FLAGS="-w -D_GNU_SOURCE" ..
-          bear make
+          bear make archive
 
       - name: Convert LibArchive
         run: |
@@ -416,7 +416,7 @@ jobs:
           cp -r out.checked/* .
           rm -r out.checked
           cd build
-          make -k || true
+          make -k archive || true
 
   test_lua_no_alltypes:
     name: Test Lua (no -alltypes)
@@ -449,6 +449,7 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/no-alltypes/lua-5.4.1
           cp -r out.checked/* .
           rm -r out.checked
+          sed -i "s/luac_main/main/" src/luac.c
           make CC="${{env.builddir}}/bin/clang" -k linux
 
   test_lua_alltypes:
@@ -483,6 +484,7 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/alltypes/lua-5.4.1
           cp -r out.checked/* .
           rm -r out.checked
+          sed -i "s/luac_main/main/" src/luac.c
           make CC="${{env.builddir}}/bin/clang" -k linux || true
 
   test_libtiff_no_alltypes:
@@ -576,7 +578,7 @@ jobs:
           mkdir build
           cd build
           cmake -DCMAKE_C_COMPILER=${{env.builddir}}/bin/clang -DCMAKE_C_FLAGS="-w" ..
-          bear make
+          bear make zlib
 
       - name: Convert ZLib
         run: |
@@ -594,7 +596,7 @@ jobs:
           cp -r out.checked/* .
           rm -r out.checked
           cd build
-          make -k
+          make -k zlib
 
   test_zlib_alltypes:
     name: Test ZLib (-alltypes)
@@ -610,7 +612,7 @@ jobs:
           mkdir build
           cd build
           cmake -DCMAKE_C_COMPILER=${{env.builddir}}/bin/clang -DCMAKE_C_FLAGS="-w" ..
-          bear make
+          bear make zlib
 
       - name: Convert ZLib
         run: |
@@ -629,7 +631,7 @@ jobs:
           cp -r out.checked/* .
           rm -r out.checked
           cd build
-          make -k || true
+          make -k zlib || true
 
   test_icecast_no_alltypes:
     name: Test Icecast (no -alltypes)

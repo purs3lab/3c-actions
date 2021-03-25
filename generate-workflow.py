@@ -91,9 +91,9 @@ benchmarks = [
         build_cmds=textwrap.dedent(f'''\
         cd build
         {cmake_checkedc} -DCMAKE_C_FLAGS="-w -D_GNU_SOURCE" ..
-        bear make
+        bear make archive
         '''),
-        build_converted_cmd='make -k',
+        build_converted_cmd='make -k archive',
         convert_extra=textwrap.dedent('''\
         --skip '/.*/(test|test_utils|tar|cat|cpio|examples|contrib|libarchive_fe)/.*' \\
         '''),
@@ -113,7 +113,14 @@ benchmarks = [
             --new-name=luac_main \\
             luac.c )
         '''),
-        build_converted_cmd=f'{make_checkedc} -k linux'),
+        # Undo the rename using sed because the system install of clang-rename
+        # can't handle checked pointers. This works since "luac_main" only
+        # appears in the locations where it was added as a result of the
+        # original rename.
+        build_converted_cmd=textwrap.dedent(f'''\
+        sed -i "s/luac_main/main/" src/luac.c
+        {make_checkedc} -k linux
+        ''')),
 
     # LibTiff
     BenchmarkInfo(
@@ -148,9 +155,9 @@ benchmarks = [
         mkdir build
         cd build
         {cmake_checkedc} -DCMAKE_C_FLAGS="-w" ..
-        bear make
+        bear make zlib
         '''),
-        build_converted_cmd='make -k',
+        build_converted_cmd='make -k zlib',
         convert_extra="--skip '/.*/test/.*' \\",
         components=[BenchmarkComponent(build_dir='build')]),
 
