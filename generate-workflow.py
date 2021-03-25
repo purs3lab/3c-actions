@@ -160,6 +160,18 @@ benchmarks = [
         build_converted_cmd='make -k zlib',
         convert_extra="--skip '/.*/test/.*' \\",
         components=[BenchmarkComponent(build_dir='build')]),
+
+    # Icecast
+    BenchmarkInfo(
+        #
+        name='icecast',
+        friendly_name='Icecast',
+        dir_name='icecast-2.4.4',
+        build_cmds=textwrap.dedent('''\
+        CC="${{env.builddir}}/bin/clang" ./configure
+        bear make
+        '''),
+        build_converted_cmd='make -k'),
 ]
 
 HEADER = '''\
