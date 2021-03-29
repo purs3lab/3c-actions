@@ -105,8 +105,9 @@ jobs:
           ninja -l $(nproc) check-3c
 
   # Convert our benchmark programs
+
   test_vsftpd_no_alltypes:
-    name: Test Vsftpd (no -alltypes )
+    name: Test Vsftpd (no -alltypes)
     needs: build_3c
     runs-on: self-hosted
     steps:
@@ -126,112 +127,15 @@ jobs:
             --prog_name ${{env.builddir}}/bin/3c \
             --project_path .
 
-      - name: Copy 3c stats of Vsftpd
-        run: |
-          cd ${{env.benchmark_conv_dir}}/no-alltypes/vsftpd-3.0.3
-          mkdir 3c_performance_stats/
-          cp *.json 3c_performance_stats/
-
-      - name: Upload 3c stats of Vsftpd
-        uses: actions/upload-artifact@v2
-        with: 
-          name: Vsftpd_noalltypes
-          path: ${{env.benchmark_conv_dir}}/no-alltypes/vsftpd-3.0.3/3c_performance_stats/
-          retention-days: 5
-
       - name: Build converted Vsftpd
         run: |
           cd ${{env.benchmark_conv_dir}}/no-alltypes/vsftpd-3.0.3
-          cp -r out.checked/* .
-          rm -r out.checked
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang -Wno-enum-conversion" -k
-
-  test_vsftpd_no_alltypes__only_g_sol:
-    name: Test Vsftpd (no -alltypes __only_g_sol)
-    needs: build_3c
-    runs-on: self-hosted
-    steps:
-      - name: Build Vsftpd
-        run: |
-          mkdir -p ${{env.benchmark_conv_dir}}/no-alltypes__only_g_sol
-          cd ${{env.benchmark_conv_dir}}/no-alltypes__only_g_sol
-          tar -xvzf ${{env.benchmark_tar_dir}}/vsftpd-3.0.3.tar.gz
-          cd vsftpd-3.0.3
-          bear make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang -Wno-enum-conversion"
-
-      - name: Convert Vsftpd
-        run: |
-          cd ${{env.benchmark_conv_dir}}/no-alltypes__only_g_sol/vsftpd-3.0.3
-          ${{env.port_tools}}/convert_project.py \
-            --includeDir ${{env.include_dir}} \
-            --prog_name ${{env.builddir}}/bin/3c \
-            --extra-3c-arg=-only-g-sol \
-            --project_path .
-
-      - name: Copy 3c stats of Vsftpd
-        run: |
-          cd ${{env.benchmark_conv_dir}}/no-alltypes__only_g_sol/vsftpd-3.0.3
-          mkdir 3c_performance_stats/
-          cp *.json 3c_performance_stats/
-
-      - name: Upload 3c stats of Vsftpd
-        uses: actions/upload-artifact@v2
-        with: 
-          name: Vsftpd__only_g_sol_noalltypes
-          path: ${{env.benchmark_conv_dir}}/no-alltypes__only_g_sol/vsftpd-3.0.3/3c_performance_stats/
-          retention-days: 5
-
-      - name: Build converted Vsftpd
-        run: |
-          cd ${{env.benchmark_conv_dir}}/no-alltypes__only_g_sol/vsftpd-3.0.3
-          cp -r out.checked/* .
-          rm -r out.checked
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang -Wno-enum-conversion" -k
-
-  test_vsftpd_no_alltypes__only_l_sol:
-    name: Test Vsftpd (no -alltypes __only_l_sol)
-    needs: build_3c
-    runs-on: self-hosted
-    steps:
-      - name: Build Vsftpd
-        run: |
-          mkdir -p ${{env.benchmark_conv_dir}}/no-alltypes__only_l_sol
-          cd ${{env.benchmark_conv_dir}}/no-alltypes__only_l_sol
-          tar -xvzf ${{env.benchmark_tar_dir}}/vsftpd-3.0.3.tar.gz
-          cd vsftpd-3.0.3
-          bear make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang -Wno-enum-conversion"
-
-      - name: Convert Vsftpd
-        run: |
-          cd ${{env.benchmark_conv_dir}}/no-alltypes__only_l_sol/vsftpd-3.0.3
-          ${{env.port_tools}}/convert_project.py \
-            --includeDir ${{env.include_dir}} \
-            --prog_name ${{env.builddir}}/bin/3c \
-            --extra-3c-arg=-only-l-sol \
-            --project_path .
-
-      - name: Copy 3c stats of Vsftpd
-        run: |
-          cd ${{env.benchmark_conv_dir}}/no-alltypes__only_l_sol/vsftpd-3.0.3
-          mkdir 3c_performance_stats/
-          cp *.json 3c_performance_stats/
-
-      - name: Upload 3c stats of Vsftpd
-        uses: actions/upload-artifact@v2
-        with: 
-          name: Vsftpd__only_l_sol_noalltypes
-          path: ${{env.benchmark_conv_dir}}/no-alltypes__only_l_sol/vsftpd-3.0.3/3c_performance_stats/
-          retention-days: 5
-
-      - name: Build converted Vsftpd
-        run: |
-          cd ${{env.benchmark_conv_dir}}/no-alltypes__only_l_sol/vsftpd-3.0.3
           cp -r out.checked/* .
           rm -r out.checked
           make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang -Wno-enum-conversion" -k
 
   test_vsftpd_alltypes:
-    name: Test Vsftpd (-alltypes )
+    name: Test Vsftpd (-alltypes)
     needs: build_3c
     runs-on: self-hosted
     steps:
@@ -251,19 +155,6 @@ jobs:
             --prog_name ${{env.builddir}}/bin/3c \
             --extra-3c-arg=-alltypes \
             --project_path .
-
-      - name: Copy 3c stats of Vsftpd
-        run: |
-          cd ${{env.benchmark_conv_dir}}/alltypes/vsftpd-3.0.3
-          mkdir 3c_performance_stats/
-          cp *.json 3c_performance_stats/
-
-      - name: Upload 3c stats of Vsftpd
-        uses: actions/upload-artifact@v2
-        with: 
-          name: Vsftpd_alltypes
-          path: ${{env.benchmark_conv_dir}}/alltypes/vsftpd-3.0.3/3c_performance_stats/
-          retention-days: 5
 
       - name: Build converted Vsftpd (ignore failure)
         run: |
@@ -273,7 +164,7 @@ jobs:
           make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang -Wno-enum-conversion" -k || true
 
   test_ptrdist_no_alltypes:
-    name: Test PtrDist (no -alltypes )
+    name: Test PtrDist (no -alltypes)
     needs: build_3c
     runs-on: self-hosted
     steps:
@@ -295,19 +186,6 @@ jobs:
             --prog_name ${{env.builddir}}/bin/3c \
             --project_path .
 
-      - name: Copy 3c stats of anagram
-        run: |
-          cd ${{env.benchmark_conv_dir}}/no-alltypes/ptrdist-1.1/anagram
-          mkdir 3c_performance_stats/
-          cp *.json 3c_performance_stats/
-
-      - name: Upload 3c stats of anagram
-        uses: actions/upload-artifact@v2
-        with: 
-          name: anagram_noalltypes
-          path: ${{env.benchmark_conv_dir}}/no-alltypes/ptrdist-1.1/anagram/3c_performance_stats/
-          retention-days: 5
-
       - name: Build converted anagram
         run: |
           cd ${{env.benchmark_conv_dir}}/no-alltypes/ptrdist-1.1/anagram
@@ -323,19 +201,6 @@ jobs:
             --prog_name ${{env.builddir}}/bin/3c \
             --project_path .
 
-      - name: Copy 3c stats of bc
-        run: |
-          cd ${{env.benchmark_conv_dir}}/no-alltypes/ptrdist-1.1/bc
-          mkdir 3c_performance_stats/
-          cp *.json 3c_performance_stats/
-
-      - name: Upload 3c stats of bc
-        uses: actions/upload-artifact@v2
-        with: 
-          name: bc_noalltypes
-          path: ${{env.benchmark_conv_dir}}/no-alltypes/ptrdist-1.1/bc/3c_performance_stats/
-          retention-days: 5
-
       - name: Build converted bc
         run: |
           cd ${{env.benchmark_conv_dir}}/no-alltypes/ptrdist-1.1/bc
@@ -351,19 +216,6 @@ jobs:
             --prog_name ${{env.builddir}}/bin/3c \
             --project_path .
 
-      - name: Copy 3c stats of ft
-        run: |
-          cd ${{env.benchmark_conv_dir}}/no-alltypes/ptrdist-1.1/ft
-          mkdir 3c_performance_stats/
-          cp *.json 3c_performance_stats/
-
-      - name: Upload 3c stats of ft
-        uses: actions/upload-artifact@v2
-        with: 
-          name: ft_noalltypes
-          path: ${{env.benchmark_conv_dir}}/no-alltypes/ptrdist-1.1/ft/3c_performance_stats/
-          retention-days: 5
-
       - name: Build converted ft
         run: |
           cd ${{env.benchmark_conv_dir}}/no-alltypes/ptrdist-1.1/ft
@@ -379,19 +231,6 @@ jobs:
             --prog_name ${{env.builddir}}/bin/3c \
             --project_path .
 
-      - name: Copy 3c stats of ks
-        run: |
-          cd ${{env.benchmark_conv_dir}}/no-alltypes/ptrdist-1.1/ks
-          mkdir 3c_performance_stats/
-          cp *.json 3c_performance_stats/
-
-      - name: Upload 3c stats of ks
-        uses: actions/upload-artifact@v2
-        with: 
-          name: ks_noalltypes
-          path: ${{env.benchmark_conv_dir}}/no-alltypes/ptrdist-1.1/ks/3c_performance_stats/
-          retention-days: 5
-
       - name: Build converted ks
         run: |
           cd ${{env.benchmark_conv_dir}}/no-alltypes/ptrdist-1.1/ks
@@ -407,348 +246,15 @@ jobs:
             --prog_name ${{env.builddir}}/bin/3c \
             --project_path .
 
-      - name: Copy 3c stats of yacr2
-        run: |
-          cd ${{env.benchmark_conv_dir}}/no-alltypes/ptrdist-1.1/yacr2
-          mkdir 3c_performance_stats/
-          cp *.json 3c_performance_stats/
-
-      - name: Upload 3c stats of yacr2
-        uses: actions/upload-artifact@v2
-        with: 
-          name: yacr2_noalltypes
-          path: ${{env.benchmark_conv_dir}}/no-alltypes/ptrdist-1.1/yacr2/3c_performance_stats/
-          retention-days: 5
-
       - name: Build converted yacr2
         run: |
           cd ${{env.benchmark_conv_dir}}/no-alltypes/ptrdist-1.1/yacr2
-          cp -r out.checked/* .
-          rm -r out.checked
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-D_ISOC99_SOURCE"
-
-  test_ptrdist_no_alltypes__only_g_sol:
-    name: Test PtrDist (no -alltypes __only_g_sol)
-    needs: build_3c
-    runs-on: self-hosted
-    steps:
-      - name: Build PtrDist
-        run: |
-          mkdir -p ${{env.benchmark_conv_dir}}/no-alltypes__only_g_sol
-          cd ${{env.benchmark_conv_dir}}/no-alltypes__only_g_sol
-          tar -xvzf ${{env.benchmark_tar_dir}}/ptrdist-1.1.tar.gz
-          cd ptrdist-1.1
-          for i in anagram bc ft ks yacr2 ; do \
-            (cd $i ; bear make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" LOCAL_CFLAGS="-D_ISOC99_SOURCE") \
-          done
-
-      - name: Convert anagram
-        run: |
-          cd ${{env.benchmark_conv_dir}}/no-alltypes__only_g_sol/ptrdist-1.1/anagram
-          ${{env.port_tools}}/convert_project.py \
-            --includeDir ${{env.include_dir}} \
-            --prog_name ${{env.builddir}}/bin/3c \
-            --extra-3c-arg=-only-g-sol \
-            --project_path .
-
-      - name: Copy 3c stats of anagram
-        run: |
-          cd ${{env.benchmark_conv_dir}}/no-alltypes__only_g_sol/ptrdist-1.1/anagram
-          mkdir 3c_performance_stats/
-          cp *.json 3c_performance_stats/
-
-      - name: Upload 3c stats of anagram
-        uses: actions/upload-artifact@v2
-        with: 
-          name: anagram__only_g_sol_noalltypes
-          path: ${{env.benchmark_conv_dir}}/no-alltypes__only_g_sol/ptrdist-1.1/anagram/3c_performance_stats/
-          retention-days: 5
-
-      - name: Build converted anagram
-        run: |
-          cd ${{env.benchmark_conv_dir}}/no-alltypes__only_g_sol/ptrdist-1.1/anagram
-          cp -r out.checked/* .
-          rm -r out.checked
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-D_ISOC99_SOURCE"
-
-      - name: Convert bc
-        run: |
-          cd ${{env.benchmark_conv_dir}}/no-alltypes__only_g_sol/ptrdist-1.1/bc
-          ${{env.port_tools}}/convert_project.py \
-            --includeDir ${{env.include_dir}} \
-            --prog_name ${{env.builddir}}/bin/3c \
-            --extra-3c-arg=-only-g-sol \
-            --project_path .
-
-      - name: Copy 3c stats of bc
-        run: |
-          cd ${{env.benchmark_conv_dir}}/no-alltypes__only_g_sol/ptrdist-1.1/bc
-          mkdir 3c_performance_stats/
-          cp *.json 3c_performance_stats/
-
-      - name: Upload 3c stats of bc
-        uses: actions/upload-artifact@v2
-        with: 
-          name: bc__only_g_sol_noalltypes
-          path: ${{env.benchmark_conv_dir}}/no-alltypes__only_g_sol/ptrdist-1.1/bc/3c_performance_stats/
-          retention-days: 5
-
-      - name: Build converted bc
-        run: |
-          cd ${{env.benchmark_conv_dir}}/no-alltypes__only_g_sol/ptrdist-1.1/bc
-          cp -r out.checked/* .
-          rm -r out.checked
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-D_ISOC99_SOURCE"
-
-      - name: Convert ft
-        run: |
-          cd ${{env.benchmark_conv_dir}}/no-alltypes__only_g_sol/ptrdist-1.1/ft
-          ${{env.port_tools}}/convert_project.py \
-            --includeDir ${{env.include_dir}} \
-            --prog_name ${{env.builddir}}/bin/3c \
-            --extra-3c-arg=-only-g-sol \
-            --project_path .
-
-      - name: Copy 3c stats of ft
-        run: |
-          cd ${{env.benchmark_conv_dir}}/no-alltypes__only_g_sol/ptrdist-1.1/ft
-          mkdir 3c_performance_stats/
-          cp *.json 3c_performance_stats/
-
-      - name: Upload 3c stats of ft
-        uses: actions/upload-artifact@v2
-        with: 
-          name: ft__only_g_sol_noalltypes
-          path: ${{env.benchmark_conv_dir}}/no-alltypes__only_g_sol/ptrdist-1.1/ft/3c_performance_stats/
-          retention-days: 5
-
-      - name: Build converted ft
-        run: |
-          cd ${{env.benchmark_conv_dir}}/no-alltypes__only_g_sol/ptrdist-1.1/ft
-          cp -r out.checked/* .
-          rm -r out.checked
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-D_ISOC99_SOURCE"
-
-      - name: Convert ks
-        run: |
-          cd ${{env.benchmark_conv_dir}}/no-alltypes__only_g_sol/ptrdist-1.1/ks
-          ${{env.port_tools}}/convert_project.py \
-            --includeDir ${{env.include_dir}} \
-            --prog_name ${{env.builddir}}/bin/3c \
-            --extra-3c-arg=-only-g-sol \
-            --project_path .
-
-      - name: Copy 3c stats of ks
-        run: |
-          cd ${{env.benchmark_conv_dir}}/no-alltypes__only_g_sol/ptrdist-1.1/ks
-          mkdir 3c_performance_stats/
-          cp *.json 3c_performance_stats/
-
-      - name: Upload 3c stats of ks
-        uses: actions/upload-artifact@v2
-        with: 
-          name: ks__only_g_sol_noalltypes
-          path: ${{env.benchmark_conv_dir}}/no-alltypes__only_g_sol/ptrdist-1.1/ks/3c_performance_stats/
-          retention-days: 5
-
-      - name: Build converted ks
-        run: |
-          cd ${{env.benchmark_conv_dir}}/no-alltypes__only_g_sol/ptrdist-1.1/ks
-          cp -r out.checked/* .
-          rm -r out.checked
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-D_ISOC99_SOURCE"
-
-      - name: Convert yacr2
-        run: |
-          cd ${{env.benchmark_conv_dir}}/no-alltypes__only_g_sol/ptrdist-1.1/yacr2
-          ${{env.port_tools}}/convert_project.py \
-            --includeDir ${{env.include_dir}} \
-            --prog_name ${{env.builddir}}/bin/3c \
-            --extra-3c-arg=-only-g-sol \
-            --project_path .
-
-      - name: Copy 3c stats of yacr2
-        run: |
-          cd ${{env.benchmark_conv_dir}}/no-alltypes__only_g_sol/ptrdist-1.1/yacr2
-          mkdir 3c_performance_stats/
-          cp *.json 3c_performance_stats/
-
-      - name: Upload 3c stats of yacr2
-        uses: actions/upload-artifact@v2
-        with: 
-          name: yacr2__only_g_sol_noalltypes
-          path: ${{env.benchmark_conv_dir}}/no-alltypes__only_g_sol/ptrdist-1.1/yacr2/3c_performance_stats/
-          retention-days: 5
-
-      - name: Build converted yacr2
-        run: |
-          cd ${{env.benchmark_conv_dir}}/no-alltypes__only_g_sol/ptrdist-1.1/yacr2
-          cp -r out.checked/* .
-          rm -r out.checked
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-D_ISOC99_SOURCE"
-
-  test_ptrdist_no_alltypes__only_l_sol:
-    name: Test PtrDist (no -alltypes __only_l_sol)
-    needs: build_3c
-    runs-on: self-hosted
-    steps:
-      - name: Build PtrDist
-        run: |
-          mkdir -p ${{env.benchmark_conv_dir}}/no-alltypes__only_l_sol
-          cd ${{env.benchmark_conv_dir}}/no-alltypes__only_l_sol
-          tar -xvzf ${{env.benchmark_tar_dir}}/ptrdist-1.1.tar.gz
-          cd ptrdist-1.1
-          for i in anagram bc ft ks yacr2 ; do \
-            (cd $i ; bear make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" LOCAL_CFLAGS="-D_ISOC99_SOURCE") \
-          done
-
-      - name: Convert anagram
-        run: |
-          cd ${{env.benchmark_conv_dir}}/no-alltypes__only_l_sol/ptrdist-1.1/anagram
-          ${{env.port_tools}}/convert_project.py \
-            --includeDir ${{env.include_dir}} \
-            --prog_name ${{env.builddir}}/bin/3c \
-            --extra-3c-arg=-only-l-sol \
-            --project_path .
-
-      - name: Copy 3c stats of anagram
-        run: |
-          cd ${{env.benchmark_conv_dir}}/no-alltypes__only_l_sol/ptrdist-1.1/anagram
-          mkdir 3c_performance_stats/
-          cp *.json 3c_performance_stats/
-
-      - name: Upload 3c stats of anagram
-        uses: actions/upload-artifact@v2
-        with: 
-          name: anagram__only_l_sol_noalltypes
-          path: ${{env.benchmark_conv_dir}}/no-alltypes__only_l_sol/ptrdist-1.1/anagram/3c_performance_stats/
-          retention-days: 5
-
-      - name: Build converted anagram
-        run: |
-          cd ${{env.benchmark_conv_dir}}/no-alltypes__only_l_sol/ptrdist-1.1/anagram
-          cp -r out.checked/* .
-          rm -r out.checked
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-D_ISOC99_SOURCE"
-
-      - name: Convert bc
-        run: |
-          cd ${{env.benchmark_conv_dir}}/no-alltypes__only_l_sol/ptrdist-1.1/bc
-          ${{env.port_tools}}/convert_project.py \
-            --includeDir ${{env.include_dir}} \
-            --prog_name ${{env.builddir}}/bin/3c \
-            --extra-3c-arg=-only-l-sol \
-            --project_path .
-
-      - name: Copy 3c stats of bc
-        run: |
-          cd ${{env.benchmark_conv_dir}}/no-alltypes__only_l_sol/ptrdist-1.1/bc
-          mkdir 3c_performance_stats/
-          cp *.json 3c_performance_stats/
-
-      - name: Upload 3c stats of bc
-        uses: actions/upload-artifact@v2
-        with: 
-          name: bc__only_l_sol_noalltypes
-          path: ${{env.benchmark_conv_dir}}/no-alltypes__only_l_sol/ptrdist-1.1/bc/3c_performance_stats/
-          retention-days: 5
-
-      - name: Build converted bc
-        run: |
-          cd ${{env.benchmark_conv_dir}}/no-alltypes__only_l_sol/ptrdist-1.1/bc
-          cp -r out.checked/* .
-          rm -r out.checked
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-D_ISOC99_SOURCE"
-
-      - name: Convert ft
-        run: |
-          cd ${{env.benchmark_conv_dir}}/no-alltypes__only_l_sol/ptrdist-1.1/ft
-          ${{env.port_tools}}/convert_project.py \
-            --includeDir ${{env.include_dir}} \
-            --prog_name ${{env.builddir}}/bin/3c \
-            --extra-3c-arg=-only-l-sol \
-            --project_path .
-
-      - name: Copy 3c stats of ft
-        run: |
-          cd ${{env.benchmark_conv_dir}}/no-alltypes__only_l_sol/ptrdist-1.1/ft
-          mkdir 3c_performance_stats/
-          cp *.json 3c_performance_stats/
-
-      - name: Upload 3c stats of ft
-        uses: actions/upload-artifact@v2
-        with: 
-          name: ft__only_l_sol_noalltypes
-          path: ${{env.benchmark_conv_dir}}/no-alltypes__only_l_sol/ptrdist-1.1/ft/3c_performance_stats/
-          retention-days: 5
-
-      - name: Build converted ft
-        run: |
-          cd ${{env.benchmark_conv_dir}}/no-alltypes__only_l_sol/ptrdist-1.1/ft
-          cp -r out.checked/* .
-          rm -r out.checked
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-D_ISOC99_SOURCE"
-
-      - name: Convert ks
-        run: |
-          cd ${{env.benchmark_conv_dir}}/no-alltypes__only_l_sol/ptrdist-1.1/ks
-          ${{env.port_tools}}/convert_project.py \
-            --includeDir ${{env.include_dir}} \
-            --prog_name ${{env.builddir}}/bin/3c \
-            --extra-3c-arg=-only-l-sol \
-            --project_path .
-
-      - name: Copy 3c stats of ks
-        run: |
-          cd ${{env.benchmark_conv_dir}}/no-alltypes__only_l_sol/ptrdist-1.1/ks
-          mkdir 3c_performance_stats/
-          cp *.json 3c_performance_stats/
-
-      - name: Upload 3c stats of ks
-        uses: actions/upload-artifact@v2
-        with: 
-          name: ks__only_l_sol_noalltypes
-          path: ${{env.benchmark_conv_dir}}/no-alltypes__only_l_sol/ptrdist-1.1/ks/3c_performance_stats/
-          retention-days: 5
-
-      - name: Build converted ks
-        run: |
-          cd ${{env.benchmark_conv_dir}}/no-alltypes__only_l_sol/ptrdist-1.1/ks
-          cp -r out.checked/* .
-          rm -r out.checked
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-D_ISOC99_SOURCE"
-
-      - name: Convert yacr2
-        run: |
-          cd ${{env.benchmark_conv_dir}}/no-alltypes__only_l_sol/ptrdist-1.1/yacr2
-          ${{env.port_tools}}/convert_project.py \
-            --includeDir ${{env.include_dir}} \
-            --prog_name ${{env.builddir}}/bin/3c \
-            --extra-3c-arg=-only-l-sol \
-            --project_path .
-
-      - name: Copy 3c stats of yacr2
-        run: |
-          cd ${{env.benchmark_conv_dir}}/no-alltypes__only_l_sol/ptrdist-1.1/yacr2
-          mkdir 3c_performance_stats/
-          cp *.json 3c_performance_stats/
-
-      - name: Upload 3c stats of yacr2
-        uses: actions/upload-artifact@v2
-        with: 
-          name: yacr2__only_l_sol_noalltypes
-          path: ${{env.benchmark_conv_dir}}/no-alltypes__only_l_sol/ptrdist-1.1/yacr2/3c_performance_stats/
-          retention-days: 5
-
-      - name: Build converted yacr2
-        run: |
-          cd ${{env.benchmark_conv_dir}}/no-alltypes__only_l_sol/ptrdist-1.1/yacr2
           cp -r out.checked/* .
           rm -r out.checked
           make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-D_ISOC99_SOURCE"
 
   test_ptrdist_alltypes:
-    name: Test PtrDist (-alltypes )
+    name: Test PtrDist (-alltypes)
     needs: build_3c
     runs-on: self-hosted
     steps:
@@ -770,19 +276,6 @@ jobs:
             --prog_name ${{env.builddir}}/bin/3c \
             --extra-3c-arg=-alltypes \
             --project_path .
-
-      - name: Copy 3c stats of anagram
-        run: |
-          cd ${{env.benchmark_conv_dir}}/alltypes/ptrdist-1.1/anagram
-          mkdir 3c_performance_stats/
-          cp *.json 3c_performance_stats/
-
-      - name: Upload 3c stats of anagram
-        uses: actions/upload-artifact@v2
-        with: 
-          name: anagram_alltypes
-          path: ${{env.benchmark_conv_dir}}/alltypes/ptrdist-1.1/anagram/3c_performance_stats/
-          retention-days: 5
 
       - name: Build converted anagram (ignore failure)
         run: |
@@ -800,19 +293,6 @@ jobs:
             --extra-3c-arg=-alltypes \
             --project_path .
 
-      - name: Copy 3c stats of bc
-        run: |
-          cd ${{env.benchmark_conv_dir}}/alltypes/ptrdist-1.1/bc
-          mkdir 3c_performance_stats/
-          cp *.json 3c_performance_stats/
-
-      - name: Upload 3c stats of bc
-        uses: actions/upload-artifact@v2
-        with: 
-          name: bc_alltypes
-          path: ${{env.benchmark_conv_dir}}/alltypes/ptrdist-1.1/bc/3c_performance_stats/
-          retention-days: 5
-
       - name: Build converted bc (ignore failure)
         run: |
           cd ${{env.benchmark_conv_dir}}/alltypes/ptrdist-1.1/bc
@@ -828,19 +308,6 @@ jobs:
             --prog_name ${{env.builddir}}/bin/3c \
             --extra-3c-arg=-alltypes \
             --project_path .
-
-      - name: Copy 3c stats of ft
-        run: |
-          cd ${{env.benchmark_conv_dir}}/alltypes/ptrdist-1.1/ft
-          mkdir 3c_performance_stats/
-          cp *.json 3c_performance_stats/
-
-      - name: Upload 3c stats of ft
-        uses: actions/upload-artifact@v2
-        with: 
-          name: ft_alltypes
-          path: ${{env.benchmark_conv_dir}}/alltypes/ptrdist-1.1/ft/3c_performance_stats/
-          retention-days: 5
 
       - name: Build converted ft (ignore failure)
         run: |
@@ -858,19 +325,6 @@ jobs:
             --extra-3c-arg=-alltypes \
             --project_path .
 
-      - name: Copy 3c stats of ks
-        run: |
-          cd ${{env.benchmark_conv_dir}}/alltypes/ptrdist-1.1/ks
-          mkdir 3c_performance_stats/
-          cp *.json 3c_performance_stats/
-
-      - name: Upload 3c stats of ks
-        uses: actions/upload-artifact@v2
-        with: 
-          name: ks_alltypes
-          path: ${{env.benchmark_conv_dir}}/alltypes/ptrdist-1.1/ks/3c_performance_stats/
-          retention-days: 5
-
       - name: Build converted ks (ignore failure)
         run: |
           cd ${{env.benchmark_conv_dir}}/alltypes/ptrdist-1.1/ks
@@ -887,19 +341,6 @@ jobs:
             --extra-3c-arg=-alltypes \
             --project_path .
 
-      - name: Copy 3c stats of yacr2
-        run: |
-          cd ${{env.benchmark_conv_dir}}/alltypes/ptrdist-1.1/yacr2
-          mkdir 3c_performance_stats/
-          cp *.json 3c_performance_stats/
-
-      - name: Upload 3c stats of yacr2
-        uses: actions/upload-artifact@v2
-        with: 
-          name: yacr2_alltypes
-          path: ${{env.benchmark_conv_dir}}/alltypes/ptrdist-1.1/yacr2/3c_performance_stats/
-          retention-days: 5
-
       - name: Build converted yacr2 (ignore failure)
         run: |
           cd ${{env.benchmark_conv_dir}}/alltypes/ptrdist-1.1/yacr2
@@ -908,7 +349,7 @@ jobs:
           make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-D_ISOC99_SOURCE" || true
 
   test_libarchive_no_alltypes:
-    name: Test LibArchive (no -alltypes )
+    name: Test LibArchive (no -alltypes)
     needs: build_3c
     runs-on: self-hosted
     steps:
@@ -932,123 +373,16 @@ jobs:
             --project_path . \
             --build_dir build
 
-      - name: Copy 3c stats of LibArchive
-        run: |
-          cd ${{env.benchmark_conv_dir}}/no-alltypes/libarchive-3.4.3
-          mkdir 3c_performance_stats/
-          cp *.json 3c_performance_stats/
-
-      - name: Upload 3c stats of LibArchive
-        uses: actions/upload-artifact@v2
-        with: 
-          name: LibArchive_noalltypes
-          path: ${{env.benchmark_conv_dir}}/no-alltypes/libarchive-3.4.3/3c_performance_stats/
-          retention-days: 5
-
       - name: Build converted LibArchive
         run: |
           cd ${{env.benchmark_conv_dir}}/no-alltypes/libarchive-3.4.3
-          cp -r out.checked/* .
-          rm -r out.checked
-          cd build
-          ninja -l $(nproc) -k 0 archive
-
-  test_libarchive_no_alltypes__only_g_sol:
-    name: Test LibArchive (no -alltypes __only_g_sol)
-    needs: build_3c
-    runs-on: self-hosted
-    steps:
-      - name: Build LibArchive
-        run: |
-          mkdir -p ${{env.benchmark_conv_dir}}/no-alltypes__only_g_sol
-          cd ${{env.benchmark_conv_dir}}/no-alltypes__only_g_sol
-          tar -xvzf ${{env.benchmark_tar_dir}}/libarchive-3.4.3.tar.gz
-          cd libarchive-3.4.3
-          cd build
-          cmake -DCMAKE_C_COMPILER=${{env.builddir}}/bin/clang -G Ninja -DCMAKE_C_FLAGS="-w -D_GNU_SOURCE" ..
-          bear ninja -l $(nproc) archive
-
-      - name: Convert LibArchive
-        run: |
-          cd ${{env.benchmark_conv_dir}}/no-alltypes__only_g_sol/libarchive-3.4.3
-          ${{env.port_tools}}/convert_project.py \
-            --skip '/.*/(test|test_utils|tar|cat|cpio|examples|contrib|libarchive_fe)/.*' \
-            --includeDir ${{env.include_dir}} \
-            --prog_name ${{env.builddir}}/bin/3c \
-            --extra-3c-arg=-only-g-sol \
-            --project_path . \
-            --build_dir build
-
-      - name: Copy 3c stats of LibArchive
-        run: |
-          cd ${{env.benchmark_conv_dir}}/no-alltypes__only_g_sol/libarchive-3.4.3
-          mkdir 3c_performance_stats/
-          cp *.json 3c_performance_stats/
-
-      - name: Upload 3c stats of LibArchive
-        uses: actions/upload-artifact@v2
-        with: 
-          name: LibArchive__only_g_sol_noalltypes
-          path: ${{env.benchmark_conv_dir}}/no-alltypes__only_g_sol/libarchive-3.4.3/3c_performance_stats/
-          retention-days: 5
-
-      - name: Build converted LibArchive
-        run: |
-          cd ${{env.benchmark_conv_dir}}/no-alltypes__only_g_sol/libarchive-3.4.3
-          cp -r out.checked/* .
-          rm -r out.checked
-          cd build
-          ninja -l $(nproc) -k 0 archive
-
-  test_libarchive_no_alltypes__only_l_sol:
-    name: Test LibArchive (no -alltypes __only_l_sol)
-    needs: build_3c
-    runs-on: self-hosted
-    steps:
-      - name: Build LibArchive
-        run: |
-          mkdir -p ${{env.benchmark_conv_dir}}/no-alltypes__only_l_sol
-          cd ${{env.benchmark_conv_dir}}/no-alltypes__only_l_sol
-          tar -xvzf ${{env.benchmark_tar_dir}}/libarchive-3.4.3.tar.gz
-          cd libarchive-3.4.3
-          cd build
-          cmake -DCMAKE_C_COMPILER=${{env.builddir}}/bin/clang -G Ninja -DCMAKE_C_FLAGS="-w -D_GNU_SOURCE" ..
-          bear ninja -l $(nproc) archive
-
-      - name: Convert LibArchive
-        run: |
-          cd ${{env.benchmark_conv_dir}}/no-alltypes__only_l_sol/libarchive-3.4.3
-          ${{env.port_tools}}/convert_project.py \
-            --skip '/.*/(test|test_utils|tar|cat|cpio|examples|contrib|libarchive_fe)/.*' \
-            --includeDir ${{env.include_dir}} \
-            --prog_name ${{env.builddir}}/bin/3c \
-            --extra-3c-arg=-only-l-sol \
-            --project_path . \
-            --build_dir build
-
-      - name: Copy 3c stats of LibArchive
-        run: |
-          cd ${{env.benchmark_conv_dir}}/no-alltypes__only_l_sol/libarchive-3.4.3
-          mkdir 3c_performance_stats/
-          cp *.json 3c_performance_stats/
-
-      - name: Upload 3c stats of LibArchive
-        uses: actions/upload-artifact@v2
-        with: 
-          name: LibArchive__only_l_sol_noalltypes
-          path: ${{env.benchmark_conv_dir}}/no-alltypes__only_l_sol/libarchive-3.4.3/3c_performance_stats/
-          retention-days: 5
-
-      - name: Build converted LibArchive
-        run: |
-          cd ${{env.benchmark_conv_dir}}/no-alltypes__only_l_sol/libarchive-3.4.3
           cp -r out.checked/* .
           rm -r out.checked
           cd build
           ninja -l $(nproc) -k 0 archive
 
   test_libarchive_alltypes:
-    name: Test LibArchive (-alltypes )
+    name: Test LibArchive (-alltypes)
     needs: build_3c
     runs-on: self-hosted
     steps:
@@ -1072,19 +406,6 @@ jobs:
             --extra-3c-arg=-alltypes \
             --project_path . \
             --build_dir build
-
-      - name: Copy 3c stats of LibArchive
-        run: |
-          cd ${{env.benchmark_conv_dir}}/alltypes/libarchive-3.4.3
-          mkdir 3c_performance_stats/
-          cp *.json 3c_performance_stats/
-
-      - name: Upload 3c stats of LibArchive
-        uses: actions/upload-artifact@v2
-        with: 
-          name: LibArchive_alltypes
-          path: ${{env.benchmark_conv_dir}}/alltypes/libarchive-3.4.3/3c_performance_stats/
-          retention-days: 5
 
       - name: Build converted LibArchive (ignore failure)
         run: |
@@ -1095,7 +416,7 @@ jobs:
           ninja -l $(nproc) -k 0 archive || true
 
   test_lua_no_alltypes:
-    name: Test Lua (no -alltypes )
+    name: Test Lua (no -alltypes)
     needs: build_3c
     runs-on: self-hosted
     steps:
@@ -1120,125 +441,16 @@ jobs:
             --prog_name ${{env.builddir}}/bin/3c \
             --project_path .
 
-      - name: Copy 3c stats of Lua
-        run: |
-          cd ${{env.benchmark_conv_dir}}/no-alltypes/lua-5.4.1
-          mkdir 3c_performance_stats/
-          cp *.json 3c_performance_stats/
-
-      - name: Upload 3c stats of Lua
-        uses: actions/upload-artifact@v2
-        with: 
-          name: Lua_noalltypes
-          path: ${{env.benchmark_conv_dir}}/no-alltypes/lua-5.4.1/3c_performance_stats/
-          retention-days: 5
-
       - name: Build converted Lua
         run: |
           cd ${{env.benchmark_conv_dir}}/no-alltypes/lua-5.4.1
-          cp -r out.checked/* .
-          rm -r out.checked
-          sed -i "s/luac_main/main/" src/luac.c
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k linux
-
-  test_lua_no_alltypes__only_g_sol:
-    name: Test Lua (no -alltypes __only_g_sol)
-    needs: build_3c
-    runs-on: self-hosted
-    steps:
-      - name: Build Lua
-        run: |
-          mkdir -p ${{env.benchmark_conv_dir}}/no-alltypes__only_g_sol
-          cd ${{env.benchmark_conv_dir}}/no-alltypes__only_g_sol
-          tar -xvzf ${{env.benchmark_tar_dir}}/lua-5.4.1.tar.gz
-          cd lua-5.4.1
-          bear make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" linux
-          ( cd src ; \
-            clang-rename-10 -pl -i \
-              --qualified-name=main \
-              --new-name=luac_main \
-              luac.c )
-
-      - name: Convert Lua
-        run: |
-          cd ${{env.benchmark_conv_dir}}/no-alltypes__only_g_sol/lua-5.4.1
-          ${{env.port_tools}}/convert_project.py \
-            --includeDir ${{env.include_dir}} \
-            --prog_name ${{env.builddir}}/bin/3c \
-            --extra-3c-arg=-only-g-sol \
-            --project_path .
-
-      - name: Copy 3c stats of Lua
-        run: |
-          cd ${{env.benchmark_conv_dir}}/no-alltypes__only_g_sol/lua-5.4.1
-          mkdir 3c_performance_stats/
-          cp *.json 3c_performance_stats/
-
-      - name: Upload 3c stats of Lua
-        uses: actions/upload-artifact@v2
-        with: 
-          name: Lua__only_g_sol_noalltypes
-          path: ${{env.benchmark_conv_dir}}/no-alltypes__only_g_sol/lua-5.4.1/3c_performance_stats/
-          retention-days: 5
-
-      - name: Build converted Lua
-        run: |
-          cd ${{env.benchmark_conv_dir}}/no-alltypes__only_g_sol/lua-5.4.1
-          cp -r out.checked/* .
-          rm -r out.checked
-          sed -i "s/luac_main/main/" src/luac.c
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k linux
-
-  test_lua_no_alltypes__only_l_sol:
-    name: Test Lua (no -alltypes __only_l_sol)
-    needs: build_3c
-    runs-on: self-hosted
-    steps:
-      - name: Build Lua
-        run: |
-          mkdir -p ${{env.benchmark_conv_dir}}/no-alltypes__only_l_sol
-          cd ${{env.benchmark_conv_dir}}/no-alltypes__only_l_sol
-          tar -xvzf ${{env.benchmark_tar_dir}}/lua-5.4.1.tar.gz
-          cd lua-5.4.1
-          bear make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" linux
-          ( cd src ; \
-            clang-rename-10 -pl -i \
-              --qualified-name=main \
-              --new-name=luac_main \
-              luac.c )
-
-      - name: Convert Lua
-        run: |
-          cd ${{env.benchmark_conv_dir}}/no-alltypes__only_l_sol/lua-5.4.1
-          ${{env.port_tools}}/convert_project.py \
-            --includeDir ${{env.include_dir}} \
-            --prog_name ${{env.builddir}}/bin/3c \
-            --extra-3c-arg=-only-l-sol \
-            --project_path .
-
-      - name: Copy 3c stats of Lua
-        run: |
-          cd ${{env.benchmark_conv_dir}}/no-alltypes__only_l_sol/lua-5.4.1
-          mkdir 3c_performance_stats/
-          cp *.json 3c_performance_stats/
-
-      - name: Upload 3c stats of Lua
-        uses: actions/upload-artifact@v2
-        with: 
-          name: Lua__only_l_sol_noalltypes
-          path: ${{env.benchmark_conv_dir}}/no-alltypes__only_l_sol/lua-5.4.1/3c_performance_stats/
-          retention-days: 5
-
-      - name: Build converted Lua
-        run: |
-          cd ${{env.benchmark_conv_dir}}/no-alltypes__only_l_sol/lua-5.4.1
           cp -r out.checked/* .
           rm -r out.checked
           sed -i "s/luac_main/main/" src/luac.c
           make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k linux
 
   test_lua_alltypes:
-    name: Test Lua (-alltypes )
+    name: Test Lua (-alltypes)
     needs: build_3c
     runs-on: self-hosted
     steps:
@@ -1263,19 +475,6 @@ jobs:
             --prog_name ${{env.builddir}}/bin/3c \
             --extra-3c-arg=-alltypes \
             --project_path .
-
-      - name: Copy 3c stats of Lua
-        run: |
-          cd ${{env.benchmark_conv_dir}}/alltypes/lua-5.4.1
-          mkdir 3c_performance_stats/
-          cp *.json 3c_performance_stats/
-
-      - name: Upload 3c stats of Lua
-        uses: actions/upload-artifact@v2
-        with: 
-          name: Lua_alltypes
-          path: ${{env.benchmark_conv_dir}}/alltypes/lua-5.4.1/3c_performance_stats/
-          retention-days: 5
 
       - name: Build converted Lua (ignore failure)
         run: |
@@ -1286,7 +485,7 @@ jobs:
           make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k linux || true
 
   test_libtiff_no_alltypes:
-    name: Test LibTiff (no -alltypes )
+    name: Test LibTiff (no -alltypes)
     needs: build_3c
     runs-on: self-hosted
     steps:
@@ -1316,132 +515,15 @@ jobs:
             --prog_name ${{env.builddir}}/bin/3c \
             --project_path .
 
-      - name: Copy 3c stats of LibTiff
-        run: |
-          cd ${{env.benchmark_conv_dir}}/no-alltypes/tiff-4.1.0
-          mkdir 3c_performance_stats/
-          cp *.json 3c_performance_stats/
-
-      - name: Upload 3c stats of LibTiff
-        uses: actions/upload-artifact@v2
-        with: 
-          name: LibTiff_noalltypes
-          path: ${{env.benchmark_conv_dir}}/no-alltypes/tiff-4.1.0/3c_performance_stats/
-          retention-days: 5
-
       - name: Build converted LibTiff
         run: |
           cd ${{env.benchmark_conv_dir}}/no-alltypes/tiff-4.1.0
-          cp -r out.checked/* .
-          rm -r out.checked
-          ninja -l $(nproc) -k 0 tiff
-
-  test_libtiff_no_alltypes__only_g_sol:
-    name: Test LibTiff (no -alltypes __only_g_sol)
-    needs: build_3c
-    runs-on: self-hosted
-    steps:
-      - name: Build LibTiff
-        run: |
-          mkdir -p ${{env.benchmark_conv_dir}}/no-alltypes__only_g_sol
-          cd ${{env.benchmark_conv_dir}}/no-alltypes__only_g_sol
-          tar -xvzf ${{env.benchmark_tar_dir}}/tiff-4.1.0.tar.gz
-          cd tiff-4.1.0
-          cmake -DCMAKE_C_COMPILER=${{env.builddir}}/bin/clang -G Ninja -DCMAKE_C_FLAGS="-w" .
-          bear ninja -l $(nproc) tiff
-          ( cd tools ; \
-            for i in *.c ; do \
-              clang-rename-10 -pl -i \
-                --qualified-name=main \
-                --new-name=$(basename -s .c $i)_main $i ; \
-            done)
-
-      - name: Convert LibTiff
-        run: |
-          cd ${{env.benchmark_conv_dir}}/no-alltypes__only_g_sol/tiff-4.1.0
-          ${{env.port_tools}}/convert_project.py \
-            --skip '/.*/tif_stream.cxx' \
-            --skip '.*/test/.*\.c' \
-            --skip '.*/contrib/.*\.c' \
-            --includeDir ${{env.include_dir}} \
-            --prog_name ${{env.builddir}}/bin/3c \
-            --extra-3c-arg=-only-g-sol \
-            --project_path .
-
-      - name: Copy 3c stats of LibTiff
-        run: |
-          cd ${{env.benchmark_conv_dir}}/no-alltypes__only_g_sol/tiff-4.1.0
-          mkdir 3c_performance_stats/
-          cp *.json 3c_performance_stats/
-
-      - name: Upload 3c stats of LibTiff
-        uses: actions/upload-artifact@v2
-        with: 
-          name: LibTiff__only_g_sol_noalltypes
-          path: ${{env.benchmark_conv_dir}}/no-alltypes__only_g_sol/tiff-4.1.0/3c_performance_stats/
-          retention-days: 5
-
-      - name: Build converted LibTiff
-        run: |
-          cd ${{env.benchmark_conv_dir}}/no-alltypes__only_g_sol/tiff-4.1.0
-          cp -r out.checked/* .
-          rm -r out.checked
-          ninja -l $(nproc) -k 0 tiff
-
-  test_libtiff_no_alltypes__only_l_sol:
-    name: Test LibTiff (no -alltypes __only_l_sol)
-    needs: build_3c
-    runs-on: self-hosted
-    steps:
-      - name: Build LibTiff
-        run: |
-          mkdir -p ${{env.benchmark_conv_dir}}/no-alltypes__only_l_sol
-          cd ${{env.benchmark_conv_dir}}/no-alltypes__only_l_sol
-          tar -xvzf ${{env.benchmark_tar_dir}}/tiff-4.1.0.tar.gz
-          cd tiff-4.1.0
-          cmake -DCMAKE_C_COMPILER=${{env.builddir}}/bin/clang -G Ninja -DCMAKE_C_FLAGS="-w" .
-          bear ninja -l $(nproc) tiff
-          ( cd tools ; \
-            for i in *.c ; do \
-              clang-rename-10 -pl -i \
-                --qualified-name=main \
-                --new-name=$(basename -s .c $i)_main $i ; \
-            done)
-
-      - name: Convert LibTiff
-        run: |
-          cd ${{env.benchmark_conv_dir}}/no-alltypes__only_l_sol/tiff-4.1.0
-          ${{env.port_tools}}/convert_project.py \
-            --skip '/.*/tif_stream.cxx' \
-            --skip '.*/test/.*\.c' \
-            --skip '.*/contrib/.*\.c' \
-            --includeDir ${{env.include_dir}} \
-            --prog_name ${{env.builddir}}/bin/3c \
-            --extra-3c-arg=-only-l-sol \
-            --project_path .
-
-      - name: Copy 3c stats of LibTiff
-        run: |
-          cd ${{env.benchmark_conv_dir}}/no-alltypes__only_l_sol/tiff-4.1.0
-          mkdir 3c_performance_stats/
-          cp *.json 3c_performance_stats/
-
-      - name: Upload 3c stats of LibTiff
-        uses: actions/upload-artifact@v2
-        with: 
-          name: LibTiff__only_l_sol_noalltypes
-          path: ${{env.benchmark_conv_dir}}/no-alltypes__only_l_sol/tiff-4.1.0/3c_performance_stats/
-          retention-days: 5
-
-      - name: Build converted LibTiff
-        run: |
-          cd ${{env.benchmark_conv_dir}}/no-alltypes__only_l_sol/tiff-4.1.0
           cp -r out.checked/* .
           rm -r out.checked
           ninja -l $(nproc) -k 0 tiff
 
   test_libtiff_alltypes:
-    name: Test LibTiff (-alltypes )
+    name: Test LibTiff (-alltypes)
     needs: build_3c
     runs-on: self-hosted
     steps:
@@ -1471,19 +553,6 @@ jobs:
             --prog_name ${{env.builddir}}/bin/3c \
             --extra-3c-arg=-alltypes \
             --project_path .
-
-      - name: Copy 3c stats of LibTiff
-        run: |
-          cd ${{env.benchmark_conv_dir}}/alltypes/tiff-4.1.0
-          mkdir 3c_performance_stats/
-          cp *.json 3c_performance_stats/
-
-      - name: Upload 3c stats of LibTiff
-        uses: actions/upload-artifact@v2
-        with: 
-          name: LibTiff_alltypes
-          path: ${{env.benchmark_conv_dir}}/alltypes/tiff-4.1.0/3c_performance_stats/
-          retention-days: 5
 
       - name: Build converted LibTiff (ignore failure)
         run: |
@@ -1493,7 +562,7 @@ jobs:
           ninja -l $(nproc) -k 0 tiff || true
 
   test_zlib_no_alltypes:
-    name: Test ZLib (no -alltypes )
+    name: Test ZLib (no -alltypes)
     needs: build_3c
     runs-on: self-hosted
     steps:
@@ -1518,125 +587,16 @@ jobs:
             --project_path . \
             --build_dir build
 
-      - name: Copy 3c stats of ZLib
-        run: |
-          cd ${{env.benchmark_conv_dir}}/no-alltypes/zlib-1.2.11
-          mkdir 3c_performance_stats/
-          cp *.json 3c_performance_stats/
-
-      - name: Upload 3c stats of ZLib
-        uses: actions/upload-artifact@v2
-        with: 
-          name: ZLib_noalltypes
-          path: ${{env.benchmark_conv_dir}}/no-alltypes/zlib-1.2.11/3c_performance_stats/
-          retention-days: 5
-
       - name: Build converted ZLib
         run: |
           cd ${{env.benchmark_conv_dir}}/no-alltypes/zlib-1.2.11
-          cp -r out.checked/* .
-          rm -r out.checked
-          cd build
-          ninja -l $(nproc) -k 0 zlib
-
-  test_zlib_no_alltypes__only_g_sol:
-    name: Test ZLib (no -alltypes __only_g_sol)
-    needs: build_3c
-    runs-on: self-hosted
-    steps:
-      - name: Build ZLib
-        run: |
-          mkdir -p ${{env.benchmark_conv_dir}}/no-alltypes__only_g_sol
-          cd ${{env.benchmark_conv_dir}}/no-alltypes__only_g_sol
-          tar -xvzf ${{env.benchmark_tar_dir}}/zlib-1.2.11.tar.gz
-          cd zlib-1.2.11
-          mkdir build
-          cd build
-          cmake -DCMAKE_C_COMPILER=${{env.builddir}}/bin/clang -G Ninja -DCMAKE_C_FLAGS="-w" ..
-          bear ninja -l $(nproc) zlib
-
-      - name: Convert ZLib
-        run: |
-          cd ${{env.benchmark_conv_dir}}/no-alltypes__only_g_sol/zlib-1.2.11
-          ${{env.port_tools}}/convert_project.py \
-            --skip '/.*/test/.*' \
-            --includeDir ${{env.include_dir}} \
-            --prog_name ${{env.builddir}}/bin/3c \
-            --extra-3c-arg=-only-g-sol \
-            --project_path . \
-            --build_dir build
-
-      - name: Copy 3c stats of ZLib
-        run: |
-          cd ${{env.benchmark_conv_dir}}/no-alltypes__only_g_sol/zlib-1.2.11
-          mkdir 3c_performance_stats/
-          cp *.json 3c_performance_stats/
-
-      - name: Upload 3c stats of ZLib
-        uses: actions/upload-artifact@v2
-        with: 
-          name: ZLib__only_g_sol_noalltypes
-          path: ${{env.benchmark_conv_dir}}/no-alltypes__only_g_sol/zlib-1.2.11/3c_performance_stats/
-          retention-days: 5
-
-      - name: Build converted ZLib
-        run: |
-          cd ${{env.benchmark_conv_dir}}/no-alltypes__only_g_sol/zlib-1.2.11
-          cp -r out.checked/* .
-          rm -r out.checked
-          cd build
-          ninja -l $(nproc) -k 0 zlib
-
-  test_zlib_no_alltypes__only_l_sol:
-    name: Test ZLib (no -alltypes __only_l_sol)
-    needs: build_3c
-    runs-on: self-hosted
-    steps:
-      - name: Build ZLib
-        run: |
-          mkdir -p ${{env.benchmark_conv_dir}}/no-alltypes__only_l_sol
-          cd ${{env.benchmark_conv_dir}}/no-alltypes__only_l_sol
-          tar -xvzf ${{env.benchmark_tar_dir}}/zlib-1.2.11.tar.gz
-          cd zlib-1.2.11
-          mkdir build
-          cd build
-          cmake -DCMAKE_C_COMPILER=${{env.builddir}}/bin/clang -G Ninja -DCMAKE_C_FLAGS="-w" ..
-          bear ninja -l $(nproc) zlib
-
-      - name: Convert ZLib
-        run: |
-          cd ${{env.benchmark_conv_dir}}/no-alltypes__only_l_sol/zlib-1.2.11
-          ${{env.port_tools}}/convert_project.py \
-            --skip '/.*/test/.*' \
-            --includeDir ${{env.include_dir}} \
-            --prog_name ${{env.builddir}}/bin/3c \
-            --extra-3c-arg=-only-l-sol \
-            --project_path . \
-            --build_dir build
-
-      - name: Copy 3c stats of ZLib
-        run: |
-          cd ${{env.benchmark_conv_dir}}/no-alltypes__only_l_sol/zlib-1.2.11
-          mkdir 3c_performance_stats/
-          cp *.json 3c_performance_stats/
-
-      - name: Upload 3c stats of ZLib
-        uses: actions/upload-artifact@v2
-        with: 
-          name: ZLib__only_l_sol_noalltypes
-          path: ${{env.benchmark_conv_dir}}/no-alltypes__only_l_sol/zlib-1.2.11/3c_performance_stats/
-          retention-days: 5
-
-      - name: Build converted ZLib
-        run: |
-          cd ${{env.benchmark_conv_dir}}/no-alltypes__only_l_sol/zlib-1.2.11
           cp -r out.checked/* .
           rm -r out.checked
           cd build
           ninja -l $(nproc) -k 0 zlib
 
   test_zlib_alltypes:
-    name: Test ZLib (-alltypes )
+    name: Test ZLib (-alltypes)
     needs: build_3c
     runs-on: self-hosted
     steps:
@@ -1661,19 +621,6 @@ jobs:
             --extra-3c-arg=-alltypes \
             --project_path . \
             --build_dir build
-
-      - name: Copy 3c stats of ZLib
-        run: |
-          cd ${{env.benchmark_conv_dir}}/alltypes/zlib-1.2.11
-          mkdir 3c_performance_stats/
-          cp *.json 3c_performance_stats/
-
-      - name: Upload 3c stats of ZLib
-        uses: actions/upload-artifact@v2
-        with: 
-          name: ZLib_alltypes
-          path: ${{env.benchmark_conv_dir}}/alltypes/zlib-1.2.11/3c_performance_stats/
-          retention-days: 5
 
       - name: Build converted ZLib (ignore failure)
         run: |
@@ -1684,7 +631,7 @@ jobs:
           ninja -l $(nproc) -k 0 zlib || true
 
   test_icecast_no_alltypes:
-    name: Test Icecast (no -alltypes )
+    name: Test Icecast (no -alltypes)
     needs: build_3c
     runs-on: self-hosted
     steps:
@@ -1705,114 +652,15 @@ jobs:
             --prog_name ${{env.builddir}}/bin/3c \
             --project_path .
 
-      - name: Copy 3c stats of Icecast
-        run: |
-          cd ${{env.benchmark_conv_dir}}/no-alltypes/icecast-2.4.4
-          mkdir 3c_performance_stats/
-          cp *.json 3c_performance_stats/
-
-      - name: Upload 3c stats of Icecast
-        uses: actions/upload-artifact@v2
-        with: 
-          name: Icecast_noalltypes
-          path: ${{env.benchmark_conv_dir}}/no-alltypes/icecast-2.4.4/3c_performance_stats/
-          retention-days: 5
-
       - name: Build converted Icecast
         run: |
           cd ${{env.benchmark_conv_dir}}/no-alltypes/icecast-2.4.4
-          cp -r out.checked/* .
-          rm -r out.checked
-          make -j $(nproc) -l $(nproc) --output-sync -k
-
-  test_icecast_no_alltypes__only_g_sol:
-    name: Test Icecast (no -alltypes __only_g_sol)
-    needs: build_3c
-    runs-on: self-hosted
-    steps:
-      - name: Build Icecast
-        run: |
-          mkdir -p ${{env.benchmark_conv_dir}}/no-alltypes__only_g_sol
-          cd ${{env.benchmark_conv_dir}}/no-alltypes__only_g_sol
-          tar -xvzf ${{env.benchmark_tar_dir}}/icecast-2.4.4.tar.gz
-          cd icecast-2.4.4
-          CC="${{env.builddir}}/bin/clang" ./configure
-          bear make -j $(nproc) -l $(nproc) --output-sync
-
-      - name: Convert Icecast
-        run: |
-          cd ${{env.benchmark_conv_dir}}/no-alltypes__only_g_sol/icecast-2.4.4
-          ${{env.port_tools}}/convert_project.py \
-            --includeDir ${{env.include_dir}} \
-            --prog_name ${{env.builddir}}/bin/3c \
-            --extra-3c-arg=-only-g-sol \
-            --project_path .
-
-      - name: Copy 3c stats of Icecast
-        run: |
-          cd ${{env.benchmark_conv_dir}}/no-alltypes__only_g_sol/icecast-2.4.4
-          mkdir 3c_performance_stats/
-          cp *.json 3c_performance_stats/
-
-      - name: Upload 3c stats of Icecast
-        uses: actions/upload-artifact@v2
-        with: 
-          name: Icecast__only_g_sol_noalltypes
-          path: ${{env.benchmark_conv_dir}}/no-alltypes__only_g_sol/icecast-2.4.4/3c_performance_stats/
-          retention-days: 5
-
-      - name: Build converted Icecast
-        run: |
-          cd ${{env.benchmark_conv_dir}}/no-alltypes__only_g_sol/icecast-2.4.4
-          cp -r out.checked/* .
-          rm -r out.checked
-          make -j $(nproc) -l $(nproc) --output-sync -k
-
-  test_icecast_no_alltypes__only_l_sol:
-    name: Test Icecast (no -alltypes __only_l_sol)
-    needs: build_3c
-    runs-on: self-hosted
-    steps:
-      - name: Build Icecast
-        run: |
-          mkdir -p ${{env.benchmark_conv_dir}}/no-alltypes__only_l_sol
-          cd ${{env.benchmark_conv_dir}}/no-alltypes__only_l_sol
-          tar -xvzf ${{env.benchmark_tar_dir}}/icecast-2.4.4.tar.gz
-          cd icecast-2.4.4
-          CC="${{env.builddir}}/bin/clang" ./configure
-          bear make -j $(nproc) -l $(nproc) --output-sync
-
-      - name: Convert Icecast
-        run: |
-          cd ${{env.benchmark_conv_dir}}/no-alltypes__only_l_sol/icecast-2.4.4
-          ${{env.port_tools}}/convert_project.py \
-            --includeDir ${{env.include_dir}} \
-            --prog_name ${{env.builddir}}/bin/3c \
-            --extra-3c-arg=-only-l-sol \
-            --project_path .
-
-      - name: Copy 3c stats of Icecast
-        run: |
-          cd ${{env.benchmark_conv_dir}}/no-alltypes__only_l_sol/icecast-2.4.4
-          mkdir 3c_performance_stats/
-          cp *.json 3c_performance_stats/
-
-      - name: Upload 3c stats of Icecast
-        uses: actions/upload-artifact@v2
-        with: 
-          name: Icecast__only_l_sol_noalltypes
-          path: ${{env.benchmark_conv_dir}}/no-alltypes__only_l_sol/icecast-2.4.4/3c_performance_stats/
-          retention-days: 5
-
-      - name: Build converted Icecast
-        run: |
-          cd ${{env.benchmark_conv_dir}}/no-alltypes__only_l_sol/icecast-2.4.4
           cp -r out.checked/* .
           rm -r out.checked
           make -j $(nproc) -l $(nproc) --output-sync -k
 
   test_icecast_alltypes:
-    name: Test Icecast (-alltypes )
+    name: Test Icecast (-alltypes)
     needs: build_3c
     runs-on: self-hosted
     steps:
@@ -1834,23 +682,9 @@ jobs:
             --extra-3c-arg=-alltypes \
             --project_path .
 
-      - name: Copy 3c stats of Icecast
-        run: |
-          cd ${{env.benchmark_conv_dir}}/alltypes/icecast-2.4.4
-          mkdir 3c_performance_stats/
-          cp *.json 3c_performance_stats/
-
-      - name: Upload 3c stats of Icecast
-        uses: actions/upload-artifact@v2
-        with: 
-          name: Icecast_alltypes
-          path: ${{env.benchmark_conv_dir}}/alltypes/icecast-2.4.4/3c_performance_stats/
-          retention-days: 5
-
       - name: Build converted Icecast (ignore failure)
         run: |
           cd ${{env.benchmark_conv_dir}}/alltypes/icecast-2.4.4
           cp -r out.checked/* .
           rm -r out.checked
           make -j $(nproc) -l $(nproc) --output-sync -k || true
-
