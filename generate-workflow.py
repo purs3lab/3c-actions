@@ -368,13 +368,12 @@ def create_benchmark(out, binfo, alltypes, extra_args=[]):
     at_ignore_code = ' || true' if alltypes else ''
 
     out.write(f'''\
-
-      test_{binfo.name}_{at_job}{job_suffix}:
-        name: Test {binfo.friendly_name} ({at_job_friendly})
-        needs: build_3c
-        runs-on: self-hosted
-        steps:
-    ''')
+  test_{binfo.name}_{at_job}{job_suffix}:
+    name: Test {binfo.friendly_name} ({at_job_friendly})
+    needs: build_3c
+    runs-on: self-hosted
+    steps:
+''')
 
     full_build_cmds = textwrap.dedent(f'''\
                 mkdir -p {at_dir}
@@ -383,7 +382,9 @@ def create_benchmark(out, binfo, alltypes, extra_args=[]):
                 cd {binfo.dir_name}
                 ''') + ensure_trailing_newline(binfo.build_cmds)
 
-    steps = [Step('Build ' + binfo.friendly_name, full_build_cmds)]
+    steps = [Step(
+                 'Build ' + binfo.friendly_name,
+                 full_build_cmds)]
 
     components = binfo.components
     if components is None:
