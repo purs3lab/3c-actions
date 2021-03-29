@@ -348,22 +348,24 @@ def ensure_trailing_newline(s: str):
 
 
 def create_benchmark(out, binfo, alltypes, extra_args=[]):
-    at_dir = ('${{env.benchmark_conv_dir}}/' +
-              ('alltypes' if alltypes else 'no-alltypes'))
-    at_job = 'alltypes' if alltypes else 'no_alltypes'
-    at_job_friendly = '-alltypes' if alltypes else 'no -alltypes'
-    convert_extra = (ensure_trailing_newline(binfo.convert_extra)
-                     if binfo.convert_extra is not None else '')
-    build_converted_cmd = binfo.build_converted_cmd.rstrip('\n')
     # Python argparse thinks `--extra-3c-arg -alltypes` is two options
     # rather than an option with an argument.
     at_flag = '--extra-3c-arg=-alltypes \\\n' if alltypes else ''
+
     job_suffix = ''
     for earg in extra_args:
         if not job_suffix:
             job_suffix = "_"
         at_flag += '--extra-3c-arg=' + earg + ' \\\n'
         job_suffix += earg.replace('-', '_')
+
+    at_dir = ('${{env.benchmark_conv_dir}}/' +
+              ('alltypes' if alltypes else 'no-alltypes') + job_suffix)
+    at_job = 'alltypes' if alltypes else 'no_alltypes'
+    at_job_friendly = '-alltypes' if alltypes else 'no -alltypes'
+    convert_extra = (ensure_trailing_newline(binfo.convert_extra)
+                     if binfo.convert_extra is not None else '')
+    build_converted_cmd = binfo.build_converted_cmd.rstrip('\n')
     at_ignore_step = ' (ignore failure)' if alltypes else ''
     at_ignore_code = ' || true' if alltypes else ''
 
@@ -424,7 +426,7 @@ def create_benchmark(out, binfo, alltypes, extra_args=[]):
                 textwrap.dedent(f'''\
                             cd {component_dir}
                             mkdir {perf_dir_name}
-                            cp out.checked/*.json {perf_dir_name}
+                            cp *.json {perf_dir_name}
                             ''')))
         perf_artifact_name = component_friendly_name + job_suffix + ('_alltypes' if alltypes else '_noalltypes')
         perf_dir = os.path.join(component_dir, perf_dir_name)
