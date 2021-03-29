@@ -5,7 +5,7 @@
 name: 3C benchmark tests
 
 on:
-  # Run every day at 3:00 AM EDT (i.e., 7 am UTC)
+  # Run every day at the following time.
   schedule:
     - cron: "0 7 * * *"
   workflow_dispatch:
@@ -105,7 +105,6 @@ jobs:
           ninja -l $(nproc) check-3c
 
   # Convert our benchmark programs
-
   test_vsftpd_no_alltypes:
     name: Test Vsftpd (no -alltypes)
     needs: build_3c

@@ -5,9 +5,10 @@
 # jobs with similar content and as far as we know, the workflow language has
 # essentially no support for code reuse. :(
 
+import collections
 import os
 import textwrap
-from typing import List, NamedTuple, Optional
+from typing import List, NamedTuple, Optional, Any
 
 
 class BenchmarkComponent(NamedTuple):
@@ -203,9 +204,9 @@ HEADER = '''\
 name: {workflow.name}
 
 on:
-  # Run every day at 3:00 AM EDT (i.e., 7 am UTC)
+  # Run every day at the following time.
   schedule:
-    - cron: "0 7 * * *"
+    - cron: "{workflow.scheduletime}"
   workflow_dispatch:
     inputs:
       branch:
@@ -324,11 +325,10 @@ class Step(NamedTuple):
         return textwrap.indent(part1 + part2, 6 * ' ')
 
 
-class ActionStep:
-    def __init__(self, act_name, use_act, act_args):
-        self.act_name = act_name
-        self.use_act = use_act
-        self.act_args = act_args
+class ActionStep(NamedTuple):
+    act_name: str
+    use_act: str
+    act_args: List[Any]
 
     def __str__(self):
         part1 = textwrap.dedent(f'''\
@@ -350,13 +350,13 @@ def ensure_trailing_newline(s: str):
 def create_benchmark(out, binfo, alltypes, generate_stats=False, extra_args=[]):
     # Python argparse thinks `--extra-3c-arg -alltypes` is two options
     # rather than an option with an argument.
-    at_flag = '--extra-3c-arg=-alltypes \\\n' if alltypes else ''
+    extra_3c_args = '--extra-3c-arg=-alltypes \\\n' if alltypes else ''
 
     job_suffix = ''
     for earg in extra_args:
         if not job_suffix:
             job_suffix = "_"
-        at_flag += '--extra-3c-arg=' + earg + ' \\\n'
+        extra_3c_args += '--extra-3c-arg=' + earg + ' \\\n'
         job_suffix += earg.replace('-', '_')
 
     at_dir = ('${{env.benchmark_conv_dir}}/' +
@@ -404,7 +404,7 @@ def create_benchmark(out, binfo, alltypes, generate_stats=False, extra_args=[]):
             convert_extra +
             '--includeDir ${{env.include_dir}} \\\n' +
             '--prog_name ${{env.builddir}}/bin/3c \\\n' +
-            at_flag +
+            extra_3c_args +
             '--project_path .' +
             (f' \\\n--build_dir {component.build_dir}'
              if component.build_dir is not None else '') +
@@ -468,29 +468,40 @@ exhaustive_run_configurations = {
     True: []
 }
 
+
+class WorkflowConfig(NamedTuple):
+    name: str
+    cron_timestamp: str
+    run_configurations: dict
+    generate_stats: bool
+
+
 '''
 Format:
   {
-    workflow_file_path : (<workflow_name>, <run_config>, [True|False] <- flag to enable stats generation)
+    workflow_file_path : (<workflow_name>, <cron_format>, 
+                          <run_config>, [True|False] <- flag to enable stats generation)
   }
 '''
 workflow_file_configs = {
-    '.github/workflows/main.yml': ("3C benchmark tests",
-                                   regular_run_configurations, False),
-    '.github/workflows/exhaustive.yml': ("Exhaustive testing and Performance Stats",
-                                         exhaustive_run_configurations, True)
+    '.github/workflows/main.yml': WorkflowConfig("3C benchmark tests", "0 7 * * *", regular_run_configurations, False),
+    '.github/workflows/exhaustive.yml': WorkflowConfig("Exhaustive testing and Performance Stats", "0 9 * * *",
+                                                       exhaustive_run_configurations, True)
 }
 
 for workflow_file in workflow_file_configs:
-    workflow_name = workflow_file_configs[workflow_file][0]
-    run_configurations = workflow_file_configs[workflow_file][1]
-    generate_stats = workflow_file_configs[workflow_file][2]
+    workflow_name = workflow_file_configs[workflow_file].name
+    cron_timestamp = workflow_file_configs[workflow_file].cron_timestamp
+    run_configurations = workflow_file_configs[workflow_file].run_configurations
+    generate_stats = workflow_file_configs[workflow_file].generate_stats
     with open(workflow_file, 'w') as out:
-        out.write(HEADER.replace('{workflow.name}', workflow_name))
+        # format header using workflow name and schedule time.
+        formatted_hdr = HEADER.replace('{workflow.name}', workflow_name)
+        formatted_hdr = formatted_hdr.replace('{workflow.scheduletime}', cron_timestamp)
+        out.write(formatted_hdr)
         for binfo in benchmarks:
             for alltypes in run_configurations:
                 create_benchmark(out, binfo, alltypes, generate_stats)
                 extra_args = run_configurations[alltypes]
-                if len(extra_args) > 0:
-                    for earg in extra_args:
-                        create_benchmark(out, binfo, alltypes, generate_stats, [earg])
+                for earg in extra_args:
+                    create_benchmark(out, binfo, alltypes, generate_stats, [earg])
