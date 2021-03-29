@@ -369,7 +369,7 @@ def create_benchmark(out, binfo, alltypes, extra_args=[]):
 
     out.write(f'''\
   test_{binfo.name}_{at_job}{job_suffix}:
-    name: Test {binfo.friendly_name} ({at_job_friendly})
+    name: Test {binfo.friendly_name} ({at_job_friendly} {job_suffix})
     needs: build_3c
     runs-on: self-hosted
     steps:
@@ -452,7 +452,7 @@ def create_benchmark(out, binfo, alltypes, extra_args=[]):
 
     # We want blank lines between steps but not after the last step of
     # the last benchmark.
-    out.write('\n'.join(str(s) for s in steps))
+    out.write('\n'.join(str(s) for s in steps) + '\n')
 
 
 run_configurations = {
