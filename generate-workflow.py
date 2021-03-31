@@ -5,6 +5,7 @@
 # jobs with similar content and as far as we know, the workflow language has
 # essentially no support for code reuse. :(
 
+import itertools
 import textwrap
 from typing import List, NamedTuple, Optional
 
@@ -330,32 +331,37 @@ def ensure_trailing_newline(s: str):
 with open('.github/workflows/main.yml', 'w') as out:
     out.write(HEADER)
     for binfo in benchmarks:
-        for alltypes in (False, True):
-            at_dir = ('${{env.benchmark_conv_dir}}/' +
-                      ('alltypes' if alltypes else 'no-alltypes'))
-            at_job = 'alltypes' if alltypes else 'no_alltypes'
-            at_job_friendly = '-alltypes' if alltypes else 'no -alltypes'
+        for expand_macros, alltypes in itertools.product((False, True),
+                                                         (False, True)):
+            variant = (('expand_macros_' if expand_macros else '') +
+                       ('alltypes' if alltypes else 'no_alltypes'))
+            variant_friendly = (('' if expand_macros else 'not ') +
+                                'macro-expanded, ' +
+                                ('' if alltypes else 'no ') + '-alltypes')
+            variant_dir = '${{env.benchmark_conv_dir}}/' + variant
             convert_extra = (ensure_trailing_newline(binfo.convert_extra)
                              if binfo.convert_extra is not None else '')
             build_converted_cmd = binfo.build_converted_cmd.rstrip('\n')
             # Python argparse thinks `--extra-3c-arg -alltypes` is two options
             # rather than an option with an argument.
             at_flag = '--extra-3c-arg=-alltypes \\\n' if alltypes else ''
+            embc_flag = ('--expand_macros_before_conversion \\\n'
+                         if expand_macros else '')
             at_ignore_step = ' (ignore failure)' if alltypes else ''
             at_ignore_code = ' || true' if alltypes else ''
 
             out.write(f'''\
 
-  test_{binfo.name}_{at_job}:
-    name: Test {binfo.friendly_name} ({at_job_friendly})
+  test_{binfo.name}_{variant}:
+    name: Test {binfo.friendly_name} ({variant_friendly})
     needs: build_3c
     runs-on: self-hosted
     steps:
 ''')
 
             full_build_cmds = textwrap.dedent(f'''\
-            mkdir -p {at_dir}
-            cd {at_dir}
+            mkdir -p {variant_dir}
+            cd {variant_dir}
             tar -xvzf ${{{{env.benchmark_tar_dir}}}}/{binfo.dir_name}.tar.gz
             cd {binfo.dir_name}
             ''') + ensure_trailing_newline(binfo.build_cmds)
@@ -367,7 +373,7 @@ with open('.github/workflows/main.yml', 'w') as out:
                 components = [BenchmarkComponent(binfo.friendly_name)]
 
             for component in components:
-                component_dir = f'{at_dir}/{binfo.dir_name}'
+                component_dir = f'{variant_dir}/{binfo.dir_name}'
                 if component.subdir is not None:
                     component_dir += '/' + component.subdir
                 component_friendly_name = (component.friendly_name or
@@ -378,7 +384,7 @@ with open('.github/workflows/main.yml', 'w') as out:
                     convert_extra +
                     '--includeDir ${{env.include_dir}} \\\n' +
                     '--prog_name ${{env.builddir}}/bin/3c \\\n' +
-                    at_flag +
+                    at_flag + embc_flag +
                     '--project_path .' +
                     (f' \\\n--build_dir {component.build_dir}'
                      if component.build_dir is not None else '') +
