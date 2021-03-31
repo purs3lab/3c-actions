@@ -5,7 +5,7 @@
 # jobs with similar content and as far as we know, the workflow language has
 # essentially no support for code reuse. :(
 
-import collections
+import itertools
 import os
 import textwrap
 from typing import List, NamedTuple, Optional, Any
@@ -347,10 +347,14 @@ def ensure_trailing_newline(s: str):
     return s + '\n' if s != '' and not s.endswith('\n') else s
 
 
-def create_benchmark(out, binfo, alltypes, generate_stats=False, extra_args=[]):
-    # Python argparse thinks `--extra-3c-arg -alltypes` is two options
-    # rather than an option with an argument.
-    extra_3c_args = '--extra-3c-arg=-alltypes \\\n' if alltypes else ''
+def create_benchmark(out, binfo, expand_macros, alltypes, generate_stats=False, extra_args=[]):
+    extra_3c_args = ''
+    if alltypes:
+        # Python argparse thinks `--extra-3c-arg -alltypes` is two options
+        # rather than an option with an argument.
+        extra_3c_args += '--extra-3c-arg=-alltypes \\\n'
+    if expand_macros:
+        extra_3c_args += '--expand_macros_before_conversion \\\n'
 
     job_suffix = ''
     for earg in extra_args:
@@ -359,10 +363,13 @@ def create_benchmark(out, binfo, alltypes, generate_stats=False, extra_args=[]):
         extra_3c_args += '--extra-3c-arg=' + earg + ' \\\n'
         job_suffix += earg.replace('-', '_')
 
-    at_dir = ('${{env.benchmark_conv_dir}}/' +
-              ('alltypes' if alltypes else 'no-alltypes') + job_suffix)
-    at_job = 'alltypes' if alltypes else 'no_alltypes'
-    at_job_friendly = '-alltypes' if alltypes else 'no -alltypes'
+    variant = (('expand_macros_' if expand_macros else '') +
+               ('alltypes' if alltypes else 'no_alltypes') + job_suffix)
+    variant_friendly = (('' if expand_macros else 'not ') +
+                        'macro-expanded, ' +
+                        ('' if alltypes else 'no ') + '-alltypes' +
+                        job_suffix)
+    variant_dir = '${{env.benchmark_conv_dir}}/' + variant
     convert_extra = (ensure_trailing_newline(binfo.convert_extra)
                      if binfo.convert_extra is not None else '')
     build_converted_cmd = binfo.build_converted_cmd.rstrip('\n')
@@ -370,16 +377,16 @@ def create_benchmark(out, binfo, alltypes, generate_stats=False, extra_args=[]):
     at_ignore_code = ' || true' if alltypes else ''
 
     out.write(f'''\
-  test_{binfo.name}_{at_job}{job_suffix}:
-    name: Test {binfo.friendly_name} ({at_job_friendly}{job_suffix})
+  test_{binfo.name}_{variant}:
+    name: Test {binfo.friendly_name} ({variant_friendly})
     needs: build_3c
     runs-on: self-hosted
     steps:
 ''')
 
     full_build_cmds = textwrap.dedent(f'''\
-                mkdir -p {at_dir}
-                cd {at_dir}
+                mkdir -p {variant_dir}
+                cd {variant_dir}
                 tar -xvzf ${{{{env.benchmark_tar_dir}}}}/{binfo.dir_name}.tar.gz
                 cd {binfo.dir_name}
                 ''') + ensure_trailing_newline(binfo.build_cmds)
@@ -393,7 +400,7 @@ def create_benchmark(out, binfo, alltypes, generate_stats=False, extra_args=[]):
         components = [BenchmarkComponent(binfo.friendly_name)]
 
     for component in components:
-        component_dir = f'{at_dir}/{binfo.dir_name}'
+        component_dir = f'{variant_dir}/{binfo.dir_name}'
         if component.subdir is not None:
             component_dir += '/' + component.subdir
         component_friendly_name = (component.friendly_name or
@@ -500,8 +507,9 @@ for workflow_file in workflow_file_configs:
         formatted_hdr = formatted_hdr.replace('{workflow.scheduletime}', cron_timestamp)
         out.write(formatted_hdr)
         for binfo in benchmarks:
-            for alltypes in run_configurations:
-                create_benchmark(out, binfo, alltypes, generate_stats)
+            for expand_macros, alltypes in itertools.product((False, True),
+                                                             (False, True)):
+                create_benchmark(out, binfo, expand_macros, alltypes, generate_stats)
                 extra_args = run_configurations[alltypes]
                 for earg in extra_args:
-                    create_benchmark(out, binfo, alltypes, generate_stats, [earg])
+                    create_benchmark(out, binfo, expand_macros, alltypes, generate_stats, [earg])
