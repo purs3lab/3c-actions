@@ -134,7 +134,7 @@ jobs:
 
       - name: Upload 3c stats of Vsftpd
         uses: actions/upload-artifact@v2
-        with: 
+        with:
           name: Vsftpd_noalltypes
           path: ${{env.benchmark_conv_dir}}/no_alltypes/vsftpd-3.0.3/3c_performance_stats/
           retention-days: 5
@@ -176,7 +176,7 @@ jobs:
 
       - name: Upload 3c stats of Vsftpd
         uses: actions/upload-artifact@v2
-        with: 
+        with:
           name: Vsftpd__only_g_sol_noalltypes
           path: ${{env.benchmark_conv_dir}}/no_alltypes__only_g_sol/vsftpd-3.0.3/3c_performance_stats/
           retention-days: 5
@@ -218,7 +218,7 @@ jobs:
 
       - name: Upload 3c stats of Vsftpd
         uses: actions/upload-artifact@v2
-        with: 
+        with:
           name: Vsftpd__only_l_sol_noalltypes
           path: ${{env.benchmark_conv_dir}}/no_alltypes__only_l_sol/vsftpd-3.0.3/3c_performance_stats/
           retention-days: 5
@@ -260,7 +260,7 @@ jobs:
 
       - name: Upload 3c stats of Vsftpd
         uses: actions/upload-artifact@v2
-        with: 
+        with:
           name: Vsftpd_alltypes
           path: ${{env.benchmark_conv_dir}}/alltypes/vsftpd-3.0.3/3c_performance_stats/
           retention-days: 5
@@ -302,7 +302,7 @@ jobs:
 
       - name: Upload 3c stats of Vsftpd
         uses: actions/upload-artifact@v2
-        with: 
+        with:
           name: Vsftpd_noalltypes
           path: ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/vsftpd-3.0.3/3c_performance_stats/
           retention-days: 5
@@ -345,7 +345,7 @@ jobs:
 
       - name: Upload 3c stats of Vsftpd
         uses: actions/upload-artifact@v2
-        with: 
+        with:
           name: Vsftpd__only_g_sol_noalltypes
           path: ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes__only_g_sol/vsftpd-3.0.3/3c_performance_stats/
           retention-days: 5
@@ -388,7 +388,7 @@ jobs:
 
       - name: Upload 3c stats of Vsftpd
         uses: actions/upload-artifact@v2
-        with: 
+        with:
           name: Vsftpd__only_l_sol_noalltypes
           path: ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes__only_l_sol/vsftpd-3.0.3/3c_performance_stats/
           retention-days: 5
@@ -431,7 +431,7 @@ jobs:
 
       - name: Upload 3c stats of Vsftpd
         uses: actions/upload-artifact@v2
-        with: 
+        with:
           name: Vsftpd_alltypes
           path: ${{env.benchmark_conv_dir}}/expand_macros_alltypes/vsftpd-3.0.3/3c_performance_stats/
           retention-days: 5
@@ -474,7 +474,7 @@ jobs:
 
       - name: Upload 3c stats of anagram
         uses: actions/upload-artifact@v2
-        with: 
+        with:
           name: anagram_noalltypes
           path: ${{env.benchmark_conv_dir}}/no_alltypes/ptrdist-1.1/anagram/3c_performance_stats/
           retention-days: 5
@@ -502,7 +502,7 @@ jobs:
 
       - name: Upload 3c stats of bc
         uses: actions/upload-artifact@v2
-        with: 
+        with:
           name: bc_noalltypes
           path: ${{env.benchmark_conv_dir}}/no_alltypes/ptrdist-1.1/bc/3c_performance_stats/
           retention-days: 5
@@ -530,7 +530,7 @@ jobs:
 
       - name: Upload 3c stats of ft
         uses: actions/upload-artifact@v2
-        with: 
+        with:
           name: ft_noalltypes
           path: ${{env.benchmark_conv_dir}}/no_alltypes/ptrdist-1.1/ft/3c_performance_stats/
           retention-days: 5
@@ -558,7 +558,7 @@ jobs:
 
       - name: Upload 3c stats of ks
         uses: actions/upload-artifact@v2
-        with: 
+        with:
           name: ks_noalltypes
           path: ${{env.benchmark_conv_dir}}/no_alltypes/ptrdist-1.1/ks/3c_performance_stats/
           retention-days: 5
@@ -586,7 +586,7 @@ jobs:
 
       - name: Upload 3c stats of yacr2
         uses: actions/upload-artifact@v2
-        with: 
+        with:
           name: yacr2_noalltypes
           path: ${{env.benchmark_conv_dir}}/no_alltypes/ptrdist-1.1/yacr2/3c_performance_stats/
           retention-days: 5
@@ -630,7 +630,7 @@ jobs:
 
       - name: Upload 3c stats of anagram
         uses: actions/upload-artifact@v2
-        with: 
+        with:
           name: anagram__only_g_sol_noalltypes
           path: ${{env.benchmark_conv_dir}}/no_alltypes__only_g_sol/ptrdist-1.1/anagram/3c_performance_stats/
           retention-days: 5
@@ -659,7 +659,7 @@ jobs:
 
       - name: Upload 3c stats of bc
         uses: actions/upload-artifact@v2
-        with: 
+        with:
           name: bc__only_g_sol_noalltypes
           path: ${{env.benchmark_conv_dir}}/no_alltypes__only_g_sol/ptrdist-1.1/bc/3c_performance_stats/
           retention-days: 5
@@ -688,7 +688,7 @@ jobs:
 
       - name: Upload 3c stats of ft
         uses: actions/upload-artifact@v2
-        with: 
+        with:
           name: ft__only_g_sol_noalltypes
           path: ${{env.benchmark_conv_dir}}/no_alltypes__only_g_sol/ptrdist-1.1/ft/3c_performance_stats/
           retention-days: 5
@@ -717,7 +717,7 @@ jobs:
 
       - name: Upload 3c stats of ks
         uses: actions/upload-artifact@v2
-        with: 
+        with:
           name: ks__only_g_sol_noalltypes
           path: ${{env.benchmark_conv_dir}}/no_alltypes__only_g_sol/ptrdist-1.1/ks/3c_performance_stats/
           retention-days: 5
@@ -746,7 +746,7 @@ jobs:
 
       - name: Upload 3c stats of yacr2
         uses: actions/upload-artifact@v2
-        with: 
+        with:
           name: yacr2__only_g_sol_noalltypes
           path: ${{env.benchmark_conv_dir}}/no_alltypes__only_g_sol/ptrdist-1.1/yacr2/3c_performance_stats/
           retention-days: 5
@@ -790,7 +790,7 @@ jobs:
 
       - name: Upload 3c stats of anagram
         uses: actions/upload-artifact@v2
-        with: 
+        with:
           name: anagram__only_l_sol_noalltypes
           path: ${{env.benchmark_conv_dir}}/no_alltypes__only_l_sol/ptrdist-1.1/anagram/3c_performance_stats/
           retention-days: 5
@@ -819,7 +819,7 @@ jobs:
 
       - name: Upload 3c stats of bc
         uses: actions/upload-artifact@v2
-        with: 
+        with:
           name: bc__only_l_sol_noalltypes
           path: ${{env.benchmark_conv_dir}}/no_alltypes__only_l_sol/ptrdist-1.1/bc/3c_performance_stats/
           retention-days: 5
@@ -848,7 +848,7 @@ jobs:
 
       - name: Upload 3c stats of ft
         uses: actions/upload-artifact@v2
-        with: 
+        with:
           name: ft__only_l_sol_noalltypes
           path: ${{env.benchmark_conv_dir}}/no_alltypes__only_l_sol/ptrdist-1.1/ft/3c_performance_stats/
           retention-days: 5
@@ -877,7 +877,7 @@ jobs:
 
       - name: Upload 3c stats of ks
         uses: actions/upload-artifact@v2
-        with: 
+        with:
           name: ks__only_l_sol_noalltypes
           path: ${{env.benchmark_conv_dir}}/no_alltypes__only_l_sol/ptrdist-1.1/ks/3c_performance_stats/
           retention-days: 5
@@ -906,7 +906,7 @@ jobs:
 
       - name: Upload 3c stats of yacr2
         uses: actions/upload-artifact@v2
-        with: 
+        with:
           name: yacr2__only_l_sol_noalltypes
           path: ${{env.benchmark_conv_dir}}/no_alltypes__only_l_sol/ptrdist-1.1/yacr2/3c_performance_stats/
           retention-days: 5
@@ -950,7 +950,7 @@ jobs:
 
       - name: Upload 3c stats of anagram
         uses: actions/upload-artifact@v2
-        with: 
+        with:
           name: anagram_alltypes
           path: ${{env.benchmark_conv_dir}}/alltypes/ptrdist-1.1/anagram/3c_performance_stats/
           retention-days: 5
@@ -979,7 +979,7 @@ jobs:
 
       - name: Upload 3c stats of bc
         uses: actions/upload-artifact@v2
-        with: 
+        with:
           name: bc_alltypes
           path: ${{env.benchmark_conv_dir}}/alltypes/ptrdist-1.1/bc/3c_performance_stats/
           retention-days: 5
@@ -1008,7 +1008,7 @@ jobs:
 
       - name: Upload 3c stats of ft
         uses: actions/upload-artifact@v2
-        with: 
+        with:
           name: ft_alltypes
           path: ${{env.benchmark_conv_dir}}/alltypes/ptrdist-1.1/ft/3c_performance_stats/
           retention-days: 5
@@ -1037,7 +1037,7 @@ jobs:
 
       - name: Upload 3c stats of ks
         uses: actions/upload-artifact@v2
-        with: 
+        with:
           name: ks_alltypes
           path: ${{env.benchmark_conv_dir}}/alltypes/ptrdist-1.1/ks/3c_performance_stats/
           retention-days: 5
@@ -1066,7 +1066,7 @@ jobs:
 
       - name: Upload 3c stats of yacr2
         uses: actions/upload-artifact@v2
-        with: 
+        with:
           name: yacr2_alltypes
           path: ${{env.benchmark_conv_dir}}/alltypes/ptrdist-1.1/yacr2/3c_performance_stats/
           retention-days: 5
@@ -1110,7 +1110,7 @@ jobs:
 
       - name: Upload 3c stats of anagram
         uses: actions/upload-artifact@v2
-        with: 
+        with:
           name: anagram_noalltypes
           path: ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/ptrdist-1.1/anagram/3c_performance_stats/
           retention-days: 5
@@ -1139,7 +1139,7 @@ jobs:
 
       - name: Upload 3c stats of bc
         uses: actions/upload-artifact@v2
-        with: 
+        with:
           name: bc_noalltypes
           path: ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/ptrdist-1.1/bc/3c_performance_stats/
           retention-days: 5
@@ -1168,7 +1168,7 @@ jobs:
 
       - name: Upload 3c stats of ft
         uses: actions/upload-artifact@v2
-        with: 
+        with:
           name: ft_noalltypes
           path: ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/ptrdist-1.1/ft/3c_performance_stats/
           retention-days: 5
@@ -1197,7 +1197,7 @@ jobs:
 
       - name: Upload 3c stats of ks
         uses: actions/upload-artifact@v2
-        with: 
+        with:
           name: ks_noalltypes
           path: ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/ptrdist-1.1/ks/3c_performance_stats/
           retention-days: 5
@@ -1226,7 +1226,7 @@ jobs:
 
       - name: Upload 3c stats of yacr2
         uses: actions/upload-artifact@v2
-        with: 
+        with:
           name: yacr2_noalltypes
           path: ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/ptrdist-1.1/yacr2/3c_performance_stats/
           retention-days: 5
@@ -1271,7 +1271,7 @@ jobs:
 
       - name: Upload 3c stats of anagram
         uses: actions/upload-artifact@v2
-        with: 
+        with:
           name: anagram__only_g_sol_noalltypes
           path: ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes__only_g_sol/ptrdist-1.1/anagram/3c_performance_stats/
           retention-days: 5
@@ -1301,7 +1301,7 @@ jobs:
 
       - name: Upload 3c stats of bc
         uses: actions/upload-artifact@v2
-        with: 
+        with:
           name: bc__only_g_sol_noalltypes
           path: ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes__only_g_sol/ptrdist-1.1/bc/3c_performance_stats/
           retention-days: 5
@@ -1331,7 +1331,7 @@ jobs:
 
       - name: Upload 3c stats of ft
         uses: actions/upload-artifact@v2
-        with: 
+        with:
           name: ft__only_g_sol_noalltypes
           path: ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes__only_g_sol/ptrdist-1.1/ft/3c_performance_stats/
           retention-days: 5
@@ -1361,7 +1361,7 @@ jobs:
 
       - name: Upload 3c stats of ks
         uses: actions/upload-artifact@v2
-        with: 
+        with:
           name: ks__only_g_sol_noalltypes
           path: ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes__only_g_sol/ptrdist-1.1/ks/3c_performance_stats/
           retention-days: 5
@@ -1391,7 +1391,7 @@ jobs:
 
       - name: Upload 3c stats of yacr2
         uses: actions/upload-artifact@v2
-        with: 
+        with:
           name: yacr2__only_g_sol_noalltypes
           path: ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes__only_g_sol/ptrdist-1.1/yacr2/3c_performance_stats/
           retention-days: 5
@@ -1436,7 +1436,7 @@ jobs:
 
       - name: Upload 3c stats of anagram
         uses: actions/upload-artifact@v2
-        with: 
+        with:
           name: anagram__only_l_sol_noalltypes
           path: ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes__only_l_sol/ptrdist-1.1/anagram/3c_performance_stats/
           retention-days: 5
@@ -1466,7 +1466,7 @@ jobs:
 
       - name: Upload 3c stats of bc
         uses: actions/upload-artifact@v2
-        with: 
+        with:
           name: bc__only_l_sol_noalltypes
           path: ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes__only_l_sol/ptrdist-1.1/bc/3c_performance_stats/
           retention-days: 5
@@ -1496,7 +1496,7 @@ jobs:
 
       - name: Upload 3c stats of ft
         uses: actions/upload-artifact@v2
-        with: 
+        with:
           name: ft__only_l_sol_noalltypes
           path: ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes__only_l_sol/ptrdist-1.1/ft/3c_performance_stats/
           retention-days: 5
@@ -1526,7 +1526,7 @@ jobs:
 
       - name: Upload 3c stats of ks
         uses: actions/upload-artifact@v2
-        with: 
+        with:
           name: ks__only_l_sol_noalltypes
           path: ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes__only_l_sol/ptrdist-1.1/ks/3c_performance_stats/
           retention-days: 5
@@ -1556,7 +1556,7 @@ jobs:
 
       - name: Upload 3c stats of yacr2
         uses: actions/upload-artifact@v2
-        with: 
+        with:
           name: yacr2__only_l_sol_noalltypes
           path: ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes__only_l_sol/ptrdist-1.1/yacr2/3c_performance_stats/
           retention-days: 5
@@ -1601,7 +1601,7 @@ jobs:
 
       - name: Upload 3c stats of anagram
         uses: actions/upload-artifact@v2
-        with: 
+        with:
           name: anagram_alltypes
           path: ${{env.benchmark_conv_dir}}/expand_macros_alltypes/ptrdist-1.1/anagram/3c_performance_stats/
           retention-days: 5
@@ -1631,7 +1631,7 @@ jobs:
 
       - name: Upload 3c stats of bc
         uses: actions/upload-artifact@v2
-        with: 
+        with:
           name: bc_alltypes
           path: ${{env.benchmark_conv_dir}}/expand_macros_alltypes/ptrdist-1.1/bc/3c_performance_stats/
           retention-days: 5
@@ -1661,7 +1661,7 @@ jobs:
 
       - name: Upload 3c stats of ft
         uses: actions/upload-artifact@v2
-        with: 
+        with:
           name: ft_alltypes
           path: ${{env.benchmark_conv_dir}}/expand_macros_alltypes/ptrdist-1.1/ft/3c_performance_stats/
           retention-days: 5
@@ -1691,7 +1691,7 @@ jobs:
 
       - name: Upload 3c stats of ks
         uses: actions/upload-artifact@v2
-        with: 
+        with:
           name: ks_alltypes
           path: ${{env.benchmark_conv_dir}}/expand_macros_alltypes/ptrdist-1.1/ks/3c_performance_stats/
           retention-days: 5
@@ -1721,7 +1721,7 @@ jobs:
 
       - name: Upload 3c stats of yacr2
         uses: actions/upload-artifact@v2
-        with: 
+        with:
           name: yacr2_alltypes
           path: ${{env.benchmark_conv_dir}}/expand_macros_alltypes/ptrdist-1.1/yacr2/3c_performance_stats/
           retention-days: 5
@@ -1766,7 +1766,7 @@ jobs:
 
       - name: Upload 3c stats of LibArchive
         uses: actions/upload-artifact@v2
-        with: 
+        with:
           name: LibArchive_noalltypes
           path: ${{env.benchmark_conv_dir}}/no_alltypes/libarchive-3.4.3/3c_performance_stats/
           retention-days: 5
@@ -1813,7 +1813,7 @@ jobs:
 
       - name: Upload 3c stats of LibArchive
         uses: actions/upload-artifact@v2
-        with: 
+        with:
           name: LibArchive__only_g_sol_noalltypes
           path: ${{env.benchmark_conv_dir}}/no_alltypes__only_g_sol/libarchive-3.4.3/3c_performance_stats/
           retention-days: 5
@@ -1860,7 +1860,7 @@ jobs:
 
       - name: Upload 3c stats of LibArchive
         uses: actions/upload-artifact@v2
-        with: 
+        with:
           name: LibArchive__only_l_sol_noalltypes
           path: ${{env.benchmark_conv_dir}}/no_alltypes__only_l_sol/libarchive-3.4.3/3c_performance_stats/
           retention-days: 5
@@ -1907,7 +1907,7 @@ jobs:
 
       - name: Upload 3c stats of LibArchive
         uses: actions/upload-artifact@v2
-        with: 
+        with:
           name: LibArchive_alltypes
           path: ${{env.benchmark_conv_dir}}/alltypes/libarchive-3.4.3/3c_performance_stats/
           retention-days: 5
@@ -1954,7 +1954,7 @@ jobs:
 
       - name: Upload 3c stats of LibArchive
         uses: actions/upload-artifact@v2
-        with: 
+        with:
           name: LibArchive_noalltypes
           path: ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/libarchive-3.4.3/3c_performance_stats/
           retention-days: 5
@@ -2002,7 +2002,7 @@ jobs:
 
       - name: Upload 3c stats of LibArchive
         uses: actions/upload-artifact@v2
-        with: 
+        with:
           name: LibArchive__only_g_sol_noalltypes
           path: ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes__only_g_sol/libarchive-3.4.3/3c_performance_stats/
           retention-days: 5
@@ -2050,7 +2050,7 @@ jobs:
 
       - name: Upload 3c stats of LibArchive
         uses: actions/upload-artifact@v2
-        with: 
+        with:
           name: LibArchive__only_l_sol_noalltypes
           path: ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes__only_l_sol/libarchive-3.4.3/3c_performance_stats/
           retention-days: 5
@@ -2098,7 +2098,7 @@ jobs:
 
       - name: Upload 3c stats of LibArchive
         uses: actions/upload-artifact@v2
-        with: 
+        with:
           name: LibArchive_alltypes
           path: ${{env.benchmark_conv_dir}}/expand_macros_alltypes/libarchive-3.4.3/3c_performance_stats/
           retention-days: 5
@@ -2145,7 +2145,7 @@ jobs:
 
       - name: Upload 3c stats of Lua
         uses: actions/upload-artifact@v2
-        with: 
+        with:
           name: Lua_noalltypes
           path: ${{env.benchmark_conv_dir}}/no_alltypes/lua-5.4.1/3c_performance_stats/
           retention-days: 5
@@ -2193,7 +2193,7 @@ jobs:
 
       - name: Upload 3c stats of Lua
         uses: actions/upload-artifact@v2
-        with: 
+        with:
           name: Lua__only_g_sol_noalltypes
           path: ${{env.benchmark_conv_dir}}/no_alltypes__only_g_sol/lua-5.4.1/3c_performance_stats/
           retention-days: 5
@@ -2241,7 +2241,7 @@ jobs:
 
       - name: Upload 3c stats of Lua
         uses: actions/upload-artifact@v2
-        with: 
+        with:
           name: Lua__only_l_sol_noalltypes
           path: ${{env.benchmark_conv_dir}}/no_alltypes__only_l_sol/lua-5.4.1/3c_performance_stats/
           retention-days: 5
@@ -2289,7 +2289,7 @@ jobs:
 
       - name: Upload 3c stats of Lua
         uses: actions/upload-artifact@v2
-        with: 
+        with:
           name: Lua_alltypes
           path: ${{env.benchmark_conv_dir}}/alltypes/lua-5.4.1/3c_performance_stats/
           retention-days: 5
@@ -2337,7 +2337,7 @@ jobs:
 
       - name: Upload 3c stats of Lua
         uses: actions/upload-artifact@v2
-        with: 
+        with:
           name: Lua_noalltypes
           path: ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/lua-5.4.1/3c_performance_stats/
           retention-days: 5
@@ -2386,7 +2386,7 @@ jobs:
 
       - name: Upload 3c stats of Lua
         uses: actions/upload-artifact@v2
-        with: 
+        with:
           name: Lua__only_g_sol_noalltypes
           path: ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes__only_g_sol/lua-5.4.1/3c_performance_stats/
           retention-days: 5
@@ -2435,7 +2435,7 @@ jobs:
 
       - name: Upload 3c stats of Lua
         uses: actions/upload-artifact@v2
-        with: 
+        with:
           name: Lua__only_l_sol_noalltypes
           path: ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes__only_l_sol/lua-5.4.1/3c_performance_stats/
           retention-days: 5
@@ -2484,7 +2484,7 @@ jobs:
 
       - name: Upload 3c stats of Lua
         uses: actions/upload-artifact@v2
-        with: 
+        with:
           name: Lua_alltypes
           path: ${{env.benchmark_conv_dir}}/expand_macros_alltypes/lua-5.4.1/3c_performance_stats/
           retention-days: 5
@@ -2536,7 +2536,7 @@ jobs:
 
       - name: Upload 3c stats of LibTiff
         uses: actions/upload-artifact@v2
-        with: 
+        with:
           name: LibTiff_noalltypes
           path: ${{env.benchmark_conv_dir}}/no_alltypes/tiff-4.1.0/3c_performance_stats/
           retention-days: 5
@@ -2588,7 +2588,7 @@ jobs:
 
       - name: Upload 3c stats of LibTiff
         uses: actions/upload-artifact@v2
-        with: 
+        with:
           name: LibTiff__only_g_sol_noalltypes
           path: ${{env.benchmark_conv_dir}}/no_alltypes__only_g_sol/tiff-4.1.0/3c_performance_stats/
           retention-days: 5
@@ -2640,7 +2640,7 @@ jobs:
 
       - name: Upload 3c stats of LibTiff
         uses: actions/upload-artifact@v2
-        with: 
+        with:
           name: LibTiff__only_l_sol_noalltypes
           path: ${{env.benchmark_conv_dir}}/no_alltypes__only_l_sol/tiff-4.1.0/3c_performance_stats/
           retention-days: 5
@@ -2692,7 +2692,7 @@ jobs:
 
       - name: Upload 3c stats of LibTiff
         uses: actions/upload-artifact@v2
-        with: 
+        with:
           name: LibTiff_alltypes
           path: ${{env.benchmark_conv_dir}}/alltypes/tiff-4.1.0/3c_performance_stats/
           retention-days: 5
@@ -2744,7 +2744,7 @@ jobs:
 
       - name: Upload 3c stats of LibTiff
         uses: actions/upload-artifact@v2
-        with: 
+        with:
           name: LibTiff_noalltypes
           path: ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/tiff-4.1.0/3c_performance_stats/
           retention-days: 5
@@ -2797,7 +2797,7 @@ jobs:
 
       - name: Upload 3c stats of LibTiff
         uses: actions/upload-artifact@v2
-        with: 
+        with:
           name: LibTiff__only_g_sol_noalltypes
           path: ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes__only_g_sol/tiff-4.1.0/3c_performance_stats/
           retention-days: 5
@@ -2850,7 +2850,7 @@ jobs:
 
       - name: Upload 3c stats of LibTiff
         uses: actions/upload-artifact@v2
-        with: 
+        with:
           name: LibTiff__only_l_sol_noalltypes
           path: ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes__only_l_sol/tiff-4.1.0/3c_performance_stats/
           retention-days: 5
@@ -2903,7 +2903,7 @@ jobs:
 
       - name: Upload 3c stats of LibTiff
         uses: actions/upload-artifact@v2
-        with: 
+        with:
           name: LibTiff_alltypes
           path: ${{env.benchmark_conv_dir}}/expand_macros_alltypes/tiff-4.1.0/3c_performance_stats/
           retention-days: 5
@@ -2949,7 +2949,7 @@ jobs:
 
       - name: Upload 3c stats of ZLib
         uses: actions/upload-artifact@v2
-        with: 
+        with:
           name: ZLib_noalltypes
           path: ${{env.benchmark_conv_dir}}/no_alltypes/zlib-1.2.11/3c_performance_stats/
           retention-days: 5
@@ -2997,7 +2997,7 @@ jobs:
 
       - name: Upload 3c stats of ZLib
         uses: actions/upload-artifact@v2
-        with: 
+        with:
           name: ZLib__only_g_sol_noalltypes
           path: ${{env.benchmark_conv_dir}}/no_alltypes__only_g_sol/zlib-1.2.11/3c_performance_stats/
           retention-days: 5
@@ -3045,7 +3045,7 @@ jobs:
 
       - name: Upload 3c stats of ZLib
         uses: actions/upload-artifact@v2
-        with: 
+        with:
           name: ZLib__only_l_sol_noalltypes
           path: ${{env.benchmark_conv_dir}}/no_alltypes__only_l_sol/zlib-1.2.11/3c_performance_stats/
           retention-days: 5
@@ -3093,7 +3093,7 @@ jobs:
 
       - name: Upload 3c stats of ZLib
         uses: actions/upload-artifact@v2
-        with: 
+        with:
           name: ZLib_alltypes
           path: ${{env.benchmark_conv_dir}}/alltypes/zlib-1.2.11/3c_performance_stats/
           retention-days: 5
@@ -3141,7 +3141,7 @@ jobs:
 
       - name: Upload 3c stats of ZLib
         uses: actions/upload-artifact@v2
-        with: 
+        with:
           name: ZLib_noalltypes
           path: ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/zlib-1.2.11/3c_performance_stats/
           retention-days: 5
@@ -3190,7 +3190,7 @@ jobs:
 
       - name: Upload 3c stats of ZLib
         uses: actions/upload-artifact@v2
-        with: 
+        with:
           name: ZLib__only_g_sol_noalltypes
           path: ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes__only_g_sol/zlib-1.2.11/3c_performance_stats/
           retention-days: 5
@@ -3239,7 +3239,7 @@ jobs:
 
       - name: Upload 3c stats of ZLib
         uses: actions/upload-artifact@v2
-        with: 
+        with:
           name: ZLib__only_l_sol_noalltypes
           path: ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes__only_l_sol/zlib-1.2.11/3c_performance_stats/
           retention-days: 5
@@ -3288,7 +3288,7 @@ jobs:
 
       - name: Upload 3c stats of ZLib
         uses: actions/upload-artifact@v2
-        with: 
+        with:
           name: ZLib_alltypes
           path: ${{env.benchmark_conv_dir}}/expand_macros_alltypes/zlib-1.2.11/3c_performance_stats/
           retention-days: 5
@@ -3331,7 +3331,7 @@ jobs:
 
       - name: Upload 3c stats of Icecast
         uses: actions/upload-artifact@v2
-        with: 
+        with:
           name: Icecast_noalltypes
           path: ${{env.benchmark_conv_dir}}/no_alltypes/icecast-2.4.4/3c_performance_stats/
           retention-days: 5
@@ -3374,7 +3374,7 @@ jobs:
 
       - name: Upload 3c stats of Icecast
         uses: actions/upload-artifact@v2
-        with: 
+        with:
           name: Icecast__only_g_sol_noalltypes
           path: ${{env.benchmark_conv_dir}}/no_alltypes__only_g_sol/icecast-2.4.4/3c_performance_stats/
           retention-days: 5
@@ -3417,7 +3417,7 @@ jobs:
 
       - name: Upload 3c stats of Icecast
         uses: actions/upload-artifact@v2
-        with: 
+        with:
           name: Icecast__only_l_sol_noalltypes
           path: ${{env.benchmark_conv_dir}}/no_alltypes__only_l_sol/icecast-2.4.4/3c_performance_stats/
           retention-days: 5
@@ -3460,7 +3460,7 @@ jobs:
 
       - name: Upload 3c stats of Icecast
         uses: actions/upload-artifact@v2
-        with: 
+        with:
           name: Icecast_alltypes
           path: ${{env.benchmark_conv_dir}}/alltypes/icecast-2.4.4/3c_performance_stats/
           retention-days: 5
@@ -3503,7 +3503,7 @@ jobs:
 
       - name: Upload 3c stats of Icecast
         uses: actions/upload-artifact@v2
-        with: 
+        with:
           name: Icecast_noalltypes
           path: ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/icecast-2.4.4/3c_performance_stats/
           retention-days: 5
@@ -3547,7 +3547,7 @@ jobs:
 
       - name: Upload 3c stats of Icecast
         uses: actions/upload-artifact@v2
-        with: 
+        with:
           name: Icecast__only_g_sol_noalltypes
           path: ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes__only_g_sol/icecast-2.4.4/3c_performance_stats/
           retention-days: 5
@@ -3591,7 +3591,7 @@ jobs:
 
       - name: Upload 3c stats of Icecast
         uses: actions/upload-artifact@v2
-        with: 
+        with:
           name: Icecast__only_l_sol_noalltypes
           path: ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes__only_l_sol/icecast-2.4.4/3c_performance_stats/
           retention-days: 5
@@ -3635,7 +3635,7 @@ jobs:
 
       - name: Upload 3c stats of Icecast
         uses: actions/upload-artifact@v2
-        with: 
+        with:
           name: Icecast_alltypes
           path: ${{env.benchmark_conv_dir}}/expand_macros_alltypes/icecast-2.4.4/3c_performance_stats/
           retention-days: 5

@@ -5,13 +5,16 @@
 # jobs with similar content and as far as we know, the workflow language has
 # essentially no support for code reuse. :(
 
+from abc import ABC, abstractmethod
+from dataclasses import dataclass
 import itertools
 import os
 import textwrap
-from typing import List, NamedTuple, Optional, Any
+from typing import Dict, List, Optional, Any
 
 
-class BenchmarkComponent(NamedTuple):
+@dataclass
+class BenchmarkComponent:
     # Default: Same as the benchmark's friendly_name.
     friendly_name: Optional[str] = None
     # Default: The benchmark's main directory.
@@ -20,7 +23,8 @@ class BenchmarkComponent(NamedTuple):
     build_dir: Optional[str] = None
 
 
-class BenchmarkInfo(NamedTuple):
+@dataclass
+class BenchmarkInfo:
     name: str
     friendly_name: str
     dir_name: str
@@ -312,42 +316,49 @@ jobs:
 HEADER = HEADER.replace('{ninja_std}', ninja_std)
 
 
-class Step(NamedTuple):
-    name: str
+# Apparently Step has to be a dataclass in order for its field declaration to
+# be seen by the dataclass implementation in the subclasses.
+@dataclass
+class Step(ABC):
+    step_name: str
+
+    @abstractmethod
+    def format_body(self):
+        raise NotImplementedError
+
+    def __str__(self):
+        step = (f'- name: {self.step_name}\n' +
+                textwrap.indent(self.format_body(), 2 * ' '))
+        return textwrap.indent(step, 6 * ' ')
+
+
+@dataclass
+class RunStep(Step):
     run: str  # Trailing newline but not blank line
 
-    def __str__(self):
-        part1 = textwrap.dedent(f'''\
-        - name: {self.name}
-          run: |
-        ''')
-        part2 = textwrap.indent(self.run, 4 * ' ')
-        return textwrap.indent(part1 + part2, 6 * ' ')
+    def format_body(self):
+        return 'run: |\n' + textwrap.indent(self.run, 2 * ' ')
 
 
-class ActionStep(NamedTuple):
-    act_name: str
-    use_act: str
-    act_args: List[Any]
+@dataclass
+class ActionStep(Step):
+    action_name: str
+    args: Dict[str, Any]
 
-    def __str__(self):
-        part1 = textwrap.dedent(f'''\
-        - name: {self.act_name}
-          uses: {self.use_act}
-          with: 
-        ''')
-        all_args = ''
-        for arg_key in self.act_args:
-            all_args += arg_key + ": " + f'''{self.act_args[arg_key]}''' + '\n'
-        part2 = textwrap.indent(all_args, 4 * ' ')
-        return textwrap.indent(part1 + part2, 6 * ' ')
+    def format_body(self):
+        formatted_args = ''.join(f'{arg_key}: {arg_val}\n'
+                                 for arg_key, arg_val in self.args.items())
+        return (textwrap.dedent(f'''\
+        uses: {self.action_name}
+        with:
+        ''') + textwrap.indent(formatted_args, 2 * ' '))
 
 
 def ensure_trailing_newline(s: str):
     return s + '\n' if s != '' and not s.endswith('\n') else s
 
 
-def create_benchmark(out, binfo, expand_macros, alltypes, generate_stats=False, extra_args=[]):
+def generate_benchmark_job(out, binfo, expand_macros, alltypes, generate_stats=False, extra_args=[]):
     extra_3c_args = ''
     if alltypes:
         # Python argparse thinks `--extra-3c-arg -alltypes` is two options
@@ -391,7 +402,7 @@ def create_benchmark(out, binfo, expand_macros, alltypes, generate_stats=False, 
                 cd {binfo.dir_name}
                 ''') + ensure_trailing_newline(binfo.build_cmds)
 
-    steps = [Step(
+    steps = [RunStep(
                  'Build ' + binfo.friendly_name,
                  full_build_cmds)]
 
@@ -419,7 +430,7 @@ def create_benchmark(out, binfo, expand_macros, alltypes, generate_stats=False, 
             2 * ' ')
         # yapf: enable
         steps.append(
-            Step(
+            RunStep(
                 'Convert ' + component_friendly_name,
                 textwrap.dedent(f'''\
                             cd {component_dir}
@@ -429,7 +440,7 @@ def create_benchmark(out, binfo, expand_macros, alltypes, generate_stats=False, 
         if generate_stats:
             perf_dir_name = "3c_performance_stats/"
             steps.append(
-                Step(
+                RunStep(
                     'Copy 3c stats of ' + component_friendly_name,
                     textwrap.dedent(f'''\
                                 cd {component_dir}
@@ -445,7 +456,7 @@ def create_benchmark(out, binfo, expand_macros, alltypes, generate_stats=False, 
                     {'name': perf_artifact_name, 'path': perf_dir, 'retention-days': 5}))
 
         steps.append(
-            Step(
+            RunStep(
                 'Build converted ' + component_friendly_name +
                 at_ignore_step,
                 # convert_project.py sets -output-dir=out.checked as
@@ -476,7 +487,8 @@ exhaustive_run_configurations = {
 }
 
 
-class WorkflowConfig(NamedTuple):
+@dataclass
+class WorkflowConfig:
     name: str
     cron_timestamp: str
     run_configurations: dict
@@ -509,7 +521,7 @@ for workflow_file in workflow_file_configs:
         for binfo in benchmarks:
             for expand_macros, alltypes in itertools.product((False, True),
                                                              (False, True)):
-                create_benchmark(out, binfo, expand_macros, alltypes, generate_stats)
+                generate_benchmark_job(out, binfo, expand_macros, alltypes, generate_stats)
                 extra_args = run_configurations[alltypes]
                 for earg in extra_args:
-                    create_benchmark(out, binfo, expand_macros, alltypes, generate_stats, [earg])
+                    generate_benchmark_job(out, binfo, expand_macros, alltypes, generate_stats, [earg])
