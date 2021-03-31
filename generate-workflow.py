@@ -512,6 +512,8 @@ workflow_file_configs = [
                              Variant(alltypes=True)]),
     WorkflowConfig(filename="exhaustive",
                    friendly_name="Exhaustive testing and Performance Stats",
+                   # The times need to be well-separated because of
+                   # https://github.com/correctcomputation/actions/issues/6 .
                    cron_timestamp="0 9 * * *",
                    variants=[
                        Variant(alltypes=False),
