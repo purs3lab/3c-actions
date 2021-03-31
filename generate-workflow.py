@@ -345,8 +345,8 @@ class ActionStep(Step):
     args: Dict[str, Any]
 
     def format_body(self):
-        formatted_args = ''.join(f'{arg_key}: {arg_val}\n'
-                                 for arg_key, arg_val in self.args.items())
+        formatted_args = ''.join(
+            f'{arg_key}: {arg_val}\n' for arg_key, arg_val in self.args.items())
         return (textwrap.dedent(f'''\
         uses: {self.action_name}
         with:
@@ -367,12 +367,16 @@ class Variant:
     friendly_name_suffix: str = ''
 
 
-def generate_benchmark_job(out: TextIO, binfo: BenchmarkInfo, expand_macros: bool, variant: Variant, generate_stats=False):
+def generate_benchmark_job(out: TextIO,
+                           binfo: BenchmarkInfo,
+                           expand_macros: bool,
+                           variant: Variant,
+                           generate_stats=False):
     # "Subvariant" = Variant object + the extra flags mentioned above.
     # We use the name "subvariant" even though the subvariants may be grouped by
     # extra flag value before variant. (Better naming ideas?)
     subvariant_name = (('expand_macros_' if expand_macros else '') +
-                    ('alltypes' if variant.alltypes else 'no_alltypes'))
+                       ('alltypes' if variant.alltypes else 'no_alltypes'))
 
     extra_convert_project_args = ''
     if variant.alltypes:
@@ -390,9 +394,9 @@ def generate_benchmark_job(out: TextIO, binfo: BenchmarkInfo, expand_macros: boo
         subvariant_name += '_' + earg.lstrip('-').replace('-', '_')
 
     subvariant_friendly = (('' if expand_macros else 'not ') +
-                        'macro-expanded, ' +
-                        ('' if variant.alltypes else 'no ') + '-alltypes' +
-                        variant.friendly_name_suffix)
+                           'macro-expanded, ' +
+                           ('' if variant.alltypes else 'no ') + '-alltypes' +
+                           variant.friendly_name_suffix)
     subvariant_dir = '${{env.benchmark_conv_dir}}/' + subvariant_name
     convert_extra = (ensure_trailing_newline(binfo.convert_extra)
                      if binfo.convert_extra is not None else '')
@@ -415,9 +419,7 @@ def generate_benchmark_job(out: TextIO, binfo: BenchmarkInfo, expand_macros: boo
                 cd {binfo.dir_name}
                 ''') + ensure_trailing_newline(binfo.build_cmds)
 
-    steps = [RunStep(
-                 'Build ' + binfo.friendly_name,
-                 full_build_cmds)]
+    steps = [RunStep('Build ' + binfo.friendly_name, full_build_cmds)]
 
     components = binfo.components
     if components is None:
@@ -466,13 +468,15 @@ def generate_benchmark_job(out: TextIO, binfo: BenchmarkInfo, expand_macros: boo
             steps.append(
                 ActionStep(
                     'Upload 3c stats of ' + component_friendly_name,
-                    'actions/upload-artifact@v2',
-                    {'name': perf_artifact_name, 'path': perf_dir, 'retention-days': 5}))
+                    'actions/upload-artifact@v2', {
+                        'name': perf_artifact_name,
+                        'path': perf_dir,
+                        'retention-days': 5
+                    }))
 
         steps.append(
             RunStep(
-                'Build converted ' + component_friendly_name +
-                at_ignore_step,
+                'Build converted ' + component_friendly_name + at_ignore_step,
                 # convert_project.py sets -output-dir=out.checked as
                 # standard.
                 textwrap.dedent(f'''\
@@ -500,17 +504,22 @@ class WorkflowConfig:
 
 
 workflow_file_configs = [
-    WorkflowConfig(filename="main", friendly_name="3C benchmark tests", cron_timestamp="0 7 * * *",
-                   variants=[
-                       Variant(alltypes=False),
-                       Variant(alltypes=True)
-                   ]),
+    WorkflowConfig(filename="main",
+                   friendly_name="3C benchmark tests",
+                   cron_timestamp="0 7 * * *",
+                   variants=[Variant(alltypes=False),
+                             Variant(alltypes=True)]),
     WorkflowConfig(filename="exhaustive",
-                   friendly_name="Exhaustive testing and Performance Stats", cron_timestamp="0 9 * * *",
+                   friendly_name="Exhaustive testing and Performance Stats",
+                   cron_timestamp="0 9 * * *",
                    variants=[
                        Variant(alltypes=False),
-                       Variant(alltypes=False, extra_3c_args=['-only-g-sol'], friendly_name_suffix=', greatest solution'),
-                       Variant(alltypes=False, extra_3c_args=['-only-l-sol'], friendly_name_suffix=', least solution'),
+                       Variant(alltypes=False,
+                               extra_3c_args=['-only-g-sol'],
+                               friendly_name_suffix=', greatest solution'),
+                       Variant(alltypes=False,
+                               extra_3c_args=['-only-l-sol'],
+                               friendly_name_suffix=', least solution'),
                        Variant(alltypes=True)
                    ],
                    generate_stats=True)
@@ -520,9 +529,11 @@ for config in workflow_file_configs:
     with open(f'.github/workflows/{config.filename}.yml', 'w') as out:
         # format header using workflow name and schedule time.
         formatted_hdr = HEADER.replace('{workflow.name}', config.friendly_name)
-        formatted_hdr = formatted_hdr.replace('{workflow.scheduletime}', config.cron_timestamp)
+        formatted_hdr = formatted_hdr.replace('{workflow.scheduletime}',
+                                              config.cron_timestamp)
         out.write(formatted_hdr)
         for binfo in benchmarks:
             for expand_macros in (False, True):
                 for variant in config.variants:
-                    generate_benchmark_job(out, binfo, expand_macros, variant, config.generate_stats)
+                    generate_benchmark_job(out, binfo, expand_macros, variant,
+                                           config.generate_stats)
