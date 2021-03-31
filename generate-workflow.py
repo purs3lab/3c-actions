@@ -315,8 +315,8 @@ jobs:
 HEADER = HEADER.replace('{ninja_std}', ninja_std)
 
 
-# Apparently Step has to be a dataclass in order for its field declaration to
-# be seen by the dataclass implementation in the subclasses.
+# Apparently Step has to be a dataclass in order for its field declaration to be
+# seen by the dataclass implementation in the subclasses.
 @dataclass
 class Step(ABC):
     name: str
@@ -348,8 +348,8 @@ class ActionStep(Step):
         formatted_args = ''.join(
             f'{arg_key}: {arg_val}\n' for arg_key, arg_val in self.args.items())
         return (textwrap.dedent(f'''\
-        uses: {self.action_name}
-        with:
+            uses: {self.action_name}
+            with:
         ''') + textwrap.indent(formatted_args, 2 * ' '))
 
 
@@ -358,8 +358,8 @@ def ensure_trailing_newline(s: str):
 
 
 # To make `WorkflowConfig` definitions more concise, this `Variant` class does
-# not include some extra flags that are currently done in Cartesian product
-# with `Variant` objects. Currently, the only such extra flag is expand_macros.
+# not include some extra flags that are currently done in Cartesian product with
+# `Variant` objects. Currently, the only such extra flag is expand_macros.
 @dataclass
 class Variant:
     alltypes: bool
@@ -372,9 +372,9 @@ def generate_benchmark_job(out: TextIO,
                            expand_macros: bool,
                            variant: Variant,
                            generate_stats=False):
-    # "Subvariant" = Variant object + the extra flags mentioned above.
-    # We use the name "subvariant" even though the subvariants may be grouped by
-    # extra flag value before variant. (Better naming ideas?)
+    # "Subvariant" = Variant object + the extra flags mentioned above. We use
+    # the name "subvariant" even though the subvariants may be grouped by extra
+    # flag value before variant. (Better naming ideas?)
     subvariant_name = (('expand_macros_' if expand_macros else '') +
                        ('alltypes' if variant.alltypes else 'no_alltypes'))
 
@@ -413,11 +413,11 @@ def generate_benchmark_job(out: TextIO,
 ''')
 
     full_build_cmds = textwrap.dedent(f'''\
-                mkdir -p {subvariant_dir}
-                cd {subvariant_dir}
-                tar -xvzf ${{{{env.benchmark_tar_dir}}}}/{binfo.dir_name}.tar.gz
-                cd {binfo.dir_name}
-                ''') + ensure_trailing_newline(binfo.build_cmds)
+        mkdir -p {subvariant_dir}
+        cd {subvariant_dir}
+        tar -xvzf ${{{{env.benchmark_tar_dir}}}}/{binfo.dir_name}.tar.gz
+        cd {binfo.dir_name}
+    ''') + ensure_trailing_newline(binfo.build_cmds)
 
     steps = [RunStep('Build ' + binfo.friendly_name, full_build_cmds)]
 
@@ -448,9 +448,9 @@ def generate_benchmark_job(out: TextIO,
             RunStep(
                 'Convert ' + component_friendly_name,
                 textwrap.dedent(f'''\
-                            cd {component_dir}
-                            ${{{{env.port_tools}}}}/convert_project.py \\
-                            ''') + convert_flags))
+                    cd {component_dir}
+                    ${{{{env.port_tools}}}}/convert_project.py \\
+                ''') + convert_flags))
 
         if generate_stats:
             perf_dir_name = "3c_performance_stats/"
@@ -458,10 +458,10 @@ def generate_benchmark_job(out: TextIO,
                 RunStep(
                     'Copy 3c stats of ' + component_friendly_name,
                     textwrap.dedent(f'''\
-                                cd {component_dir}
-                                mkdir {perf_dir_name}
-                                cp *.json {perf_dir_name}
-                                ''')))
+                        cd {component_dir}
+                        mkdir {perf_dir_name}
+                        cp *.json {perf_dir_name}
+                    ''')))
             # Same idea as the job name but using the component name instead.
             perf_artifact_name = f'{component_friendly_name}_{subvariant_name}'
             perf_dir = os.path.join(component_dir, perf_dir_name)
@@ -480,10 +480,10 @@ def generate_benchmark_job(out: TextIO,
                 # convert_project.py sets -output-dir=out.checked as
                 # standard.
                 textwrap.dedent(f'''\
-                            cd {component_dir}
-                            cp -r out.checked/* .
-                            rm -r out.checked
-                            ''') +
+                    cd {component_dir}
+                    cp -r out.checked/* .
+                    rm -r out.checked
+                ''') +
                 #
                 (f'cd {component.build_dir}\n'
                  if component.build_dir is not None else '') +
