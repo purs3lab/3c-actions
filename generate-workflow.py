@@ -462,7 +462,8 @@ def generate_benchmark_job(out: TextIO,
                         mkdir {perf_dir_name}
                         cp *.json {perf_dir_name}
                     ''')))
-            # Same idea as the job name but using the component name instead.
+            # Same idea as the job name but using the component name instead of
+            # the benchmark name.
             perf_artifact_name = f'{component_friendly_name}_{subvariant_name}'
             perf_dir = os.path.join(component_dir, perf_dir_name)
             steps.append(
