@@ -513,22 +513,23 @@ workflow_file_configs = [
                    cron_timestamp="0 7 * * *",
                    variants=[Variant(alltypes=False),
                              Variant(alltypes=True)]),
-    WorkflowConfig(filename="exhaustive",
-                   friendly_name="Exhaustive testing and Performance Stats",
-                   # The times need to be well-separated because of
-                   # https://github.com/correctcomputation/actions/issues/6 .
-                   cron_timestamp="0 9 * * *",
-                   variants=[
-                       Variant(alltypes=False),
-                       Variant(alltypes=False,
-                               extra_3c_args=['-only-g-sol'],
-                               friendly_name_suffix=', greatest solution'),
-                       Variant(alltypes=False,
-                               extra_3c_args=['-only-l-sol'],
-                               friendly_name_suffix=', least solution'),
-                       Variant(alltypes=True)
-                   ],
-                   generate_stats=True)
+    WorkflowConfig(
+        filename="exhaustive",
+        friendly_name="Exhaustive testing and Performance Stats",
+        # The times need to be well-separated because of
+        # https://github.com/correctcomputation/actions/issues/6 .
+        cron_timestamp="0 9 * * *",
+        variants=[
+            Variant(alltypes=False),
+            Variant(alltypes=False,
+                    extra_3c_args=['-only-g-sol'],
+                    friendly_name_suffix=', greatest solution'),
+            Variant(alltypes=False,
+                    extra_3c_args=['-only-l-sol'],
+                    friendly_name_suffix=', least solution'),
+            Variant(alltypes=True)
+        ],
+        generate_stats=True)
 ]
 
 for config in workflow_file_configs:
