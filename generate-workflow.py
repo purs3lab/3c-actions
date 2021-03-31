@@ -378,19 +378,19 @@ def generate_benchmark_job(out: TextIO,
     subvariant_name = (('expand_macros_' if expand_macros else '') +
                        ('alltypes' if variant.alltypes else 'no_alltypes'))
 
-    extra_convert_project_args = ''
+    subvariant_convert_extra = ''
     if variant.alltypes:
         # Python argparse thinks `--extra-3c-arg -alltypes` is two options
         # rather than an option with an argument.
-        extra_convert_project_args += '--extra-3c-arg=-alltypes \\\n'
+        subvariant_convert_extra += '--extra-3c-arg=-alltypes \\\n'
     # XXX: An argument could be made for putting this before -alltypes for
     # consistency with the subvariant name. For now, I don't want the diff in
     # the generated workflow.
     if expand_macros:
-        extra_convert_project_args += '--expand_macros_before_conversion \\\n'
+        subvariant_convert_extra += '--expand_macros_before_conversion \\\n'
 
     for earg in variant.extra_3c_args:
-        extra_convert_project_args += '--extra-3c-arg=' + earg + ' \\\n'
+        subvariant_convert_extra += '--extra-3c-arg=' + earg + ' \\\n'
         subvariant_name += '_' + earg.lstrip('-').replace('-', '_')
 
     subvariant_friendly = (('' if expand_macros else 'not ') +
@@ -398,8 +398,8 @@ def generate_benchmark_job(out: TextIO,
                            ('' if variant.alltypes else 'no ') + '-alltypes' +
                            variant.friendly_name_suffix)
     subvariant_dir = '${{env.benchmark_conv_dir}}/' + subvariant_name
-    convert_extra = (ensure_trailing_newline(binfo.convert_extra)
-                     if binfo.convert_extra is not None else '')
+    benchmark_convert_extra = (ensure_trailing_newline(binfo.convert_extra)
+                               if binfo.convert_extra is not None else '')
     build_converted_cmd = binfo.build_converted_cmd.rstrip('\n')
     at_ignore_step = ' (ignore failure)' if variant.alltypes else ''
     at_ignore_code = ' || true' if variant.alltypes else ''
@@ -434,10 +434,10 @@ def generate_benchmark_job(out: TextIO,
 
         # yapf: disable
         convert_flags = textwrap.indent(
-            convert_extra +
+            benchmark_convert_extra +
             '--includeDir ${{env.include_dir}} \\\n' +
             '--prog_name ${{env.builddir}}/bin/3c \\\n' +
-            extra_convert_project_args +
+            subvariant_convert_extra +
             '--project_path .' +
             (f' \\\n--build_dir {component.build_dir}'
              if component.build_dir is not None else '') +
