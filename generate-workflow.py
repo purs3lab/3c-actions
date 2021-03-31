@@ -385,13 +385,9 @@ def generate_benchmark_job(out: TextIO, binfo: BenchmarkInfo, expand_macros: boo
     if expand_macros:
         extra_convert_project_args += '--expand_macros_before_conversion \\\n'
 
-    first_earg = True
     for earg in variant.extra_3c_args:
         extra_convert_project_args += '--extra-3c-arg=' + earg + ' \\\n'
-        if first_earg:
-            subvariant_name += '_'
-        #subvariant_name += '_' + earg.lstrip('-').replace('-', '_')
-        subvariant_name += earg.replace('-', '_')
+        subvariant_name += '_' + earg.lstrip('-').replace('-', '_')
 
     subvariant_friendly = (('' if expand_macros else 'not ') +
                         'macro-expanded, ' +
