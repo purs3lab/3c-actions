@@ -105,6 +105,7 @@ jobs:
           ninja -l $(nproc) check-3c
 
   # Convert our benchmark programs
+
   test_vsftpd_no_alltypes:
     name: Test Vsftpd (not macro-expanded, no -alltypes)
     needs: build_3c
@@ -1292,4 +1293,3 @@ jobs:
           cp -r out.checked/* .
           rm -r out.checked
           make -j $(nproc) -l $(nproc) --output-sync -k || true
-

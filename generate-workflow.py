@@ -404,7 +404,10 @@ def generate_benchmark_job(out: TextIO,
     at_ignore_step = ' (ignore failure)' if variant.alltypes else ''
     at_ignore_code = ' || true' if variant.alltypes else ''
 
+    # The blank line below is important: it gets us blank lines between jobs
+    # without a blank line at the very end of the workflow file.
     out.write(f'''\
+
   test_{binfo.name}_{subvariant_name}:
     name: Test {binfo.friendly_name} ({subvariant_friendly})
     needs: build_3c
@@ -492,7 +495,7 @@ def generate_benchmark_job(out: TextIO,
 
     # We want blank lines between steps but not after the last step of
     # the last benchmark.
-    out.write('\n'.join(str(s) for s in steps) + '\n')
+    out.write('\n'.join(str(s) for s in steps))
 
 
 @dataclass
