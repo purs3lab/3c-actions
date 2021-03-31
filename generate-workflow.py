@@ -48,6 +48,12 @@ cmake_checkedc = 'cmake -DCMAKE_C_COMPILER=${{env.builddir}}/bin/clang'
 vsftpd_make = 'make CC="${{env.builddir}}/bin/clang -Wno-enum-conversion"'
 
 ptrdist_components = ['anagram', 'bc', 'ft', 'ks', 'yacr2']
+ptrdist_defines = ' '.join([
+    f'-D{define}' for define in [
+        '_ISOC99_SOURCE', 'ASSIGN_CODE', 'HCG_CODE', 'OPTION_CODE', 'VCG_CODE',
+        'MAIN_CODE', 'CHANNEL_CODE'
+    ]
+])
 
 # The blank comments below stop YAPF from reformatting things in ways we don't
 # want; large data literals are a known weakness of YAPF
@@ -72,11 +78,11 @@ benchmarks = [
         dir_name='ptrdist-1.1',
         build_cmds=textwrap.dedent(f'''\
         for i in {' '.join(ptrdist_components)} ; do \\
-          (cd $i ; bear {make_checkedc} LOCAL_CFLAGS="-D_ISOC99_SOURCE") \\
+          (cd $i ; bear {make_checkedc} LOCAL_CFLAGS="{ptrdist_defines}") \\
         done
         '''),
         build_converted_cmd=(
-            f'{make_checkedc} -k LOCAL_CFLAGS="-D_ISOC99_SOURCE"'),
+            f'{make_checkedc} -k LOCAL_CFLAGS="{ptrdist_defines}"'),
         components=[
             BenchmarkComponent(friendly_name=c, subdir=c)
             for c in ptrdist_components

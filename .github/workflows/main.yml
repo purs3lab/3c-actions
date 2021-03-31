@@ -178,7 +178,7 @@ jobs:
           tar -xvzf ${{env.benchmark_tar_dir}}/ptrdist-1.1.tar.gz
           cd ptrdist-1.1
           for i in anagram bc ft ks yacr2 ; do \
-            (cd $i ; bear make CC="${{env.builddir}}/bin/clang" LOCAL_CFLAGS="-D_ISOC99_SOURCE") \
+            (cd $i ; bear make CC="${{env.builddir}}/bin/clang" LOCAL_CFLAGS="-D_ISOC99_SOURCE -DASSIGN_CODE -DHCG_CODE -DOPTION_CODE -DVCG_CODE -DMAIN_CODE -DCHANNEL_CODE") \
           done
 
       - name: Convert anagram
@@ -194,7 +194,7 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/no-alltypes/ptrdist-1.1/anagram
           cp -r out.checked/* .
           rm -r out.checked
-          make CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-D_ISOC99_SOURCE"
+          make CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-D_ISOC99_SOURCE -DASSIGN_CODE -DHCG_CODE -DOPTION_CODE -DVCG_CODE -DMAIN_CODE -DCHANNEL_CODE"
 
       - name: Convert bc
         run: |
@@ -209,7 +209,7 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/no-alltypes/ptrdist-1.1/bc
           cp -r out.checked/* .
           rm -r out.checked
-          make CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-D_ISOC99_SOURCE"
+          make CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-D_ISOC99_SOURCE -DASSIGN_CODE -DHCG_CODE -DOPTION_CODE -DVCG_CODE -DMAIN_CODE -DCHANNEL_CODE"
 
       - name: Convert ft
         run: |
@@ -224,7 +224,7 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/no-alltypes/ptrdist-1.1/ft
           cp -r out.checked/* .
           rm -r out.checked
-          make CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-D_ISOC99_SOURCE"
+          make CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-D_ISOC99_SOURCE -DASSIGN_CODE -DHCG_CODE -DOPTION_CODE -DVCG_CODE -DMAIN_CODE -DCHANNEL_CODE"
 
       - name: Convert ks
         run: |
@@ -239,7 +239,7 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/no-alltypes/ptrdist-1.1/ks
           cp -r out.checked/* .
           rm -r out.checked
-          make CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-D_ISOC99_SOURCE"
+          make CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-D_ISOC99_SOURCE -DASSIGN_CODE -DHCG_CODE -DOPTION_CODE -DVCG_CODE -DMAIN_CODE -DCHANNEL_CODE"
 
       - name: Convert yacr2
         run: |
@@ -254,7 +254,7 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/no-alltypes/ptrdist-1.1/yacr2
           cp -r out.checked/* .
           rm -r out.checked
-          make CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-D_ISOC99_SOURCE"
+          make CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-D_ISOC99_SOURCE -DASSIGN_CODE -DHCG_CODE -DOPTION_CODE -DVCG_CODE -DMAIN_CODE -DCHANNEL_CODE"
 
   test_ptrdist_alltypes:
     name: Test PtrDist (-alltypes)
@@ -268,7 +268,7 @@ jobs:
           tar -xvzf ${{env.benchmark_tar_dir}}/ptrdist-1.1.tar.gz
           cd ptrdist-1.1
           for i in anagram bc ft ks yacr2 ; do \
-            (cd $i ; bear make CC="${{env.builddir}}/bin/clang" LOCAL_CFLAGS="-D_ISOC99_SOURCE") \
+            (cd $i ; bear make CC="${{env.builddir}}/bin/clang" LOCAL_CFLAGS="-D_ISOC99_SOURCE -DASSIGN_CODE -DHCG_CODE -DOPTION_CODE -DVCG_CODE -DMAIN_CODE -DCHANNEL_CODE") \
           done
 
       - name: Convert anagram
@@ -285,7 +285,7 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/alltypes/ptrdist-1.1/anagram
           cp -r out.checked/* .
           rm -r out.checked
-          make CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-D_ISOC99_SOURCE" || true
+          make CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-D_ISOC99_SOURCE -DASSIGN_CODE -DHCG_CODE -DOPTION_CODE -DVCG_CODE -DMAIN_CODE -DCHANNEL_CODE" || true
 
       - name: Convert bc
         run: |
@@ -301,7 +301,7 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/alltypes/ptrdist-1.1/bc
           cp -r out.checked/* .
           rm -r out.checked
-          make CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-D_ISOC99_SOURCE" || true
+          make CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-D_ISOC99_SOURCE -DASSIGN_CODE -DHCG_CODE -DOPTION_CODE -DVCG_CODE -DMAIN_CODE -DCHANNEL_CODE" || true
 
       - name: Convert ft
         run: |
@@ -317,7 +317,7 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/alltypes/ptrdist-1.1/ft
           cp -r out.checked/* .
           rm -r out.checked
-          make CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-D_ISOC99_SOURCE" || true
+          make CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-D_ISOC99_SOURCE -DASSIGN_CODE -DHCG_CODE -DOPTION_CODE -DVCG_CODE -DMAIN_CODE -DCHANNEL_CODE" || true
 
       - name: Convert ks
         run: |
@@ -333,7 +333,7 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/alltypes/ptrdist-1.1/ks
           cp -r out.checked/* .
           rm -r out.checked
-          make CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-D_ISOC99_SOURCE" || true
+          make CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-D_ISOC99_SOURCE -DASSIGN_CODE -DHCG_CODE -DOPTION_CODE -DVCG_CODE -DMAIN_CODE -DCHANNEL_CODE" || true
 
       - name: Convert yacr2
         run: |
@@ -349,7 +349,7 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/alltypes/ptrdist-1.1/yacr2
           cp -r out.checked/* .
           rm -r out.checked
-          make CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-D_ISOC99_SOURCE" || true
+          make CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-D_ISOC99_SOURCE -DASSIGN_CODE -DHCG_CODE -DOPTION_CODE -DVCG_CODE -DMAIN_CODE -DCHANNEL_CODE" || true
 
   test_libarchive_no_alltypes:
     name: Test LibArchive (no -alltypes)
