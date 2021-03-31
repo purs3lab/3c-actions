@@ -135,7 +135,7 @@ jobs:
       - name: Upload 3c stats of Vsftpd
         uses: actions/upload-artifact@v2
         with:
-          name: Vsftpd_noalltypes
+          name: Vsftpd_no_alltypes
           path: ${{env.benchmark_conv_dir}}/no_alltypes/vsftpd-3.0.3/3c_performance_stats/
           retention-days: 5
 
@@ -147,7 +147,7 @@ jobs:
           make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang -Wno-enum-conversion" -k
 
   test_vsftpd_no_alltypes__only_g_sol:
-    name: Test Vsftpd (not macro-expanded, no -alltypes__only_g_sol)
+    name: Test Vsftpd (not macro-expanded, no -alltypes, greatest solution)
     needs: build_3c
     runs-on: self-hosted
     steps:
@@ -177,7 +177,7 @@ jobs:
       - name: Upload 3c stats of Vsftpd
         uses: actions/upload-artifact@v2
         with:
-          name: Vsftpd__only_g_sol_noalltypes
+          name: Vsftpd_no_alltypes__only_g_sol
           path: ${{env.benchmark_conv_dir}}/no_alltypes__only_g_sol/vsftpd-3.0.3/3c_performance_stats/
           retention-days: 5
 
@@ -189,7 +189,7 @@ jobs:
           make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang -Wno-enum-conversion" -k
 
   test_vsftpd_no_alltypes__only_l_sol:
-    name: Test Vsftpd (not macro-expanded, no -alltypes__only_l_sol)
+    name: Test Vsftpd (not macro-expanded, no -alltypes, least solution)
     needs: build_3c
     runs-on: self-hosted
     steps:
@@ -219,7 +219,7 @@ jobs:
       - name: Upload 3c stats of Vsftpd
         uses: actions/upload-artifact@v2
         with:
-          name: Vsftpd__only_l_sol_noalltypes
+          name: Vsftpd_no_alltypes__only_l_sol
           path: ${{env.benchmark_conv_dir}}/no_alltypes__only_l_sol/vsftpd-3.0.3/3c_performance_stats/
           retention-days: 5
 
@@ -303,7 +303,7 @@ jobs:
       - name: Upload 3c stats of Vsftpd
         uses: actions/upload-artifact@v2
         with:
-          name: Vsftpd_noalltypes
+          name: Vsftpd_expand_macros_no_alltypes
           path: ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/vsftpd-3.0.3/3c_performance_stats/
           retention-days: 5
 
@@ -315,7 +315,7 @@ jobs:
           make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang -Wno-enum-conversion" -k
 
   test_vsftpd_expand_macros_no_alltypes__only_g_sol:
-    name: Test Vsftpd (macro-expanded, no -alltypes__only_g_sol)
+    name: Test Vsftpd (macro-expanded, no -alltypes, greatest solution)
     needs: build_3c
     runs-on: self-hosted
     steps:
@@ -346,7 +346,7 @@ jobs:
       - name: Upload 3c stats of Vsftpd
         uses: actions/upload-artifact@v2
         with:
-          name: Vsftpd__only_g_sol_noalltypes
+          name: Vsftpd_expand_macros_no_alltypes__only_g_sol
           path: ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes__only_g_sol/vsftpd-3.0.3/3c_performance_stats/
           retention-days: 5
 
@@ -358,7 +358,7 @@ jobs:
           make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang -Wno-enum-conversion" -k
 
   test_vsftpd_expand_macros_no_alltypes__only_l_sol:
-    name: Test Vsftpd (macro-expanded, no -alltypes__only_l_sol)
+    name: Test Vsftpd (macro-expanded, no -alltypes, least solution)
     needs: build_3c
     runs-on: self-hosted
     steps:
@@ -389,7 +389,7 @@ jobs:
       - name: Upload 3c stats of Vsftpd
         uses: actions/upload-artifact@v2
         with:
-          name: Vsftpd__only_l_sol_noalltypes
+          name: Vsftpd_expand_macros_no_alltypes__only_l_sol
           path: ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes__only_l_sol/vsftpd-3.0.3/3c_performance_stats/
           retention-days: 5
 
@@ -432,7 +432,7 @@ jobs:
       - name: Upload 3c stats of Vsftpd
         uses: actions/upload-artifact@v2
         with:
-          name: Vsftpd_alltypes
+          name: Vsftpd_expand_macros_alltypes
           path: ${{env.benchmark_conv_dir}}/expand_macros_alltypes/vsftpd-3.0.3/3c_performance_stats/
           retention-days: 5
 
@@ -475,7 +475,7 @@ jobs:
       - name: Upload 3c stats of anagram
         uses: actions/upload-artifact@v2
         with:
-          name: anagram_noalltypes
+          name: anagram_no_alltypes
           path: ${{env.benchmark_conv_dir}}/no_alltypes/ptrdist-1.1/anagram/3c_performance_stats/
           retention-days: 5
 
@@ -503,7 +503,7 @@ jobs:
       - name: Upload 3c stats of bc
         uses: actions/upload-artifact@v2
         with:
-          name: bc_noalltypes
+          name: bc_no_alltypes
           path: ${{env.benchmark_conv_dir}}/no_alltypes/ptrdist-1.1/bc/3c_performance_stats/
           retention-days: 5
 
@@ -531,7 +531,7 @@ jobs:
       - name: Upload 3c stats of ft
         uses: actions/upload-artifact@v2
         with:
-          name: ft_noalltypes
+          name: ft_no_alltypes
           path: ${{env.benchmark_conv_dir}}/no_alltypes/ptrdist-1.1/ft/3c_performance_stats/
           retention-days: 5
 
@@ -559,7 +559,7 @@ jobs:
       - name: Upload 3c stats of ks
         uses: actions/upload-artifact@v2
         with:
-          name: ks_noalltypes
+          name: ks_no_alltypes
           path: ${{env.benchmark_conv_dir}}/no_alltypes/ptrdist-1.1/ks/3c_performance_stats/
           retention-days: 5
 
@@ -587,7 +587,7 @@ jobs:
       - name: Upload 3c stats of yacr2
         uses: actions/upload-artifact@v2
         with:
-          name: yacr2_noalltypes
+          name: yacr2_no_alltypes
           path: ${{env.benchmark_conv_dir}}/no_alltypes/ptrdist-1.1/yacr2/3c_performance_stats/
           retention-days: 5
 
@@ -599,7 +599,7 @@ jobs:
           make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-D_ISOC99_SOURCE"
 
   test_ptrdist_no_alltypes__only_g_sol:
-    name: Test PtrDist (not macro-expanded, no -alltypes__only_g_sol)
+    name: Test PtrDist (not macro-expanded, no -alltypes, greatest solution)
     needs: build_3c
     runs-on: self-hosted
     steps:
@@ -631,7 +631,7 @@ jobs:
       - name: Upload 3c stats of anagram
         uses: actions/upload-artifact@v2
         with:
-          name: anagram__only_g_sol_noalltypes
+          name: anagram_no_alltypes__only_g_sol
           path: ${{env.benchmark_conv_dir}}/no_alltypes__only_g_sol/ptrdist-1.1/anagram/3c_performance_stats/
           retention-days: 5
 
@@ -660,7 +660,7 @@ jobs:
       - name: Upload 3c stats of bc
         uses: actions/upload-artifact@v2
         with:
-          name: bc__only_g_sol_noalltypes
+          name: bc_no_alltypes__only_g_sol
           path: ${{env.benchmark_conv_dir}}/no_alltypes__only_g_sol/ptrdist-1.1/bc/3c_performance_stats/
           retention-days: 5
 
@@ -689,7 +689,7 @@ jobs:
       - name: Upload 3c stats of ft
         uses: actions/upload-artifact@v2
         with:
-          name: ft__only_g_sol_noalltypes
+          name: ft_no_alltypes__only_g_sol
           path: ${{env.benchmark_conv_dir}}/no_alltypes__only_g_sol/ptrdist-1.1/ft/3c_performance_stats/
           retention-days: 5
 
@@ -718,7 +718,7 @@ jobs:
       - name: Upload 3c stats of ks
         uses: actions/upload-artifact@v2
         with:
-          name: ks__only_g_sol_noalltypes
+          name: ks_no_alltypes__only_g_sol
           path: ${{env.benchmark_conv_dir}}/no_alltypes__only_g_sol/ptrdist-1.1/ks/3c_performance_stats/
           retention-days: 5
 
@@ -747,7 +747,7 @@ jobs:
       - name: Upload 3c stats of yacr2
         uses: actions/upload-artifact@v2
         with:
-          name: yacr2__only_g_sol_noalltypes
+          name: yacr2_no_alltypes__only_g_sol
           path: ${{env.benchmark_conv_dir}}/no_alltypes__only_g_sol/ptrdist-1.1/yacr2/3c_performance_stats/
           retention-days: 5
 
@@ -759,7 +759,7 @@ jobs:
           make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-D_ISOC99_SOURCE"
 
   test_ptrdist_no_alltypes__only_l_sol:
-    name: Test PtrDist (not macro-expanded, no -alltypes__only_l_sol)
+    name: Test PtrDist (not macro-expanded, no -alltypes, least solution)
     needs: build_3c
     runs-on: self-hosted
     steps:
@@ -791,7 +791,7 @@ jobs:
       - name: Upload 3c stats of anagram
         uses: actions/upload-artifact@v2
         with:
-          name: anagram__only_l_sol_noalltypes
+          name: anagram_no_alltypes__only_l_sol
           path: ${{env.benchmark_conv_dir}}/no_alltypes__only_l_sol/ptrdist-1.1/anagram/3c_performance_stats/
           retention-days: 5
 
@@ -820,7 +820,7 @@ jobs:
       - name: Upload 3c stats of bc
         uses: actions/upload-artifact@v2
         with:
-          name: bc__only_l_sol_noalltypes
+          name: bc_no_alltypes__only_l_sol
           path: ${{env.benchmark_conv_dir}}/no_alltypes__only_l_sol/ptrdist-1.1/bc/3c_performance_stats/
           retention-days: 5
 
@@ -849,7 +849,7 @@ jobs:
       - name: Upload 3c stats of ft
         uses: actions/upload-artifact@v2
         with:
-          name: ft__only_l_sol_noalltypes
+          name: ft_no_alltypes__only_l_sol
           path: ${{env.benchmark_conv_dir}}/no_alltypes__only_l_sol/ptrdist-1.1/ft/3c_performance_stats/
           retention-days: 5
 
@@ -878,7 +878,7 @@ jobs:
       - name: Upload 3c stats of ks
         uses: actions/upload-artifact@v2
         with:
-          name: ks__only_l_sol_noalltypes
+          name: ks_no_alltypes__only_l_sol
           path: ${{env.benchmark_conv_dir}}/no_alltypes__only_l_sol/ptrdist-1.1/ks/3c_performance_stats/
           retention-days: 5
 
@@ -907,7 +907,7 @@ jobs:
       - name: Upload 3c stats of yacr2
         uses: actions/upload-artifact@v2
         with:
-          name: yacr2__only_l_sol_noalltypes
+          name: yacr2_no_alltypes__only_l_sol
           path: ${{env.benchmark_conv_dir}}/no_alltypes__only_l_sol/ptrdist-1.1/yacr2/3c_performance_stats/
           retention-days: 5
 
@@ -1111,7 +1111,7 @@ jobs:
       - name: Upload 3c stats of anagram
         uses: actions/upload-artifact@v2
         with:
-          name: anagram_noalltypes
+          name: anagram_expand_macros_no_alltypes
           path: ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/ptrdist-1.1/anagram/3c_performance_stats/
           retention-days: 5
 
@@ -1140,7 +1140,7 @@ jobs:
       - name: Upload 3c stats of bc
         uses: actions/upload-artifact@v2
         with:
-          name: bc_noalltypes
+          name: bc_expand_macros_no_alltypes
           path: ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/ptrdist-1.1/bc/3c_performance_stats/
           retention-days: 5
 
@@ -1169,7 +1169,7 @@ jobs:
       - name: Upload 3c stats of ft
         uses: actions/upload-artifact@v2
         with:
-          name: ft_noalltypes
+          name: ft_expand_macros_no_alltypes
           path: ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/ptrdist-1.1/ft/3c_performance_stats/
           retention-days: 5
 
@@ -1198,7 +1198,7 @@ jobs:
       - name: Upload 3c stats of ks
         uses: actions/upload-artifact@v2
         with:
-          name: ks_noalltypes
+          name: ks_expand_macros_no_alltypes
           path: ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/ptrdist-1.1/ks/3c_performance_stats/
           retention-days: 5
 
@@ -1227,7 +1227,7 @@ jobs:
       - name: Upload 3c stats of yacr2
         uses: actions/upload-artifact@v2
         with:
-          name: yacr2_noalltypes
+          name: yacr2_expand_macros_no_alltypes
           path: ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/ptrdist-1.1/yacr2/3c_performance_stats/
           retention-days: 5
 
@@ -1239,7 +1239,7 @@ jobs:
           make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-D_ISOC99_SOURCE"
 
   test_ptrdist_expand_macros_no_alltypes__only_g_sol:
-    name: Test PtrDist (macro-expanded, no -alltypes__only_g_sol)
+    name: Test PtrDist (macro-expanded, no -alltypes, greatest solution)
     needs: build_3c
     runs-on: self-hosted
     steps:
@@ -1272,7 +1272,7 @@ jobs:
       - name: Upload 3c stats of anagram
         uses: actions/upload-artifact@v2
         with:
-          name: anagram__only_g_sol_noalltypes
+          name: anagram_expand_macros_no_alltypes__only_g_sol
           path: ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes__only_g_sol/ptrdist-1.1/anagram/3c_performance_stats/
           retention-days: 5
 
@@ -1302,7 +1302,7 @@ jobs:
       - name: Upload 3c stats of bc
         uses: actions/upload-artifact@v2
         with:
-          name: bc__only_g_sol_noalltypes
+          name: bc_expand_macros_no_alltypes__only_g_sol
           path: ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes__only_g_sol/ptrdist-1.1/bc/3c_performance_stats/
           retention-days: 5
 
@@ -1332,7 +1332,7 @@ jobs:
       - name: Upload 3c stats of ft
         uses: actions/upload-artifact@v2
         with:
-          name: ft__only_g_sol_noalltypes
+          name: ft_expand_macros_no_alltypes__only_g_sol
           path: ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes__only_g_sol/ptrdist-1.1/ft/3c_performance_stats/
           retention-days: 5
 
@@ -1362,7 +1362,7 @@ jobs:
       - name: Upload 3c stats of ks
         uses: actions/upload-artifact@v2
         with:
-          name: ks__only_g_sol_noalltypes
+          name: ks_expand_macros_no_alltypes__only_g_sol
           path: ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes__only_g_sol/ptrdist-1.1/ks/3c_performance_stats/
           retention-days: 5
 
@@ -1392,7 +1392,7 @@ jobs:
       - name: Upload 3c stats of yacr2
         uses: actions/upload-artifact@v2
         with:
-          name: yacr2__only_g_sol_noalltypes
+          name: yacr2_expand_macros_no_alltypes__only_g_sol
           path: ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes__only_g_sol/ptrdist-1.1/yacr2/3c_performance_stats/
           retention-days: 5
 
@@ -1404,7 +1404,7 @@ jobs:
           make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-D_ISOC99_SOURCE"
 
   test_ptrdist_expand_macros_no_alltypes__only_l_sol:
-    name: Test PtrDist (macro-expanded, no -alltypes__only_l_sol)
+    name: Test PtrDist (macro-expanded, no -alltypes, least solution)
     needs: build_3c
     runs-on: self-hosted
     steps:
@@ -1437,7 +1437,7 @@ jobs:
       - name: Upload 3c stats of anagram
         uses: actions/upload-artifact@v2
         with:
-          name: anagram__only_l_sol_noalltypes
+          name: anagram_expand_macros_no_alltypes__only_l_sol
           path: ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes__only_l_sol/ptrdist-1.1/anagram/3c_performance_stats/
           retention-days: 5
 
@@ -1467,7 +1467,7 @@ jobs:
       - name: Upload 3c stats of bc
         uses: actions/upload-artifact@v2
         with:
-          name: bc__only_l_sol_noalltypes
+          name: bc_expand_macros_no_alltypes__only_l_sol
           path: ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes__only_l_sol/ptrdist-1.1/bc/3c_performance_stats/
           retention-days: 5
 
@@ -1497,7 +1497,7 @@ jobs:
       - name: Upload 3c stats of ft
         uses: actions/upload-artifact@v2
         with:
-          name: ft__only_l_sol_noalltypes
+          name: ft_expand_macros_no_alltypes__only_l_sol
           path: ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes__only_l_sol/ptrdist-1.1/ft/3c_performance_stats/
           retention-days: 5
 
@@ -1527,7 +1527,7 @@ jobs:
       - name: Upload 3c stats of ks
         uses: actions/upload-artifact@v2
         with:
-          name: ks__only_l_sol_noalltypes
+          name: ks_expand_macros_no_alltypes__only_l_sol
           path: ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes__only_l_sol/ptrdist-1.1/ks/3c_performance_stats/
           retention-days: 5
 
@@ -1557,7 +1557,7 @@ jobs:
       - name: Upload 3c stats of yacr2
         uses: actions/upload-artifact@v2
         with:
-          name: yacr2__only_l_sol_noalltypes
+          name: yacr2_expand_macros_no_alltypes__only_l_sol
           path: ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes__only_l_sol/ptrdist-1.1/yacr2/3c_performance_stats/
           retention-days: 5
 
@@ -1602,7 +1602,7 @@ jobs:
       - name: Upload 3c stats of anagram
         uses: actions/upload-artifact@v2
         with:
-          name: anagram_alltypes
+          name: anagram_expand_macros_alltypes
           path: ${{env.benchmark_conv_dir}}/expand_macros_alltypes/ptrdist-1.1/anagram/3c_performance_stats/
           retention-days: 5
 
@@ -1632,7 +1632,7 @@ jobs:
       - name: Upload 3c stats of bc
         uses: actions/upload-artifact@v2
         with:
-          name: bc_alltypes
+          name: bc_expand_macros_alltypes
           path: ${{env.benchmark_conv_dir}}/expand_macros_alltypes/ptrdist-1.1/bc/3c_performance_stats/
           retention-days: 5
 
@@ -1662,7 +1662,7 @@ jobs:
       - name: Upload 3c stats of ft
         uses: actions/upload-artifact@v2
         with:
-          name: ft_alltypes
+          name: ft_expand_macros_alltypes
           path: ${{env.benchmark_conv_dir}}/expand_macros_alltypes/ptrdist-1.1/ft/3c_performance_stats/
           retention-days: 5
 
@@ -1692,7 +1692,7 @@ jobs:
       - name: Upload 3c stats of ks
         uses: actions/upload-artifact@v2
         with:
-          name: ks_alltypes
+          name: ks_expand_macros_alltypes
           path: ${{env.benchmark_conv_dir}}/expand_macros_alltypes/ptrdist-1.1/ks/3c_performance_stats/
           retention-days: 5
 
@@ -1722,7 +1722,7 @@ jobs:
       - name: Upload 3c stats of yacr2
         uses: actions/upload-artifact@v2
         with:
-          name: yacr2_alltypes
+          name: yacr2_expand_macros_alltypes
           path: ${{env.benchmark_conv_dir}}/expand_macros_alltypes/ptrdist-1.1/yacr2/3c_performance_stats/
           retention-days: 5
 
@@ -1767,7 +1767,7 @@ jobs:
       - name: Upload 3c stats of LibArchive
         uses: actions/upload-artifact@v2
         with:
-          name: LibArchive_noalltypes
+          name: LibArchive_no_alltypes
           path: ${{env.benchmark_conv_dir}}/no_alltypes/libarchive-3.4.3/3c_performance_stats/
           retention-days: 5
 
@@ -1780,7 +1780,7 @@ jobs:
           ninja -l $(nproc) -k 0 archive
 
   test_libarchive_no_alltypes__only_g_sol:
-    name: Test LibArchive (not macro-expanded, no -alltypes__only_g_sol)
+    name: Test LibArchive (not macro-expanded, no -alltypes, greatest solution)
     needs: build_3c
     runs-on: self-hosted
     steps:
@@ -1814,7 +1814,7 @@ jobs:
       - name: Upload 3c stats of LibArchive
         uses: actions/upload-artifact@v2
         with:
-          name: LibArchive__only_g_sol_noalltypes
+          name: LibArchive_no_alltypes__only_g_sol
           path: ${{env.benchmark_conv_dir}}/no_alltypes__only_g_sol/libarchive-3.4.3/3c_performance_stats/
           retention-days: 5
 
@@ -1827,7 +1827,7 @@ jobs:
           ninja -l $(nproc) -k 0 archive
 
   test_libarchive_no_alltypes__only_l_sol:
-    name: Test LibArchive (not macro-expanded, no -alltypes__only_l_sol)
+    name: Test LibArchive (not macro-expanded, no -alltypes, least solution)
     needs: build_3c
     runs-on: self-hosted
     steps:
@@ -1861,7 +1861,7 @@ jobs:
       - name: Upload 3c stats of LibArchive
         uses: actions/upload-artifact@v2
         with:
-          name: LibArchive__only_l_sol_noalltypes
+          name: LibArchive_no_alltypes__only_l_sol
           path: ${{env.benchmark_conv_dir}}/no_alltypes__only_l_sol/libarchive-3.4.3/3c_performance_stats/
           retention-days: 5
 
@@ -1955,7 +1955,7 @@ jobs:
       - name: Upload 3c stats of LibArchive
         uses: actions/upload-artifact@v2
         with:
-          name: LibArchive_noalltypes
+          name: LibArchive_expand_macros_no_alltypes
           path: ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/libarchive-3.4.3/3c_performance_stats/
           retention-days: 5
 
@@ -1968,7 +1968,7 @@ jobs:
           ninja -l $(nproc) -k 0 archive
 
   test_libarchive_expand_macros_no_alltypes__only_g_sol:
-    name: Test LibArchive (macro-expanded, no -alltypes__only_g_sol)
+    name: Test LibArchive (macro-expanded, no -alltypes, greatest solution)
     needs: build_3c
     runs-on: self-hosted
     steps:
@@ -2003,7 +2003,7 @@ jobs:
       - name: Upload 3c stats of LibArchive
         uses: actions/upload-artifact@v2
         with:
-          name: LibArchive__only_g_sol_noalltypes
+          name: LibArchive_expand_macros_no_alltypes__only_g_sol
           path: ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes__only_g_sol/libarchive-3.4.3/3c_performance_stats/
           retention-days: 5
 
@@ -2016,7 +2016,7 @@ jobs:
           ninja -l $(nproc) -k 0 archive
 
   test_libarchive_expand_macros_no_alltypes__only_l_sol:
-    name: Test LibArchive (macro-expanded, no -alltypes__only_l_sol)
+    name: Test LibArchive (macro-expanded, no -alltypes, least solution)
     needs: build_3c
     runs-on: self-hosted
     steps:
@@ -2051,7 +2051,7 @@ jobs:
       - name: Upload 3c stats of LibArchive
         uses: actions/upload-artifact@v2
         with:
-          name: LibArchive__only_l_sol_noalltypes
+          name: LibArchive_expand_macros_no_alltypes__only_l_sol
           path: ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes__only_l_sol/libarchive-3.4.3/3c_performance_stats/
           retention-days: 5
 
@@ -2099,7 +2099,7 @@ jobs:
       - name: Upload 3c stats of LibArchive
         uses: actions/upload-artifact@v2
         with:
-          name: LibArchive_alltypes
+          name: LibArchive_expand_macros_alltypes
           path: ${{env.benchmark_conv_dir}}/expand_macros_alltypes/libarchive-3.4.3/3c_performance_stats/
           retention-days: 5
 
@@ -2146,7 +2146,7 @@ jobs:
       - name: Upload 3c stats of Lua
         uses: actions/upload-artifact@v2
         with:
-          name: Lua_noalltypes
+          name: Lua_no_alltypes
           path: ${{env.benchmark_conv_dir}}/no_alltypes/lua-5.4.1/3c_performance_stats/
           retention-days: 5
 
@@ -2159,7 +2159,7 @@ jobs:
           make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k linux
 
   test_lua_no_alltypes__only_g_sol:
-    name: Test Lua (not macro-expanded, no -alltypes__only_g_sol)
+    name: Test Lua (not macro-expanded, no -alltypes, greatest solution)
     needs: build_3c
     runs-on: self-hosted
     steps:
@@ -2194,7 +2194,7 @@ jobs:
       - name: Upload 3c stats of Lua
         uses: actions/upload-artifact@v2
         with:
-          name: Lua__only_g_sol_noalltypes
+          name: Lua_no_alltypes__only_g_sol
           path: ${{env.benchmark_conv_dir}}/no_alltypes__only_g_sol/lua-5.4.1/3c_performance_stats/
           retention-days: 5
 
@@ -2207,7 +2207,7 @@ jobs:
           make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k linux
 
   test_lua_no_alltypes__only_l_sol:
-    name: Test Lua (not macro-expanded, no -alltypes__only_l_sol)
+    name: Test Lua (not macro-expanded, no -alltypes, least solution)
     needs: build_3c
     runs-on: self-hosted
     steps:
@@ -2242,7 +2242,7 @@ jobs:
       - name: Upload 3c stats of Lua
         uses: actions/upload-artifact@v2
         with:
-          name: Lua__only_l_sol_noalltypes
+          name: Lua_no_alltypes__only_l_sol
           path: ${{env.benchmark_conv_dir}}/no_alltypes__only_l_sol/lua-5.4.1/3c_performance_stats/
           retention-days: 5
 
@@ -2338,7 +2338,7 @@ jobs:
       - name: Upload 3c stats of Lua
         uses: actions/upload-artifact@v2
         with:
-          name: Lua_noalltypes
+          name: Lua_expand_macros_no_alltypes
           path: ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/lua-5.4.1/3c_performance_stats/
           retention-days: 5
 
@@ -2351,7 +2351,7 @@ jobs:
           make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k linux
 
   test_lua_expand_macros_no_alltypes__only_g_sol:
-    name: Test Lua (macro-expanded, no -alltypes__only_g_sol)
+    name: Test Lua (macro-expanded, no -alltypes, greatest solution)
     needs: build_3c
     runs-on: self-hosted
     steps:
@@ -2387,7 +2387,7 @@ jobs:
       - name: Upload 3c stats of Lua
         uses: actions/upload-artifact@v2
         with:
-          name: Lua__only_g_sol_noalltypes
+          name: Lua_expand_macros_no_alltypes__only_g_sol
           path: ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes__only_g_sol/lua-5.4.1/3c_performance_stats/
           retention-days: 5
 
@@ -2400,7 +2400,7 @@ jobs:
           make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k linux
 
   test_lua_expand_macros_no_alltypes__only_l_sol:
-    name: Test Lua (macro-expanded, no -alltypes__only_l_sol)
+    name: Test Lua (macro-expanded, no -alltypes, least solution)
     needs: build_3c
     runs-on: self-hosted
     steps:
@@ -2436,7 +2436,7 @@ jobs:
       - name: Upload 3c stats of Lua
         uses: actions/upload-artifact@v2
         with:
-          name: Lua__only_l_sol_noalltypes
+          name: Lua_expand_macros_no_alltypes__only_l_sol
           path: ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes__only_l_sol/lua-5.4.1/3c_performance_stats/
           retention-days: 5
 
@@ -2485,7 +2485,7 @@ jobs:
       - name: Upload 3c stats of Lua
         uses: actions/upload-artifact@v2
         with:
-          name: Lua_alltypes
+          name: Lua_expand_macros_alltypes
           path: ${{env.benchmark_conv_dir}}/expand_macros_alltypes/lua-5.4.1/3c_performance_stats/
           retention-days: 5
 
@@ -2537,7 +2537,7 @@ jobs:
       - name: Upload 3c stats of LibTiff
         uses: actions/upload-artifact@v2
         with:
-          name: LibTiff_noalltypes
+          name: LibTiff_no_alltypes
           path: ${{env.benchmark_conv_dir}}/no_alltypes/tiff-4.1.0/3c_performance_stats/
           retention-days: 5
 
@@ -2549,7 +2549,7 @@ jobs:
           ninja -l $(nproc) -k 0 tiff
 
   test_libtiff_no_alltypes__only_g_sol:
-    name: Test LibTiff (not macro-expanded, no -alltypes__only_g_sol)
+    name: Test LibTiff (not macro-expanded, no -alltypes, greatest solution)
     needs: build_3c
     runs-on: self-hosted
     steps:
@@ -2589,7 +2589,7 @@ jobs:
       - name: Upload 3c stats of LibTiff
         uses: actions/upload-artifact@v2
         with:
-          name: LibTiff__only_g_sol_noalltypes
+          name: LibTiff_no_alltypes__only_g_sol
           path: ${{env.benchmark_conv_dir}}/no_alltypes__only_g_sol/tiff-4.1.0/3c_performance_stats/
           retention-days: 5
 
@@ -2601,7 +2601,7 @@ jobs:
           ninja -l $(nproc) -k 0 tiff
 
   test_libtiff_no_alltypes__only_l_sol:
-    name: Test LibTiff (not macro-expanded, no -alltypes__only_l_sol)
+    name: Test LibTiff (not macro-expanded, no -alltypes, least solution)
     needs: build_3c
     runs-on: self-hosted
     steps:
@@ -2641,7 +2641,7 @@ jobs:
       - name: Upload 3c stats of LibTiff
         uses: actions/upload-artifact@v2
         with:
-          name: LibTiff__only_l_sol_noalltypes
+          name: LibTiff_no_alltypes__only_l_sol
           path: ${{env.benchmark_conv_dir}}/no_alltypes__only_l_sol/tiff-4.1.0/3c_performance_stats/
           retention-days: 5
 
@@ -2745,7 +2745,7 @@ jobs:
       - name: Upload 3c stats of LibTiff
         uses: actions/upload-artifact@v2
         with:
-          name: LibTiff_noalltypes
+          name: LibTiff_expand_macros_no_alltypes
           path: ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/tiff-4.1.0/3c_performance_stats/
           retention-days: 5
 
@@ -2757,7 +2757,7 @@ jobs:
           ninja -l $(nproc) -k 0 tiff
 
   test_libtiff_expand_macros_no_alltypes__only_g_sol:
-    name: Test LibTiff (macro-expanded, no -alltypes__only_g_sol)
+    name: Test LibTiff (macro-expanded, no -alltypes, greatest solution)
     needs: build_3c
     runs-on: self-hosted
     steps:
@@ -2798,7 +2798,7 @@ jobs:
       - name: Upload 3c stats of LibTiff
         uses: actions/upload-artifact@v2
         with:
-          name: LibTiff__only_g_sol_noalltypes
+          name: LibTiff_expand_macros_no_alltypes__only_g_sol
           path: ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes__only_g_sol/tiff-4.1.0/3c_performance_stats/
           retention-days: 5
 
@@ -2810,7 +2810,7 @@ jobs:
           ninja -l $(nproc) -k 0 tiff
 
   test_libtiff_expand_macros_no_alltypes__only_l_sol:
-    name: Test LibTiff (macro-expanded, no -alltypes__only_l_sol)
+    name: Test LibTiff (macro-expanded, no -alltypes, least solution)
     needs: build_3c
     runs-on: self-hosted
     steps:
@@ -2851,7 +2851,7 @@ jobs:
       - name: Upload 3c stats of LibTiff
         uses: actions/upload-artifact@v2
         with:
-          name: LibTiff__only_l_sol_noalltypes
+          name: LibTiff_expand_macros_no_alltypes__only_l_sol
           path: ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes__only_l_sol/tiff-4.1.0/3c_performance_stats/
           retention-days: 5
 
@@ -2904,7 +2904,7 @@ jobs:
       - name: Upload 3c stats of LibTiff
         uses: actions/upload-artifact@v2
         with:
-          name: LibTiff_alltypes
+          name: LibTiff_expand_macros_alltypes
           path: ${{env.benchmark_conv_dir}}/expand_macros_alltypes/tiff-4.1.0/3c_performance_stats/
           retention-days: 5
 
@@ -2950,7 +2950,7 @@ jobs:
       - name: Upload 3c stats of ZLib
         uses: actions/upload-artifact@v2
         with:
-          name: ZLib_noalltypes
+          name: ZLib_no_alltypes
           path: ${{env.benchmark_conv_dir}}/no_alltypes/zlib-1.2.11/3c_performance_stats/
           retention-days: 5
 
@@ -2963,7 +2963,7 @@ jobs:
           ninja -l $(nproc) -k 0 zlib
 
   test_zlib_no_alltypes__only_g_sol:
-    name: Test ZLib (not macro-expanded, no -alltypes__only_g_sol)
+    name: Test ZLib (not macro-expanded, no -alltypes, greatest solution)
     needs: build_3c
     runs-on: self-hosted
     steps:
@@ -2998,7 +2998,7 @@ jobs:
       - name: Upload 3c stats of ZLib
         uses: actions/upload-artifact@v2
         with:
-          name: ZLib__only_g_sol_noalltypes
+          name: ZLib_no_alltypes__only_g_sol
           path: ${{env.benchmark_conv_dir}}/no_alltypes__only_g_sol/zlib-1.2.11/3c_performance_stats/
           retention-days: 5
 
@@ -3011,7 +3011,7 @@ jobs:
           ninja -l $(nproc) -k 0 zlib
 
   test_zlib_no_alltypes__only_l_sol:
-    name: Test ZLib (not macro-expanded, no -alltypes__only_l_sol)
+    name: Test ZLib (not macro-expanded, no -alltypes, least solution)
     needs: build_3c
     runs-on: self-hosted
     steps:
@@ -3046,7 +3046,7 @@ jobs:
       - name: Upload 3c stats of ZLib
         uses: actions/upload-artifact@v2
         with:
-          name: ZLib__only_l_sol_noalltypes
+          name: ZLib_no_alltypes__only_l_sol
           path: ${{env.benchmark_conv_dir}}/no_alltypes__only_l_sol/zlib-1.2.11/3c_performance_stats/
           retention-days: 5
 
@@ -3142,7 +3142,7 @@ jobs:
       - name: Upload 3c stats of ZLib
         uses: actions/upload-artifact@v2
         with:
-          name: ZLib_noalltypes
+          name: ZLib_expand_macros_no_alltypes
           path: ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/zlib-1.2.11/3c_performance_stats/
           retention-days: 5
 
@@ -3155,7 +3155,7 @@ jobs:
           ninja -l $(nproc) -k 0 zlib
 
   test_zlib_expand_macros_no_alltypes__only_g_sol:
-    name: Test ZLib (macro-expanded, no -alltypes__only_g_sol)
+    name: Test ZLib (macro-expanded, no -alltypes, greatest solution)
     needs: build_3c
     runs-on: self-hosted
     steps:
@@ -3191,7 +3191,7 @@ jobs:
       - name: Upload 3c stats of ZLib
         uses: actions/upload-artifact@v2
         with:
-          name: ZLib__only_g_sol_noalltypes
+          name: ZLib_expand_macros_no_alltypes__only_g_sol
           path: ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes__only_g_sol/zlib-1.2.11/3c_performance_stats/
           retention-days: 5
 
@@ -3204,7 +3204,7 @@ jobs:
           ninja -l $(nproc) -k 0 zlib
 
   test_zlib_expand_macros_no_alltypes__only_l_sol:
-    name: Test ZLib (macro-expanded, no -alltypes__only_l_sol)
+    name: Test ZLib (macro-expanded, no -alltypes, least solution)
     needs: build_3c
     runs-on: self-hosted
     steps:
@@ -3240,7 +3240,7 @@ jobs:
       - name: Upload 3c stats of ZLib
         uses: actions/upload-artifact@v2
         with:
-          name: ZLib__only_l_sol_noalltypes
+          name: ZLib_expand_macros_no_alltypes__only_l_sol
           path: ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes__only_l_sol/zlib-1.2.11/3c_performance_stats/
           retention-days: 5
 
@@ -3289,7 +3289,7 @@ jobs:
       - name: Upload 3c stats of ZLib
         uses: actions/upload-artifact@v2
         with:
-          name: ZLib_alltypes
+          name: ZLib_expand_macros_alltypes
           path: ${{env.benchmark_conv_dir}}/expand_macros_alltypes/zlib-1.2.11/3c_performance_stats/
           retention-days: 5
 
@@ -3332,7 +3332,7 @@ jobs:
       - name: Upload 3c stats of Icecast
         uses: actions/upload-artifact@v2
         with:
-          name: Icecast_noalltypes
+          name: Icecast_no_alltypes
           path: ${{env.benchmark_conv_dir}}/no_alltypes/icecast-2.4.4/3c_performance_stats/
           retention-days: 5
 
@@ -3344,7 +3344,7 @@ jobs:
           make -j $(nproc) -l $(nproc) --output-sync -k
 
   test_icecast_no_alltypes__only_g_sol:
-    name: Test Icecast (not macro-expanded, no -alltypes__only_g_sol)
+    name: Test Icecast (not macro-expanded, no -alltypes, greatest solution)
     needs: build_3c
     runs-on: self-hosted
     steps:
@@ -3375,7 +3375,7 @@ jobs:
       - name: Upload 3c stats of Icecast
         uses: actions/upload-artifact@v2
         with:
-          name: Icecast__only_g_sol_noalltypes
+          name: Icecast_no_alltypes__only_g_sol
           path: ${{env.benchmark_conv_dir}}/no_alltypes__only_g_sol/icecast-2.4.4/3c_performance_stats/
           retention-days: 5
 
@@ -3387,7 +3387,7 @@ jobs:
           make -j $(nproc) -l $(nproc) --output-sync -k
 
   test_icecast_no_alltypes__only_l_sol:
-    name: Test Icecast (not macro-expanded, no -alltypes__only_l_sol)
+    name: Test Icecast (not macro-expanded, no -alltypes, least solution)
     needs: build_3c
     runs-on: self-hosted
     steps:
@@ -3418,7 +3418,7 @@ jobs:
       - name: Upload 3c stats of Icecast
         uses: actions/upload-artifact@v2
         with:
-          name: Icecast__only_l_sol_noalltypes
+          name: Icecast_no_alltypes__only_l_sol
           path: ${{env.benchmark_conv_dir}}/no_alltypes__only_l_sol/icecast-2.4.4/3c_performance_stats/
           retention-days: 5
 
@@ -3504,7 +3504,7 @@ jobs:
       - name: Upload 3c stats of Icecast
         uses: actions/upload-artifact@v2
         with:
-          name: Icecast_noalltypes
+          name: Icecast_expand_macros_no_alltypes
           path: ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/icecast-2.4.4/3c_performance_stats/
           retention-days: 5
 
@@ -3516,7 +3516,7 @@ jobs:
           make -j $(nproc) -l $(nproc) --output-sync -k
 
   test_icecast_expand_macros_no_alltypes__only_g_sol:
-    name: Test Icecast (macro-expanded, no -alltypes__only_g_sol)
+    name: Test Icecast (macro-expanded, no -alltypes, greatest solution)
     needs: build_3c
     runs-on: self-hosted
     steps:
@@ -3548,7 +3548,7 @@ jobs:
       - name: Upload 3c stats of Icecast
         uses: actions/upload-artifact@v2
         with:
-          name: Icecast__only_g_sol_noalltypes
+          name: Icecast_expand_macros_no_alltypes__only_g_sol
           path: ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes__only_g_sol/icecast-2.4.4/3c_performance_stats/
           retention-days: 5
 
@@ -3560,7 +3560,7 @@ jobs:
           make -j $(nproc) -l $(nproc) --output-sync -k
 
   test_icecast_expand_macros_no_alltypes__only_l_sol:
-    name: Test Icecast (macro-expanded, no -alltypes__only_l_sol)
+    name: Test Icecast (macro-expanded, no -alltypes, least solution)
     needs: build_3c
     runs-on: self-hosted
     steps:
@@ -3592,7 +3592,7 @@ jobs:
       - name: Upload 3c stats of Icecast
         uses: actions/upload-artifact@v2
         with:
-          name: Icecast__only_l_sol_noalltypes
+          name: Icecast_expand_macros_no_alltypes__only_l_sol
           path: ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes__only_l_sol/icecast-2.4.4/3c_performance_stats/
           retention-days: 5
 
@@ -3636,7 +3636,7 @@ jobs:
       - name: Upload 3c stats of Icecast
         uses: actions/upload-artifact@v2
         with:
-          name: Icecast_alltypes
+          name: Icecast_expand_macros_alltypes
           path: ${{env.benchmark_conv_dir}}/expand_macros_alltypes/icecast-2.4.4/3c_performance_stats/
           retention-days: 5
 

@@ -7,10 +7,9 @@
 
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
-import itertools
 import os
 import textwrap
-from typing import Dict, List, Optional, Any
+from typing import Dict, List, Optional, TextIO, Any
 
 
 @dataclass
@@ -320,14 +319,14 @@ HEADER = HEADER.replace('{ninja_std}', ninja_std)
 # be seen by the dataclass implementation in the subclasses.
 @dataclass
 class Step(ABC):
-    step_name: str
+    name: str
 
     @abstractmethod
     def format_body(self):
         raise NotImplementedError
 
     def __str__(self):
-        step = (f'- name: {self.step_name}\n' +
+        step = (f'- name: {self.name}\n' +
                 textwrap.indent(self.format_body(), 2 * ' '))
         return textwrap.indent(step, 6 * ' ')
 
@@ -358,46 +357,64 @@ def ensure_trailing_newline(s: str):
     return s + '\n' if s != '' and not s.endswith('\n') else s
 
 
-def generate_benchmark_job(out, binfo, expand_macros, alltypes, generate_stats=False, extra_args=[]):
-    extra_3c_args = ''
-    if alltypes:
+# To make `WorkflowConfig` definitions more concise, this `Variant` class does
+# not include some extra flags that are currently done in Cartesian product
+# with `Variant` objects. Currently, the only such extra flag is expand_macros.
+@dataclass
+class Variant:
+    alltypes: bool
+    extra_3c_args: List[str] = ''
+    friendly_name_suffix: str = ''
+
+
+def generate_benchmark_job(out: TextIO, binfo: BenchmarkInfo, expand_macros: bool, variant: Variant, generate_stats=False):
+    # "Subvariant" = Variant object + the extra flags mentioned above.
+    # We use the name "subvariant" even though the subvariants may be grouped by
+    # extra flag value before variant. (Better naming ideas?)
+    subvariant_name = (('expand_macros_' if expand_macros else '') +
+                    ('alltypes' if variant.alltypes else 'no_alltypes'))
+
+    extra_convert_project_args = ''
+    if variant.alltypes:
         # Python argparse thinks `--extra-3c-arg -alltypes` is two options
         # rather than an option with an argument.
-        extra_3c_args += '--extra-3c-arg=-alltypes \\\n'
+        extra_convert_project_args += '--extra-3c-arg=-alltypes \\\n'
+    # XXX: An argument could be made for putting this before -alltypes for
+    # consistency with the subvariant name. For now, I don't want the diff in
+    # the generated workflow.
     if expand_macros:
-        extra_3c_args += '--expand_macros_before_conversion \\\n'
+        extra_convert_project_args += '--expand_macros_before_conversion \\\n'
 
-    job_suffix = ''
-    for earg in extra_args:
-        if not job_suffix:
-            job_suffix = "_"
-        extra_3c_args += '--extra-3c-arg=' + earg + ' \\\n'
-        job_suffix += earg.replace('-', '_')
+    first_earg = True
+    for earg in variant.extra_3c_args:
+        extra_convert_project_args += '--extra-3c-arg=' + earg + ' \\\n'
+        if first_earg:
+            subvariant_name += '_'
+        #subvariant_name += '_' + earg.lstrip('-').replace('-', '_')
+        subvariant_name += earg.replace('-', '_')
 
-    variant = (('expand_macros_' if expand_macros else '') +
-               ('alltypes' if alltypes else 'no_alltypes') + job_suffix)
-    variant_friendly = (('' if expand_macros else 'not ') +
+    subvariant_friendly = (('' if expand_macros else 'not ') +
                         'macro-expanded, ' +
-                        ('' if alltypes else 'no ') + '-alltypes' +
-                        job_suffix)
-    variant_dir = '${{env.benchmark_conv_dir}}/' + variant
+                        ('' if variant.alltypes else 'no ') + '-alltypes' +
+                        variant.friendly_name_suffix)
+    subvariant_dir = '${{env.benchmark_conv_dir}}/' + subvariant_name
     convert_extra = (ensure_trailing_newline(binfo.convert_extra)
                      if binfo.convert_extra is not None else '')
     build_converted_cmd = binfo.build_converted_cmd.rstrip('\n')
-    at_ignore_step = ' (ignore failure)' if alltypes else ''
-    at_ignore_code = ' || true' if alltypes else ''
+    at_ignore_step = ' (ignore failure)' if variant.alltypes else ''
+    at_ignore_code = ' || true' if variant.alltypes else ''
 
     out.write(f'''\
-  test_{binfo.name}_{variant}:
-    name: Test {binfo.friendly_name} ({variant_friendly})
+  test_{binfo.name}_{subvariant_name}:
+    name: Test {binfo.friendly_name} ({subvariant_friendly})
     needs: build_3c
     runs-on: self-hosted
     steps:
 ''')
 
     full_build_cmds = textwrap.dedent(f'''\
-                mkdir -p {variant_dir}
-                cd {variant_dir}
+                mkdir -p {subvariant_dir}
+                cd {subvariant_dir}
                 tar -xvzf ${{{{env.benchmark_tar_dir}}}}/{binfo.dir_name}.tar.gz
                 cd {binfo.dir_name}
                 ''') + ensure_trailing_newline(binfo.build_cmds)
@@ -411,7 +428,7 @@ def generate_benchmark_job(out, binfo, expand_macros, alltypes, generate_stats=F
         components = [BenchmarkComponent(binfo.friendly_name)]
 
     for component in components:
-        component_dir = f'{variant_dir}/{binfo.dir_name}'
+        component_dir = f'{subvariant_dir}/{binfo.dir_name}'
         if component.subdir is not None:
             component_dir += '/' + component.subdir
         component_friendly_name = (component.friendly_name or
@@ -422,7 +439,7 @@ def generate_benchmark_job(out, binfo, expand_macros, alltypes, generate_stats=F
             convert_extra +
             '--includeDir ${{env.include_dir}} \\\n' +
             '--prog_name ${{env.builddir}}/bin/3c \\\n' +
-            extra_3c_args +
+            extra_convert_project_args +
             '--project_path .' +
             (f' \\\n--build_dir {component.build_dir}'
              if component.build_dir is not None else '') +
@@ -447,7 +464,8 @@ def generate_benchmark_job(out, binfo, expand_macros, alltypes, generate_stats=F
                                 mkdir {perf_dir_name}
                                 cp *.json {perf_dir_name}
                                 ''')))
-            perf_artifact_name = component_friendly_name + job_suffix + ('_alltypes' if alltypes else '_noalltypes')
+            # Same idea as the job name but using the component name instead.
+            perf_artifact_name = f'{component_friendly_name}_{subvariant_name}'
             perf_dir = os.path.join(component_dir, perf_dir_name)
             steps.append(
                 ActionStep(
@@ -476,52 +494,39 @@ def generate_benchmark_job(out, binfo, expand_macros, alltypes, generate_stats=F
     out.write('\n'.join(str(s) for s in steps) + '\n')
 
 
-regular_run_configurations = {
-    False: [],
-    True: []
-}
-
-exhaustive_run_configurations = {
-    False: ['-only-g-sol', '-only-l-sol'],
-    True: []
-}
-
-
 @dataclass
 class WorkflowConfig:
-    name: str
+    filename: str
+    friendly_name: str
     cron_timestamp: str
-    run_configurations: dict
-    generate_stats: bool
+    variants: List[Variant]
+    generate_stats: bool = False
 
 
-'''
-Format:
-  {
-    workflow_file_path : (<workflow_name>, <cron_format>, 
-                          <run_config>, [True|False] <- flag to enable stats generation)
-  }
-'''
-workflow_file_configs = {
-    '.github/workflows/main.yml': WorkflowConfig("3C benchmark tests", "0 7 * * *", regular_run_configurations, False),
-    '.github/workflows/exhaustive.yml': WorkflowConfig("Exhaustive testing and Performance Stats", "0 9 * * *",
-                                                       exhaustive_run_configurations, True)
-}
+workflow_file_configs = [
+    WorkflowConfig(filename="main", friendly_name="3C benchmark tests", cron_timestamp="0 7 * * *",
+                   variants=[
+                       Variant(alltypes=False),
+                       Variant(alltypes=True)
+                   ]),
+    WorkflowConfig(filename="exhaustive",
+                   friendly_name="Exhaustive testing and Performance Stats", cron_timestamp="0 9 * * *",
+                   variants=[
+                       Variant(alltypes=False),
+                       Variant(alltypes=False, extra_3c_args=['-only-g-sol'], friendly_name_suffix=', greatest solution'),
+                       Variant(alltypes=False, extra_3c_args=['-only-l-sol'], friendly_name_suffix=', least solution'),
+                       Variant(alltypes=True)
+                   ],
+                   generate_stats=True)
+]
 
-for workflow_file in workflow_file_configs:
-    workflow_name = workflow_file_configs[workflow_file].name
-    cron_timestamp = workflow_file_configs[workflow_file].cron_timestamp
-    run_configurations = workflow_file_configs[workflow_file].run_configurations
-    generate_stats = workflow_file_configs[workflow_file].generate_stats
-    with open(workflow_file, 'w') as out:
+for config in workflow_file_configs:
+    with open(f'.github/workflows/{config.filename}.yml', 'w') as out:
         # format header using workflow name and schedule time.
-        formatted_hdr = HEADER.replace('{workflow.name}', workflow_name)
-        formatted_hdr = formatted_hdr.replace('{workflow.scheduletime}', cron_timestamp)
+        formatted_hdr = HEADER.replace('{workflow.name}', config.friendly_name)
+        formatted_hdr = formatted_hdr.replace('{workflow.scheduletime}', config.cron_timestamp)
         out.write(formatted_hdr)
         for binfo in benchmarks:
-            for expand_macros, alltypes in itertools.product((False, True),
-                                                             (False, True)):
-                generate_benchmark_job(out, binfo, expand_macros, alltypes, generate_stats)
-                extra_args = run_configurations[alltypes]
-                for earg in extra_args:
-                    generate_benchmark_job(out, binfo, expand_macros, alltypes, generate_stats, [earg])
+            for expand_macros in (False, True):
+                for variant in config.variants:
+                    generate_benchmark_job(out, binfo, expand_macros, variant, config.generate_stats)
