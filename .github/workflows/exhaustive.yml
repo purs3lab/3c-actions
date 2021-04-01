@@ -117,7 +117,7 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes
           tar -xvzf ${{env.benchmark_tar_dir}}/vsftpd-3.0.3.tar.gz
           cd vsftpd-3.0.3
-          bear make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang -Wno-enum-conversion"
+          bear make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang -w -Wno-enum-conversion"
 
       - name: Convert Vsftpd
         run: |
@@ -145,7 +145,7 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/vsftpd-3.0.3
           cp -r out.checked/* .
           rm -r out.checked
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang -Wno-enum-conversion" -k
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang -w -Wno-enum-conversion" -k
 
   test_vsftpd_no_expand_macros_no_alltypes_only_g_sol:
     name: Test Vsftpd (not macro-expanded, no -alltypes, greatest solution)
@@ -158,7 +158,7 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes_only_g_sol
           tar -xvzf ${{env.benchmark_tar_dir}}/vsftpd-3.0.3.tar.gz
           cd vsftpd-3.0.3
-          bear make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang -Wno-enum-conversion"
+          bear make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang -w -Wno-enum-conversion"
 
       - name: Convert Vsftpd
         run: |
@@ -187,7 +187,7 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes_only_g_sol/vsftpd-3.0.3
           cp -r out.checked/* .
           rm -r out.checked
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang -Wno-enum-conversion" -k
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang -w -Wno-enum-conversion" -k
 
   test_vsftpd_no_expand_macros_no_alltypes_only_l_sol:
     name: Test Vsftpd (not macro-expanded, no -alltypes, least solution)
@@ -200,7 +200,7 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes_only_l_sol
           tar -xvzf ${{env.benchmark_tar_dir}}/vsftpd-3.0.3.tar.gz
           cd vsftpd-3.0.3
-          bear make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang -Wno-enum-conversion"
+          bear make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang -w -Wno-enum-conversion"
 
       - name: Convert Vsftpd
         run: |
@@ -229,7 +229,7 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes_only_l_sol/vsftpd-3.0.3
           cp -r out.checked/* .
           rm -r out.checked
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang -Wno-enum-conversion" -k
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang -w -Wno-enum-conversion" -k
 
   test_vsftpd_no_expand_macros_alltypes:
     name: Test Vsftpd (not macro-expanded, -alltypes)
@@ -242,7 +242,7 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes
           tar -xvzf ${{env.benchmark_tar_dir}}/vsftpd-3.0.3.tar.gz
           cd vsftpd-3.0.3
-          bear make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang -Wno-enum-conversion"
+          bear make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang -w -Wno-enum-conversion"
 
       - name: Convert Vsftpd
         run: |
@@ -271,7 +271,7 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/vsftpd-3.0.3
           cp -r out.checked/* .
           rm -r out.checked
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang -Wno-enum-conversion" -k || true
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang -w -Wno-enum-conversion" -k || true
 
   test_vsftpd_expand_macros_no_alltypes:
     name: Test Vsftpd (macro-expanded, no -alltypes)
@@ -284,7 +284,7 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes
           tar -xvzf ${{env.benchmark_tar_dir}}/vsftpd-3.0.3.tar.gz
           cd vsftpd-3.0.3
-          bear make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang -Wno-enum-conversion"
+          bear make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang -w -Wno-enum-conversion"
 
       - name: Convert Vsftpd
         run: |
@@ -313,7 +313,7 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/vsftpd-3.0.3
           cp -r out.checked/* .
           rm -r out.checked
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang -Wno-enum-conversion" -k
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang -w -Wno-enum-conversion" -k
 
   test_vsftpd_expand_macros_no_alltypes_only_g_sol:
     name: Test Vsftpd (macro-expanded, no -alltypes, greatest solution)
@@ -326,7 +326,7 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes_only_g_sol
           tar -xvzf ${{env.benchmark_tar_dir}}/vsftpd-3.0.3.tar.gz
           cd vsftpd-3.0.3
-          bear make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang -Wno-enum-conversion"
+          bear make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang -w -Wno-enum-conversion"
 
       - name: Convert Vsftpd
         run: |
@@ -356,7 +356,7 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes_only_g_sol/vsftpd-3.0.3
           cp -r out.checked/* .
           rm -r out.checked
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang -Wno-enum-conversion" -k
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang -w -Wno-enum-conversion" -k
 
   test_vsftpd_expand_macros_no_alltypes_only_l_sol:
     name: Test Vsftpd (macro-expanded, no -alltypes, least solution)
@@ -369,7 +369,7 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes_only_l_sol
           tar -xvzf ${{env.benchmark_tar_dir}}/vsftpd-3.0.3.tar.gz
           cd vsftpd-3.0.3
-          bear make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang -Wno-enum-conversion"
+          bear make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang -w -Wno-enum-conversion"
 
       - name: Convert Vsftpd
         run: |
@@ -399,7 +399,7 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes_only_l_sol/vsftpd-3.0.3
           cp -r out.checked/* .
           rm -r out.checked
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang -Wno-enum-conversion" -k
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang -w -Wno-enum-conversion" -k
 
   test_vsftpd_expand_macros_alltypes:
     name: Test Vsftpd (macro-expanded, -alltypes)
@@ -412,7 +412,7 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes
           tar -xvzf ${{env.benchmark_tar_dir}}/vsftpd-3.0.3.tar.gz
           cd vsftpd-3.0.3
-          bear make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang -Wno-enum-conversion"
+          bear make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang -w -Wno-enum-conversion"
 
       - name: Convert Vsftpd
         run: |
@@ -442,7 +442,7 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes/vsftpd-3.0.3
           cp -r out.checked/* .
           rm -r out.checked
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang -Wno-enum-conversion" -k || true
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang -w -Wno-enum-conversion" -k || true
 
   test_ptrdist_no_expand_macros_no_alltypes:
     name: Test PtrDist (not macro-expanded, no -alltypes)
@@ -465,7 +465,7 @@ jobs:
               sed -i "/#define.*_CODE/d; /#include \"$header\"/a#include \"$new_header\"" "$src"
             done )
           for i in anagram bc ft ks yacr2 ; do \
-            (cd $i ; bear make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" LOCAL_CFLAGS="-D_ISOC99_SOURCE") \
+            (cd $i ; bear make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" LOCAL_CFLAGS="-w -D_ISOC99_SOURCE") \
           done
 
       - name: Convert anagram
@@ -494,7 +494,7 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/ptrdist-1.1/anagram
           cp -r out.checked/* .
           rm -r out.checked
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-D_ISOC99_SOURCE"
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -D_ISOC99_SOURCE"
 
       - name: Convert bc
         run: |
@@ -522,7 +522,7 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/ptrdist-1.1/bc
           cp -r out.checked/* .
           rm -r out.checked
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-D_ISOC99_SOURCE"
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -D_ISOC99_SOURCE"
 
       - name: Convert ft
         run: |
@@ -550,7 +550,7 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/ptrdist-1.1/ft
           cp -r out.checked/* .
           rm -r out.checked
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-D_ISOC99_SOURCE"
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -D_ISOC99_SOURCE"
 
       - name: Convert ks
         run: |
@@ -578,7 +578,7 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/ptrdist-1.1/ks
           cp -r out.checked/* .
           rm -r out.checked
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-D_ISOC99_SOURCE"
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -D_ISOC99_SOURCE"
 
       - name: Convert yacr2
         run: |
@@ -606,7 +606,7 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/ptrdist-1.1/yacr2
           cp -r out.checked/* .
           rm -r out.checked
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-D_ISOC99_SOURCE"
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -D_ISOC99_SOURCE"
 
   test_ptrdist_no_expand_macros_no_alltypes_only_g_sol:
     name: Test PtrDist (not macro-expanded, no -alltypes, greatest solution)
@@ -629,7 +629,7 @@ jobs:
               sed -i "/#define.*_CODE/d; /#include \"$header\"/a#include \"$new_header\"" "$src"
             done )
           for i in anagram bc ft ks yacr2 ; do \
-            (cd $i ; bear make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" LOCAL_CFLAGS="-D_ISOC99_SOURCE") \
+            (cd $i ; bear make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" LOCAL_CFLAGS="-w -D_ISOC99_SOURCE") \
           done
 
       - name: Convert anagram
@@ -659,7 +659,7 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes_only_g_sol/ptrdist-1.1/anagram
           cp -r out.checked/* .
           rm -r out.checked
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-D_ISOC99_SOURCE"
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -D_ISOC99_SOURCE"
 
       - name: Convert bc
         run: |
@@ -688,7 +688,7 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes_only_g_sol/ptrdist-1.1/bc
           cp -r out.checked/* .
           rm -r out.checked
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-D_ISOC99_SOURCE"
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -D_ISOC99_SOURCE"
 
       - name: Convert ft
         run: |
@@ -717,7 +717,7 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes_only_g_sol/ptrdist-1.1/ft
           cp -r out.checked/* .
           rm -r out.checked
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-D_ISOC99_SOURCE"
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -D_ISOC99_SOURCE"
 
       - name: Convert ks
         run: |
@@ -746,7 +746,7 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes_only_g_sol/ptrdist-1.1/ks
           cp -r out.checked/* .
           rm -r out.checked
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-D_ISOC99_SOURCE"
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -D_ISOC99_SOURCE"
 
       - name: Convert yacr2
         run: |
@@ -775,7 +775,7 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes_only_g_sol/ptrdist-1.1/yacr2
           cp -r out.checked/* .
           rm -r out.checked
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-D_ISOC99_SOURCE"
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -D_ISOC99_SOURCE"
 
   test_ptrdist_no_expand_macros_no_alltypes_only_l_sol:
     name: Test PtrDist (not macro-expanded, no -alltypes, least solution)
@@ -798,7 +798,7 @@ jobs:
               sed -i "/#define.*_CODE/d; /#include \"$header\"/a#include \"$new_header\"" "$src"
             done )
           for i in anagram bc ft ks yacr2 ; do \
-            (cd $i ; bear make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" LOCAL_CFLAGS="-D_ISOC99_SOURCE") \
+            (cd $i ; bear make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" LOCAL_CFLAGS="-w -D_ISOC99_SOURCE") \
           done
 
       - name: Convert anagram
@@ -828,7 +828,7 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes_only_l_sol/ptrdist-1.1/anagram
           cp -r out.checked/* .
           rm -r out.checked
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-D_ISOC99_SOURCE"
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -D_ISOC99_SOURCE"
 
       - name: Convert bc
         run: |
@@ -857,7 +857,7 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes_only_l_sol/ptrdist-1.1/bc
           cp -r out.checked/* .
           rm -r out.checked
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-D_ISOC99_SOURCE"
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -D_ISOC99_SOURCE"
 
       - name: Convert ft
         run: |
@@ -886,7 +886,7 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes_only_l_sol/ptrdist-1.1/ft
           cp -r out.checked/* .
           rm -r out.checked
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-D_ISOC99_SOURCE"
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -D_ISOC99_SOURCE"
 
       - name: Convert ks
         run: |
@@ -915,7 +915,7 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes_only_l_sol/ptrdist-1.1/ks
           cp -r out.checked/* .
           rm -r out.checked
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-D_ISOC99_SOURCE"
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -D_ISOC99_SOURCE"
 
       - name: Convert yacr2
         run: |
@@ -944,7 +944,7 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes_only_l_sol/ptrdist-1.1/yacr2
           cp -r out.checked/* .
           rm -r out.checked
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-D_ISOC99_SOURCE"
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -D_ISOC99_SOURCE"
 
   test_ptrdist_no_expand_macros_alltypes:
     name: Test PtrDist (not macro-expanded, -alltypes)
@@ -967,7 +967,7 @@ jobs:
               sed -i "/#define.*_CODE/d; /#include \"$header\"/a#include \"$new_header\"" "$src"
             done )
           for i in anagram bc ft ks yacr2 ; do \
-            (cd $i ; bear make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" LOCAL_CFLAGS="-D_ISOC99_SOURCE") \
+            (cd $i ; bear make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" LOCAL_CFLAGS="-w -D_ISOC99_SOURCE") \
           done
 
       - name: Convert anagram
@@ -997,7 +997,7 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/ptrdist-1.1/anagram
           cp -r out.checked/* .
           rm -r out.checked
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-D_ISOC99_SOURCE" || true
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -D_ISOC99_SOURCE" || true
 
       - name: Convert bc
         run: |
@@ -1026,7 +1026,7 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/ptrdist-1.1/bc
           cp -r out.checked/* .
           rm -r out.checked
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-D_ISOC99_SOURCE" || true
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -D_ISOC99_SOURCE" || true
 
       - name: Convert ft
         run: |
@@ -1055,7 +1055,7 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/ptrdist-1.1/ft
           cp -r out.checked/* .
           rm -r out.checked
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-D_ISOC99_SOURCE" || true
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -D_ISOC99_SOURCE" || true
 
       - name: Convert ks
         run: |
@@ -1084,7 +1084,7 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/ptrdist-1.1/ks
           cp -r out.checked/* .
           rm -r out.checked
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-D_ISOC99_SOURCE" || true
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -D_ISOC99_SOURCE" || true
 
       - name: Convert yacr2
         run: |
@@ -1113,7 +1113,7 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/ptrdist-1.1/yacr2
           cp -r out.checked/* .
           rm -r out.checked
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-D_ISOC99_SOURCE" || true
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -D_ISOC99_SOURCE" || true
 
   test_ptrdist_expand_macros_no_alltypes:
     name: Test PtrDist (macro-expanded, no -alltypes)
@@ -1136,7 +1136,7 @@ jobs:
               sed -i "/#define.*_CODE/d; /#include \"$header\"/a#include \"$new_header\"" "$src"
             done )
           for i in anagram bc ft ks yacr2 ; do \
-            (cd $i ; bear make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" LOCAL_CFLAGS="-D_ISOC99_SOURCE") \
+            (cd $i ; bear make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" LOCAL_CFLAGS="-w -D_ISOC99_SOURCE") \
           done
 
       - name: Convert anagram
@@ -1166,7 +1166,7 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/ptrdist-1.1/anagram
           cp -r out.checked/* .
           rm -r out.checked
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-D_ISOC99_SOURCE"
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -D_ISOC99_SOURCE"
 
       - name: Convert bc
         run: |
@@ -1195,7 +1195,7 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/ptrdist-1.1/bc
           cp -r out.checked/* .
           rm -r out.checked
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-D_ISOC99_SOURCE"
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -D_ISOC99_SOURCE"
 
       - name: Convert ft
         run: |
@@ -1224,7 +1224,7 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/ptrdist-1.1/ft
           cp -r out.checked/* .
           rm -r out.checked
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-D_ISOC99_SOURCE"
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -D_ISOC99_SOURCE"
 
       - name: Convert ks
         run: |
@@ -1253,7 +1253,7 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/ptrdist-1.1/ks
           cp -r out.checked/* .
           rm -r out.checked
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-D_ISOC99_SOURCE"
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -D_ISOC99_SOURCE"
 
       - name: Convert yacr2
         run: |
@@ -1282,7 +1282,7 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/ptrdist-1.1/yacr2
           cp -r out.checked/* .
           rm -r out.checked
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-D_ISOC99_SOURCE"
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -D_ISOC99_SOURCE"
 
   test_ptrdist_expand_macros_no_alltypes_only_g_sol:
     name: Test PtrDist (macro-expanded, no -alltypes, greatest solution)
@@ -1305,7 +1305,7 @@ jobs:
               sed -i "/#define.*_CODE/d; /#include \"$header\"/a#include \"$new_header\"" "$src"
             done )
           for i in anagram bc ft ks yacr2 ; do \
-            (cd $i ; bear make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" LOCAL_CFLAGS="-D_ISOC99_SOURCE") \
+            (cd $i ; bear make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" LOCAL_CFLAGS="-w -D_ISOC99_SOURCE") \
           done
 
       - name: Convert anagram
@@ -1336,7 +1336,7 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes_only_g_sol/ptrdist-1.1/anagram
           cp -r out.checked/* .
           rm -r out.checked
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-D_ISOC99_SOURCE"
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -D_ISOC99_SOURCE"
 
       - name: Convert bc
         run: |
@@ -1366,7 +1366,7 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes_only_g_sol/ptrdist-1.1/bc
           cp -r out.checked/* .
           rm -r out.checked
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-D_ISOC99_SOURCE"
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -D_ISOC99_SOURCE"
 
       - name: Convert ft
         run: |
@@ -1396,7 +1396,7 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes_only_g_sol/ptrdist-1.1/ft
           cp -r out.checked/* .
           rm -r out.checked
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-D_ISOC99_SOURCE"
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -D_ISOC99_SOURCE"
 
       - name: Convert ks
         run: |
@@ -1426,7 +1426,7 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes_only_g_sol/ptrdist-1.1/ks
           cp -r out.checked/* .
           rm -r out.checked
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-D_ISOC99_SOURCE"
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -D_ISOC99_SOURCE"
 
       - name: Convert yacr2
         run: |
@@ -1456,7 +1456,7 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes_only_g_sol/ptrdist-1.1/yacr2
           cp -r out.checked/* .
           rm -r out.checked
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-D_ISOC99_SOURCE"
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -D_ISOC99_SOURCE"
 
   test_ptrdist_expand_macros_no_alltypes_only_l_sol:
     name: Test PtrDist (macro-expanded, no -alltypes, least solution)
@@ -1479,7 +1479,7 @@ jobs:
               sed -i "/#define.*_CODE/d; /#include \"$header\"/a#include \"$new_header\"" "$src"
             done )
           for i in anagram bc ft ks yacr2 ; do \
-            (cd $i ; bear make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" LOCAL_CFLAGS="-D_ISOC99_SOURCE") \
+            (cd $i ; bear make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" LOCAL_CFLAGS="-w -D_ISOC99_SOURCE") \
           done
 
       - name: Convert anagram
@@ -1510,7 +1510,7 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes_only_l_sol/ptrdist-1.1/anagram
           cp -r out.checked/* .
           rm -r out.checked
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-D_ISOC99_SOURCE"
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -D_ISOC99_SOURCE"
 
       - name: Convert bc
         run: |
@@ -1540,7 +1540,7 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes_only_l_sol/ptrdist-1.1/bc
           cp -r out.checked/* .
           rm -r out.checked
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-D_ISOC99_SOURCE"
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -D_ISOC99_SOURCE"
 
       - name: Convert ft
         run: |
@@ -1570,7 +1570,7 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes_only_l_sol/ptrdist-1.1/ft
           cp -r out.checked/* .
           rm -r out.checked
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-D_ISOC99_SOURCE"
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -D_ISOC99_SOURCE"
 
       - name: Convert ks
         run: |
@@ -1600,7 +1600,7 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes_only_l_sol/ptrdist-1.1/ks
           cp -r out.checked/* .
           rm -r out.checked
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-D_ISOC99_SOURCE"
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -D_ISOC99_SOURCE"
 
       - name: Convert yacr2
         run: |
@@ -1630,7 +1630,7 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes_only_l_sol/ptrdist-1.1/yacr2
           cp -r out.checked/* .
           rm -r out.checked
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-D_ISOC99_SOURCE"
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -D_ISOC99_SOURCE"
 
   test_ptrdist_expand_macros_alltypes:
     name: Test PtrDist (macro-expanded, -alltypes)
@@ -1653,7 +1653,7 @@ jobs:
               sed -i "/#define.*_CODE/d; /#include \"$header\"/a#include \"$new_header\"" "$src"
             done )
           for i in anagram bc ft ks yacr2 ; do \
-            (cd $i ; bear make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" LOCAL_CFLAGS="-D_ISOC99_SOURCE") \
+            (cd $i ; bear make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" LOCAL_CFLAGS="-w -D_ISOC99_SOURCE") \
           done
 
       - name: Convert anagram
@@ -1684,7 +1684,7 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes/ptrdist-1.1/anagram
           cp -r out.checked/* .
           rm -r out.checked
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-D_ISOC99_SOURCE" || true
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -D_ISOC99_SOURCE" || true
 
       - name: Convert bc
         run: |
@@ -1714,7 +1714,7 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes/ptrdist-1.1/bc
           cp -r out.checked/* .
           rm -r out.checked
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-D_ISOC99_SOURCE" || true
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -D_ISOC99_SOURCE" || true
 
       - name: Convert ft
         run: |
@@ -1744,7 +1744,7 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes/ptrdist-1.1/ft
           cp -r out.checked/* .
           rm -r out.checked
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-D_ISOC99_SOURCE" || true
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -D_ISOC99_SOURCE" || true
 
       - name: Convert ks
         run: |
@@ -1774,7 +1774,7 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes/ptrdist-1.1/ks
           cp -r out.checked/* .
           rm -r out.checked
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-D_ISOC99_SOURCE" || true
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -D_ISOC99_SOURCE" || true
 
       - name: Convert yacr2
         run: |
@@ -1804,7 +1804,7 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes/ptrdist-1.1/yacr2
           cp -r out.checked/* .
           rm -r out.checked
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-D_ISOC99_SOURCE" || true
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -D_ISOC99_SOURCE" || true
 
   test_libarchive_no_expand_macros_no_alltypes:
     name: Test LibArchive (not macro-expanded, no -alltypes)
@@ -2195,7 +2195,7 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes
           tar -xvzf ${{env.benchmark_tar_dir}}/lua-5.4.1.tar.gz
           cd lua-5.4.1
-          bear make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" linux
+          bear make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" CFLAGS="-w" linux
           ( cd src ; \
             clang-rename-10 -pl -i \
               --qualified-name=main \
@@ -2229,7 +2229,7 @@ jobs:
           cp -r out.checked/* .
           rm -r out.checked
           sed -i "s/luac_main/main/" src/luac.c
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k linux
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k CFLAGS="-w" linux
 
   test_lua_no_expand_macros_no_alltypes_only_g_sol:
     name: Test Lua (not macro-expanded, no -alltypes, greatest solution)
@@ -2242,7 +2242,7 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes_only_g_sol
           tar -xvzf ${{env.benchmark_tar_dir}}/lua-5.4.1.tar.gz
           cd lua-5.4.1
-          bear make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" linux
+          bear make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" CFLAGS="-w" linux
           ( cd src ; \
             clang-rename-10 -pl -i \
               --qualified-name=main \
@@ -2277,7 +2277,7 @@ jobs:
           cp -r out.checked/* .
           rm -r out.checked
           sed -i "s/luac_main/main/" src/luac.c
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k linux
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k CFLAGS="-w" linux
 
   test_lua_no_expand_macros_no_alltypes_only_l_sol:
     name: Test Lua (not macro-expanded, no -alltypes, least solution)
@@ -2290,7 +2290,7 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes_only_l_sol
           tar -xvzf ${{env.benchmark_tar_dir}}/lua-5.4.1.tar.gz
           cd lua-5.4.1
-          bear make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" linux
+          bear make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" CFLAGS="-w" linux
           ( cd src ; \
             clang-rename-10 -pl -i \
               --qualified-name=main \
@@ -2325,7 +2325,7 @@ jobs:
           cp -r out.checked/* .
           rm -r out.checked
           sed -i "s/luac_main/main/" src/luac.c
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k linux
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k CFLAGS="-w" linux
 
   test_lua_no_expand_macros_alltypes:
     name: Test Lua (not macro-expanded, -alltypes)
@@ -2338,7 +2338,7 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes
           tar -xvzf ${{env.benchmark_tar_dir}}/lua-5.4.1.tar.gz
           cd lua-5.4.1
-          bear make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" linux
+          bear make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" CFLAGS="-w" linux
           ( cd src ; \
             clang-rename-10 -pl -i \
               --qualified-name=main \
@@ -2373,7 +2373,7 @@ jobs:
           cp -r out.checked/* .
           rm -r out.checked
           sed -i "s/luac_main/main/" src/luac.c
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k linux || true
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k CFLAGS="-w" linux || true
 
   test_lua_expand_macros_no_alltypes:
     name: Test Lua (macro-expanded, no -alltypes)
@@ -2386,7 +2386,7 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes
           tar -xvzf ${{env.benchmark_tar_dir}}/lua-5.4.1.tar.gz
           cd lua-5.4.1
-          bear make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" linux
+          bear make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" CFLAGS="-w" linux
           ( cd src ; \
             clang-rename-10 -pl -i \
               --qualified-name=main \
@@ -2421,7 +2421,7 @@ jobs:
           cp -r out.checked/* .
           rm -r out.checked
           sed -i "s/luac_main/main/" src/luac.c
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k linux
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k CFLAGS="-w" linux
 
   test_lua_expand_macros_no_alltypes_only_g_sol:
     name: Test Lua (macro-expanded, no -alltypes, greatest solution)
@@ -2434,7 +2434,7 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes_only_g_sol
           tar -xvzf ${{env.benchmark_tar_dir}}/lua-5.4.1.tar.gz
           cd lua-5.4.1
-          bear make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" linux
+          bear make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" CFLAGS="-w" linux
           ( cd src ; \
             clang-rename-10 -pl -i \
               --qualified-name=main \
@@ -2470,7 +2470,7 @@ jobs:
           cp -r out.checked/* .
           rm -r out.checked
           sed -i "s/luac_main/main/" src/luac.c
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k linux
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k CFLAGS="-w" linux
 
   test_lua_expand_macros_no_alltypes_only_l_sol:
     name: Test Lua (macro-expanded, no -alltypes, least solution)
@@ -2483,7 +2483,7 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes_only_l_sol
           tar -xvzf ${{env.benchmark_tar_dir}}/lua-5.4.1.tar.gz
           cd lua-5.4.1
-          bear make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" linux
+          bear make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" CFLAGS="-w" linux
           ( cd src ; \
             clang-rename-10 -pl -i \
               --qualified-name=main \
@@ -2519,7 +2519,7 @@ jobs:
           cp -r out.checked/* .
           rm -r out.checked
           sed -i "s/luac_main/main/" src/luac.c
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k linux
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k CFLAGS="-w" linux
 
   test_lua_expand_macros_alltypes:
     name: Test Lua (macro-expanded, -alltypes)
@@ -2532,7 +2532,7 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes
           tar -xvzf ${{env.benchmark_tar_dir}}/lua-5.4.1.tar.gz
           cd lua-5.4.1
-          bear make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" linux
+          bear make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" CFLAGS="-w" linux
           ( cd src ; \
             clang-rename-10 -pl -i \
               --qualified-name=main \
@@ -2568,7 +2568,7 @@ jobs:
           cp -r out.checked/* .
           rm -r out.checked
           sed -i "s/luac_main/main/" src/luac.c
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k linux || true
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k CFLAGS="-w" linux || true
 
   test_libtiff_no_expand_macros_no_alltypes:
     name: Test LibTiff (not macro-expanded, no -alltypes)
@@ -3386,7 +3386,7 @@ jobs:
           tar -xvzf ${{env.benchmark_tar_dir}}/icecast-2.4.4.tar.gz
           cd icecast-2.4.4
           sed -i '/_GNU_SOURCE/d' configure
-          CC="${{env.builddir}}/bin/clang" ./configure
+          CC="${{env.builddir}}/bin/clang" CFLAGS="-w" ./configure
           bear make -j $(nproc) -l $(nproc) --output-sync
 
       - name: Convert Icecast
@@ -3429,7 +3429,7 @@ jobs:
           tar -xvzf ${{env.benchmark_tar_dir}}/icecast-2.4.4.tar.gz
           cd icecast-2.4.4
           sed -i '/_GNU_SOURCE/d' configure
-          CC="${{env.builddir}}/bin/clang" ./configure
+          CC="${{env.builddir}}/bin/clang" CFLAGS="-w" ./configure
           bear make -j $(nproc) -l $(nproc) --output-sync
 
       - name: Convert Icecast
@@ -3473,7 +3473,7 @@ jobs:
           tar -xvzf ${{env.benchmark_tar_dir}}/icecast-2.4.4.tar.gz
           cd icecast-2.4.4
           sed -i '/_GNU_SOURCE/d' configure
-          CC="${{env.builddir}}/bin/clang" ./configure
+          CC="${{env.builddir}}/bin/clang" CFLAGS="-w" ./configure
           bear make -j $(nproc) -l $(nproc) --output-sync
 
       - name: Convert Icecast
@@ -3517,7 +3517,7 @@ jobs:
           tar -xvzf ${{env.benchmark_tar_dir}}/icecast-2.4.4.tar.gz
           cd icecast-2.4.4
           sed -i '/_GNU_SOURCE/d' configure
-          CC="${{env.builddir}}/bin/clang" ./configure
+          CC="${{env.builddir}}/bin/clang" CFLAGS="-w" ./configure
           bear make -j $(nproc) -l $(nproc) --output-sync
 
       - name: Convert Icecast
@@ -3561,7 +3561,7 @@ jobs:
           tar -xvzf ${{env.benchmark_tar_dir}}/icecast-2.4.4.tar.gz
           cd icecast-2.4.4
           sed -i '/_GNU_SOURCE/d' configure
-          CC="${{env.builddir}}/bin/clang" ./configure
+          CC="${{env.builddir}}/bin/clang" CFLAGS="-w" ./configure
           bear make -j $(nproc) -l $(nproc) --output-sync
 
       - name: Convert Icecast
@@ -3605,7 +3605,7 @@ jobs:
           tar -xvzf ${{env.benchmark_tar_dir}}/icecast-2.4.4.tar.gz
           cd icecast-2.4.4
           sed -i '/_GNU_SOURCE/d' configure
-          CC="${{env.builddir}}/bin/clang" ./configure
+          CC="${{env.builddir}}/bin/clang" CFLAGS="-w" ./configure
           bear make -j $(nproc) -l $(nproc) --output-sync
 
       - name: Convert Icecast
@@ -3650,7 +3650,7 @@ jobs:
           tar -xvzf ${{env.benchmark_tar_dir}}/icecast-2.4.4.tar.gz
           cd icecast-2.4.4
           sed -i '/_GNU_SOURCE/d' configure
-          CC="${{env.builddir}}/bin/clang" ./configure
+          CC="${{env.builddir}}/bin/clang" CFLAGS="-w" ./configure
           bear make -j $(nproc) -l $(nproc) --output-sync
 
       - name: Convert Icecast
@@ -3695,7 +3695,7 @@ jobs:
           tar -xvzf ${{env.benchmark_tar_dir}}/icecast-2.4.4.tar.gz
           cd icecast-2.4.4
           sed -i '/_GNU_SOURCE/d' configure
-          CC="${{env.builddir}}/bin/clang" ./configure
+          CC="${{env.builddir}}/bin/clang" CFLAGS="-w" ./configure
           bear make -j $(nproc) -l $(nproc) --output-sync
 
       - name: Convert Icecast
