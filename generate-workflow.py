@@ -92,7 +92,12 @@ benchmarks = [
         friendly_name='PtrDist',
         dir_name='ptrdist-1.1',
         build_cmds=textwrap.dedent(f'''\
-        (cd yacr2 ; sed -i '/#define.*_CODE/d' *.c)
+        ( cd yacr2 ; \\
+          for header in *.h  ; do
+            src="$(basename "$header" .h).c"
+            test "$src" -e || continue
+            sed -f <( echo -n "s/#include \\"$header\\"/" ; sed 's/\\//\\\\//g' "$header" | awk 1 ORS='\\\\n' ; echo '/' ) -i "$src"
+          done )
         for i in {' '.join(ptrdist_components)} ; do \\
           (cd $i ; bear {make_checkedc} LOCAL_CFLAGS="-D_ISOC99_SOURCE") \\
         done
