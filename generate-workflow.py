@@ -95,7 +95,22 @@ benchmarks = [
         name='ptrdist',
         friendly_name='PtrDist',
         dir_name='ptrdist-1.1',
+        # Patch yacr2 to work around correctcomputation/checkedc-clang#374.
+        # For each header file, the translation unit for the corresponding
+        # source files defines a macro *_CODE that causes the preprocessesor to
+        # take a different branch. To avoid issues that arise when rewriting is
+        # required in both branches in a single file, we create copies of the
+        # header files that are included only by the single source file that
+        # defines the relevant *_CODE macro.
         build_cmds=textwrap.dedent(f'''\
+        ( cd yacr2 ; \\
+          for header in *.h  ; do
+            src="$(basename "$header" .h).c"
+            new_header="$(basename "$header" .h)_code.h"
+            test -e "$src" || continue
+            cp "$header" "$new_header"
+            sed -i "s/#include \\"$header\\"/#include \\"$new_header\\"/" "$src"
+          done )
         for i in {' '.join(ptrdist_components)} ; do \\
           (cd $i ; bear {make_checkedc} LOCAL_CFLAGS="-D_ISOC99_SOURCE") \\
         done
