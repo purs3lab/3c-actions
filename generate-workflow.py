@@ -95,8 +95,10 @@ benchmarks = [
         ( cd yacr2 ; \\
           for header in *.h  ; do
             src="$(basename "$header" .h).c"
+            new_header="$(basename "$header" .h)_code.h"
             test -e "$src" || continue
-            sed -f <( echo -n "s/#include \\"$header\\"/" ; sed 's/\\//\\\\\\//g' "$header" | awk 1 ORS='\\\\n' ; echo '/' ) -i "$src"
+            cp "$header" "$new_header"
+            sed -i "s/#include \\"$header\\"/#include \\"$new_header\\"/" "$src"
           done )
         for i in {' '.join(ptrdist_components)} ; do \\
           (cd $i ; bear {make_checkedc} LOCAL_CFLAGS="-D_ISOC99_SOURCE") \\
