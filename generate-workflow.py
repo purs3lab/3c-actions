@@ -390,8 +390,8 @@ def generate_benchmark_job(out: TextIO,
     # "Subvariant" = Variant object + the extra flags mentioned above. We use
     # the name "subvariant" even though the subvariants may be grouped by extra
     # flag value before variant. (Better naming ideas?)
-    subvariant_name = (('expand_macros_' if expand_macros else '') +
-                       ('alltypes' if variant.alltypes else 'no_alltypes'))
+    subvariant_name = (('' if expand_macros else 'no_') + 'expand_macros_' +
+                       ('' if variant.alltypes else 'no_') + 'alltypes')
 
     subvariant_convert_extra = ''
     if variant.alltypes:
