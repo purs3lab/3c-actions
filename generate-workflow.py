@@ -5,12 +5,15 @@
 # jobs with similar content and as far as we know, the workflow language has
 # essentially no support for code reuse. :(
 
-import itertools
+from abc import ABC, abstractmethod
+from dataclasses import dataclass
+import os
 import textwrap
-from typing import List, NamedTuple, Optional
+from typing import Dict, List, Optional, TextIO, Any
 
 
-class BenchmarkComponent(NamedTuple):
+@dataclass
+class BenchmarkComponent:
     # Default: Same as the benchmark's friendly_name.
     friendly_name: Optional[str] = None
     # Default: The benchmark's main directory.
@@ -19,7 +22,8 @@ class BenchmarkComponent(NamedTuple):
     build_dir: Optional[str] = None
 
 
-class BenchmarkInfo(NamedTuple):
+@dataclass
+class BenchmarkInfo:
     name: str
     friendly_name: str
     dir_name: str
@@ -215,12 +219,12 @@ HEADER = '''\
 # generate-workflow.py instead and re-run it. Some things in this file are
 # explained by comments in generate-workflow.py.
 
-name: 3C benchmark tests
+name: {workflow.name}
 
 on:
-  # Run every day at 3:00 AM EDT (i.e., 7 am UTC)
+  # Run every day at the following time.
   schedule:
-    - cron: "0 7 * * *"
+    - cron: "{workflow.scheduletime}"
   workflow_dispatch:
     inputs:
       branch:
@@ -326,110 +330,232 @@ jobs:
 HEADER = HEADER.replace('{ninja_std}', ninja_std)
 
 
-class Step(NamedTuple):
+# Apparently Step has to be a dataclass in order for its field declaration to be
+# seen by the dataclass implementation in the subclasses.
+@dataclass
+class Step(ABC):
     name: str
-    run: str  # Trailing newline but not blank line
+
+    @abstractmethod
+    def format_body(self):
+        raise NotImplementedError
 
     def __str__(self):
-        part1 = textwrap.dedent(f'''\
-        - name: {self.name}
-          run: |
-        ''')
-        part2 = textwrap.indent(self.run, 4 * ' ')
-        return textwrap.indent(part1 + part2, 6 * ' ')
+        step = (f'- name: {self.name}\n' +
+                textwrap.indent(self.format_body(), 2 * ' '))
+        return textwrap.indent(step, 6 * ' ')
+
+
+@dataclass
+class RunStep(Step):
+    run: str  # Trailing newline but not blank line
+
+    def format_body(self):
+        return 'run: |\n' + textwrap.indent(self.run, 2 * ' ')
+
+
+@dataclass
+class ActionStep(Step):
+    action_name: str
+    args: Dict[str, Any]
+
+    def format_body(self):
+        formatted_args = ''.join(
+            f'{arg_key}: {arg_val}\n' for arg_key, arg_val in self.args.items())
+        return (textwrap.dedent(f'''\
+            uses: {self.action_name}
+            with:
+        ''') + textwrap.indent(formatted_args, 2 * ' '))
 
 
 def ensure_trailing_newline(s: str):
     return s + '\n' if s != '' and not s.endswith('\n') else s
 
 
-with open('.github/workflows/main.yml', 'w') as out:
-    out.write(HEADER)
-    for binfo in benchmarks:
-        for expand_macros, alltypes in itertools.product((False, True),
-                                                         (False, True)):
-            variant = (('expand_macros_' if expand_macros else '') +
-                       ('alltypes' if alltypes else 'no_alltypes'))
-            variant_friendly = (('' if expand_macros else 'not ') +
-                                'macro-expanded, ' +
-                                ('' if alltypes else 'no ') + '-alltypes')
-            variant_dir = '${{env.benchmark_conv_dir}}/' + variant
-            convert_extra = (ensure_trailing_newline(binfo.convert_extra)
-                             if binfo.convert_extra is not None else '')
-            build_converted_cmd = binfo.build_converted_cmd.rstrip('\n')
-            # Python argparse thinks `--extra-3c-arg -alltypes` is two options
-            # rather than an option with an argument.
-            at_flag = '--extra-3c-arg=-alltypes \\\n' if alltypes else ''
-            embc_flag = ('--expand_macros_before_conversion \\\n'
-                         if expand_macros else '')
-            at_ignore_step = ' (ignore failure)' if alltypes else ''
-            at_ignore_code = ' || true' if alltypes else ''
+# To make `WorkflowConfig` definitions more concise, this `Variant` class does
+# not include some extra flags that are currently done in Cartesian product with
+# `Variant` objects. Currently, the only such extra flag is expand_macros.
+@dataclass
+class Variant:
+    alltypes: bool
+    extra_3c_args: List[str] = ''
+    friendly_name_suffix: str = ''
 
-            out.write(f'''\
 
-  test_{binfo.name}_{variant}:
-    name: Test {binfo.friendly_name} ({variant_friendly})
+def generate_benchmark_job(out: TextIO,
+                           binfo: BenchmarkInfo,
+                           expand_macros: bool,
+                           variant: Variant,
+                           generate_stats=False):
+    # "Subvariant" = Variant object + the extra flags mentioned above. We use
+    # the name "subvariant" even though the subvariants may be grouped by extra
+    # flag value before variant. (Better naming ideas?)
+    subvariant_name = (('' if expand_macros else 'no_') + 'expand_macros_' +
+                       ('' if variant.alltypes else 'no_') + 'alltypes')
+
+    subvariant_convert_extra = ''
+    if variant.alltypes:
+        # Python argparse thinks `--extra-3c-arg -alltypes` is two options
+        # rather than an option with an argument.
+        subvariant_convert_extra += '--extra-3c-arg=-alltypes \\\n'
+    # XXX: An argument could be made for putting this before -alltypes for
+    # consistency with the subvariant name. For now, I don't want the diff in
+    # the generated workflow.
+    if expand_macros:
+        subvariant_convert_extra += '--expand_macros_before_conversion \\\n'
+
+    for earg in variant.extra_3c_args:
+        subvariant_convert_extra += '--extra-3c-arg=' + earg + ' \\\n'
+        subvariant_name += '_' + earg.lstrip('-').replace('-', '_')
+
+    subvariant_friendly = (('' if expand_macros else 'not ') +
+                           'macro-expanded, ' +
+                           ('' if variant.alltypes else 'no ') + '-alltypes' +
+                           variant.friendly_name_suffix)
+    subvariant_dir = '${{env.benchmark_conv_dir}}/' + subvariant_name
+    benchmark_convert_extra = (ensure_trailing_newline(binfo.convert_extra)
+                               if binfo.convert_extra is not None else '')
+    build_converted_cmd = binfo.build_converted_cmd.rstrip('\n')
+    at_ignore_step = ' (ignore failure)' if variant.alltypes else ''
+    at_ignore_code = ' || true' if variant.alltypes else ''
+
+    # The blank line below is important: it gets us blank lines between jobs
+    # without a blank line at the very end of the workflow file.
+    out.write(f'''\
+
+  test_{binfo.name}_{subvariant_name}:
+    name: Test {binfo.friendly_name} ({subvariant_friendly})
     needs: build_3c
     runs-on: self-hosted
     steps:
 ''')
 
-            full_build_cmds = textwrap.dedent(f'''\
-            mkdir -p {variant_dir}
-            cd {variant_dir}
-            tar -xvzf ${{{{env.benchmark_tar_dir}}}}/{binfo.dir_name}.tar.gz
-            cd {binfo.dir_name}
-            ''') + ensure_trailing_newline(binfo.build_cmds)
+    full_build_cmds = textwrap.dedent(f'''\
+        mkdir -p {subvariant_dir}
+        cd {subvariant_dir}
+        tar -xvzf ${{{{env.benchmark_tar_dir}}}}/{binfo.dir_name}.tar.gz
+        cd {binfo.dir_name}
+    ''') + ensure_trailing_newline(binfo.build_cmds)
 
-            steps = [Step('Build ' + binfo.friendly_name, full_build_cmds)]
+    steps = [RunStep('Build ' + binfo.friendly_name, full_build_cmds)]
 
-            components = binfo.components
-            if components is None:
-                components = [BenchmarkComponent(binfo.friendly_name)]
+    components = binfo.components
+    if components is None:
+        components = [BenchmarkComponent(binfo.friendly_name)]
 
-            for component in components:
-                component_dir = f'{variant_dir}/{binfo.dir_name}'
-                if component.subdir is not None:
-                    component_dir += '/' + component.subdir
-                component_friendly_name = (component.friendly_name or
-                                           binfo.friendly_name)
+    for component in components:
+        component_dir = f'{subvariant_dir}/{binfo.dir_name}'
+        if component.subdir is not None:
+            component_dir += '/' + component.subdir
+        component_friendly_name = (component.friendly_name or
+                                   binfo.friendly_name)
 
-                # yapf: disable
-                convert_flags = textwrap.indent(
-                    convert_extra +
-                    '--includeDir ${{env.include_dir}} \\\n' +
-                    '--prog_name ${{env.builddir}}/bin/3c \\\n' +
-                    at_flag + embc_flag +
-                    '--project_path .' +
-                    (f' \\\n--build_dir {component.build_dir}'
-                     if component.build_dir is not None else '') +
-                    '\n',
-                    2 * ' ')
-                # yapf: enable
-                steps.append(
-                    Step(
-                        'Convert ' + component_friendly_name,
-                        textwrap.dedent(f'''\
+        # yapf: disable
+        convert_flags = textwrap.indent(
+            benchmark_convert_extra +
+            '--includeDir ${{env.include_dir}} \\\n' +
+            '--prog_name ${{env.builddir}}/bin/3c \\\n' +
+            subvariant_convert_extra +
+            '--project_path .' +
+            (f' \\\n--build_dir {component.build_dir}'
+             if component.build_dir is not None else '') +
+            '\n',
+            2 * ' ')
+        # yapf: enable
+        steps.append(
+            RunStep(
+                'Convert ' + component_friendly_name,
+                textwrap.dedent(f'''\
+                    cd {component_dir}
+                    ${{{{env.port_tools}}}}/convert_project.py \\
+                ''') + convert_flags))
+
+        if generate_stats:
+            perf_dir_name = "3c_performance_stats/"
+            steps.append(
+                RunStep(
+                    'Copy 3c stats of ' + component_friendly_name,
+                    textwrap.dedent(f'''\
                         cd {component_dir}
-                        ${{{{env.port_tools}}}}/convert_project.py \\
-                        ''') + convert_flags))
+                        mkdir {perf_dir_name}
+                        cp *.json {perf_dir_name}
+                    ''')))
+            # Same idea as the job name but using the component name instead of
+            # the benchmark name.
+            perf_artifact_name = f'{component_friendly_name}_{subvariant_name}'
+            perf_dir = os.path.join(component_dir, perf_dir_name)
+            steps.append(
+                ActionStep(
+                    'Upload 3c stats of ' + component_friendly_name,
+                    'actions/upload-artifact@v2', {
+                        'name': perf_artifact_name,
+                        'path': perf_dir,
+                        'retention-days': 5
+                    }))
 
-                steps.append(
-                    Step(
-                        'Build converted ' + component_friendly_name +
-                        at_ignore_step,
-                        # convert_project.py sets -output-dir=out.checked as
-                        # standard.
-                        textwrap.dedent(f'''\
-                        cd {component_dir}
-                        cp -r out.checked/* .
-                        rm -r out.checked
-                        ''') +
-                        #
-                        (f'cd {component.build_dir}\n'
-                         if component.build_dir is not None else '') +
-                        f'{build_converted_cmd}{at_ignore_code}\n'))
+        steps.append(
+            RunStep(
+                'Build converted ' + component_friendly_name + at_ignore_step,
+                # convert_project.py sets -output-dir=out.checked as
+                # standard.
+                textwrap.dedent(f'''\
+                    cd {component_dir}
+                    cp -r out.checked/* .
+                    rm -r out.checked
+                ''') +
+                #
+                (f'cd {component.build_dir}\n'
+                 if component.build_dir is not None else '') +
+                f'{build_converted_cmd}{at_ignore_code}\n'))
 
-            # We want blank lines between steps but not after the last step of
-            # the last benchmark.
-            out.write('\n'.join(str(s) for s in steps))
+    # We want blank lines between steps but not after the last step of
+    # the last benchmark.
+    out.write('\n'.join(str(s) for s in steps))
+
+
+@dataclass
+class WorkflowConfig:
+    filename: str
+    friendly_name: str
+    cron_timestamp: str
+    variants: List[Variant]
+    generate_stats: bool = False
+
+
+workflow_file_configs = [
+    WorkflowConfig(filename="main",
+                   friendly_name="3C benchmark tests",
+                   cron_timestamp="0 7 * * *",
+                   variants=[Variant(alltypes=False),
+                             Variant(alltypes=True)]),
+    WorkflowConfig(
+        filename="exhaustive",
+        friendly_name="Exhaustive testing and Performance Stats",
+        # The times need to be well-separated because of
+        # https://github.com/correctcomputation/actions/issues/6 .
+        cron_timestamp="0 9 * * *",
+        variants=[
+            Variant(alltypes=False),
+            Variant(alltypes=False,
+                    extra_3c_args=['-only-g-sol'],
+                    friendly_name_suffix=', greatest solution'),
+            Variant(alltypes=False,
+                    extra_3c_args=['-only-l-sol'],
+                    friendly_name_suffix=', least solution'),
+            Variant(alltypes=True)
+        ],
+        generate_stats=True)
+]
+
+for config in workflow_file_configs:
+    with open(f'.github/workflows/{config.filename}.yml', 'w') as out:
+        # format header using workflow name and schedule time.
+        formatted_hdr = HEADER.replace('{workflow.name}', config.friendly_name)
+        formatted_hdr = formatted_hdr.replace('{workflow.scheduletime}',
+                                              config.cron_timestamp)
+        out.write(formatted_hdr)
+        for binfo in benchmarks:
+            for expand_macros in (False, True):
+                for variant in config.variants:
+                    generate_benchmark_job(out, binfo, expand_macros, variant,
+                                           config.generate_stats)
