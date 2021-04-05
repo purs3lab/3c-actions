@@ -61,6 +61,20 @@ make_std = 'make -j $(nproc) -l $(nproc) --output-sync'
 make_checkedc = f'{make_std} CC="${{{{env.builddir}}}}/bin/clang"'
 cmake_checkedc = 'cmake -DCMAKE_C_COMPILER=${{env.builddir}}/bin/clang'
 
+# We generally want to turn off all compiler warnings since there are many of
+# them in the benchmarks and they distract us from the errors we need to fix. In
+# some cases, warnings may clue us in to the cause of an error, and it may be
+# useful to temporarily turn them back on for troubleshooting.
+#
+# Some benchmarks appear to have no warnings in the code anyway (good for them!)
+# and/or have other -W flags in effect that we can't easily (and don't)
+# override, but we still pass this to all benchmarks as standard to make a best
+# effort to turn off warnings.
+#
+# There is enough variation in how we need to pass compiler options to different
+# benchmarks that we don't factor out anything more here.
+common_cflags = '-w'
+
 # There is a known incompatibility between the vsftpd version we're using and
 # Clang: vsftpd triggers a -Wenum-conversion warning that becomes an error with
 # -Werror. See, for example:
@@ -70,7 +84,10 @@ cmake_checkedc = 'cmake -DCMAKE_C_COMPILER=${{env.builddir}}/bin/clang'
 # For now, we avoid the problem by turning off -Wenum-conversion. Unfortunately,
 # the vsftpd makefile doesn't give us a way to add one flag to its CFLAGS list,
 # so we stuff the flag in CC instead.
-vsftpd_make = f'{make_std} CC="${{{{env.builddir}}}}/bin/clang -Wno-enum-conversion"'
+#
+# NOTE: -Wenum-conversion is redundant with -w in common_cflags, but we keep it
+# in case we turn off -w.
+vsftpd_make = f'{make_std} CC="${{{{env.builddir}}}}/bin/clang {common_cflags} -Wno-enum-conversion"'
 
 ptrdist_components = ['anagram', 'bc', 'ft', 'ks', 'yacr2']
 
@@ -118,11 +135,11 @@ benchmarks = [
             sed -i "/#define.*_CODE/d; /#include \\"$header\\"/a#include \\"$new_header\\"" "$src"
           done )
         for i in {' '.join(ptrdist_components)} ; do \\
-          (cd $i ; bear {make_checkedc} LOCAL_CFLAGS="-D_ISOC99_SOURCE") \\
+          (cd $i ; bear {make_checkedc} LOCAL_CFLAGS="{common_cflags} -D_ISOC99_SOURCE") \\
         done
         '''),
         build_converted_cmd=(
-            f'{make_checkedc} -k LOCAL_CFLAGS="-D_ISOC99_SOURCE"'),
+            f'{make_checkedc} -k LOCAL_CFLAGS="{common_cflags} -D_ISOC99_SOURCE"'),
         components=[
             BenchmarkComponent(friendly_name=c, subdir=c)
             for c in ptrdist_components
@@ -136,7 +153,7 @@ benchmarks = [
         dir_name='libarchive-3.4.3',
         build_cmds=textwrap.dedent(f'''\
         cd build
-        {cmake_checkedc} -G Ninja -DCMAKE_C_FLAGS="-w -D_GNU_SOURCE" ..
+        {cmake_checkedc} -G Ninja -DCMAKE_C_FLAGS="{common_cflags} -D_GNU_SOURCE" ..
         bear {ninja_std} archive
         '''),
         build_converted_cmd=f'{ninja_std} -k 0 archive',
@@ -152,7 +169,7 @@ benchmarks = [
         friendly_name='Lua',
         dir_name='lua-5.4.1',
         build_cmds=textwrap.dedent(f'''\
-        bear {make_checkedc} linux
+        bear {make_checkedc} CFLAGS="{common_cflags}" linux
         ( cd src ; \\
           clang-rename-10 -pl -i \\
             --qualified-name=main \\
@@ -165,7 +182,7 @@ benchmarks = [
         # original rename.
         build_converted_cmd=textwrap.dedent(f'''\
         sed -i "s/luac_main/main/" src/luac.c
-        {make_checkedc} -k linux
+        {make_checkedc} -k CFLAGS="{common_cflags}" linux
         ''')),
 
     # LibTiff
@@ -175,7 +192,7 @@ benchmarks = [
         friendly_name='LibTiff',
         dir_name='tiff-4.1.0',
         build_cmds=textwrap.dedent(f'''\
-        {cmake_checkedc} -G Ninja -DCMAKE_C_FLAGS="-w" .
+        {cmake_checkedc} -G Ninja -DCMAKE_C_FLAGS="{common_cflags}" .
         bear {ninja_std} tiff
         ( cd tools ; \\
           for i in *.c ; do \\
@@ -200,7 +217,7 @@ benchmarks = [
         build_cmds=textwrap.dedent(f'''\
         mkdir build
         cd build
-        {cmake_checkedc} -G Ninja -DCMAKE_C_FLAGS="-w" ..
+        {cmake_checkedc} -G Ninja -DCMAKE_C_FLAGS="{common_cflags}" ..
         bear {ninja_std} zlib
         '''),
         build_converted_cmd=f'{ninja_std} -k 0 zlib',
@@ -220,7 +237,7 @@ benchmarks = [
         # autoconf here, so just patch the generated file. :/
         build_cmds=textwrap.dedent(f'''\
         sed -i '/_GNU_SOURCE/d' configure
-        CC="${{{{env.builddir}}}}/bin/clang" ./configure
+        CC="${{{{env.builddir}}}}/bin/clang" CFLAGS="{common_cflags}" ./configure
         bear {make_std}
         '''),
         build_converted_cmd=f'{make_std} -k'),
