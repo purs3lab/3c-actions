@@ -112,7 +112,7 @@ jobs:
     steps:
       - name: Test
         run: |
-          cd ${env.builddir}
+          true
 
   test_vsftpd_no_expand_macros_no_alltypes:
     name: Test Vsftpd (not macro-expanded, no -alltypes)
@@ -236,7 +236,7 @@ jobs:
     steps:
       - name: Test
         run: |
-          cd ${env.builddir}
+          true
 
   test_ptrdist_no_expand_macros_no_alltypes:
     name: Test PtrDist (not macro-expanded, no -alltypes)
@@ -660,7 +660,7 @@ jobs:
     steps:
       - name: Test
         run: |
-          cd ${env.builddir}
+          true
 
   test_libarchive_no_expand_macros_no_alltypes:
     name: Test LibArchive (not macro-expanded, no -alltypes)
@@ -804,7 +804,7 @@ jobs:
     steps:
       - name: Test
         run: |
-          cd ${env.builddir}
+          true
 
   test_lua_no_expand_macros_no_alltypes:
     name: Test Lua (not macro-expanded, no -alltypes)
@@ -952,7 +952,7 @@ jobs:
     steps:
       - name: Test
         run: |
-          cd ${env.builddir}
+          true
 
   test_libtiff_no_expand_macros_no_alltypes:
     name: Test LibTiff (not macro-expanded, no -alltypes)
@@ -1116,7 +1116,7 @@ jobs:
     steps:
       - name: Test
         run: |
-          cd ${env.builddir}
+          true
 
   test_zlib_no_expand_macros_no_alltypes:
     name: Test ZLib (not macro-expanded, no -alltypes)
@@ -1264,7 +1264,7 @@ jobs:
     steps:
       - name: Test
         run: |
-          cd ${env.builddir}
+          true
 
   test_icecast_no_expand_macros_no_alltypes:
     name: Test Icecast (not macro-expanded, no -alltypes)

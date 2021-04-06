@@ -420,7 +420,7 @@ def generate_parent_job(out: TextIO, binfo: BenchmarkInfo):
     steps:
       - name: Test
         run: |
-          cd ${{env.builddir}}
+          true
 ''')
 
 
