@@ -411,6 +411,16 @@ class Variant:
     friendly_name_suffix: str = ''
 
 
+def generate_parent_job(out: TextIO, binfo: BenchmarkInfo):
+    out.write(f'''\
+  {binfo.name}:
+    name: {binfo.friendly_name}
+    needs: build_3c
+    runs-on: self-hosted
+    steps: true
+''')
+
+
 def generate_benchmark_job(out: TextIO,
                            binfo: BenchmarkInfo,
                            expand_macros: bool,
@@ -454,7 +464,7 @@ def generate_benchmark_job(out: TextIO,
 
   test_{binfo.name}_{subvariant_name}:
     name: Test {binfo.friendly_name} ({subvariant_friendly})
-    needs: build_3c
+    needs: {binfo.name}
     runs-on: self-hosted
     steps:
 ''')
@@ -587,6 +597,7 @@ for config in workflow_file_configs:
                                               config.cron_timestamp)
         out.write(formatted_hdr)
         for binfo in benchmarks:
+            generate_parent_job(out, binfo)
             for expand_macros in (False, True):
                 for variant in config.variants:
                     generate_benchmark_job(out, binfo, expand_macros, variant,

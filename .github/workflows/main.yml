@@ -105,10 +105,15 @@ jobs:
           ninja -l $(nproc) check-3c
 
   # Convert our benchmark programs
+  vsftpd:
+    name: Vsftpd
+    needs: build_3c
+    runs-on: self-hosted
+    steps: true
 
   test_vsftpd_no_expand_macros_no_alltypes:
     name: Test Vsftpd (not macro-expanded, no -alltypes)
-    needs: build_3c
+    needs: vsftpd
     runs-on: self-hosted
     steps:
       - name: Build Vsftpd
@@ -136,7 +141,7 @@ jobs:
 
   test_vsftpd_no_expand_macros_alltypes:
     name: Test Vsftpd (not macro-expanded, -alltypes)
-    needs: build_3c
+    needs: vsftpd
     runs-on: self-hosted
     steps:
       - name: Build Vsftpd
@@ -165,7 +170,7 @@ jobs:
 
   test_vsftpd_expand_macros_no_alltypes:
     name: Test Vsftpd (macro-expanded, no -alltypes)
-    needs: build_3c
+    needs: vsftpd
     runs-on: self-hosted
     steps:
       - name: Build Vsftpd
@@ -194,7 +199,7 @@ jobs:
 
   test_vsftpd_expand_macros_alltypes:
     name: Test Vsftpd (macro-expanded, -alltypes)
-    needs: build_3c
+    needs: vsftpd
     runs-on: self-hosted
     steps:
       - name: Build Vsftpd
@@ -221,10 +226,15 @@ jobs:
           cp -r out.checked/* .
           rm -r out.checked
           make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang -w -Wno-enum-conversion" -k || true
+  ptrdist:
+    name: PtrDist
+    needs: build_3c
+    runs-on: self-hosted
+    steps: true
 
   test_ptrdist_no_expand_macros_no_alltypes:
     name: Test PtrDist (not macro-expanded, no -alltypes)
-    needs: build_3c
+    needs: ptrdist
     runs-on: self-hosted
     steps:
       - name: Build PtrDist
@@ -323,7 +333,7 @@ jobs:
 
   test_ptrdist_no_expand_macros_alltypes:
     name: Test PtrDist (not macro-expanded, -alltypes)
-    needs: build_3c
+    needs: ptrdist
     runs-on: self-hosted
     steps:
       - name: Build PtrDist
@@ -427,7 +437,7 @@ jobs:
 
   test_ptrdist_expand_macros_no_alltypes:
     name: Test PtrDist (macro-expanded, no -alltypes)
-    needs: build_3c
+    needs: ptrdist
     runs-on: self-hosted
     steps:
       - name: Build PtrDist
@@ -531,7 +541,7 @@ jobs:
 
   test_ptrdist_expand_macros_alltypes:
     name: Test PtrDist (macro-expanded, -alltypes)
-    needs: build_3c
+    needs: ptrdist
     runs-on: self-hosted
     steps:
       - name: Build PtrDist
@@ -637,10 +647,15 @@ jobs:
           cp -r out.checked/* .
           rm -r out.checked
           make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -D_ISOC99_SOURCE" || true
+  libarchive:
+    name: LibArchive
+    needs: build_3c
+    runs-on: self-hosted
+    steps: true
 
   test_libarchive_no_expand_macros_no_alltypes:
     name: Test LibArchive (not macro-expanded, no -alltypes)
-    needs: build_3c
+    needs: libarchive
     runs-on: self-hosted
     steps:
       - name: Build LibArchive
@@ -673,7 +688,7 @@ jobs:
 
   test_libarchive_no_expand_macros_alltypes:
     name: Test LibArchive (not macro-expanded, -alltypes)
-    needs: build_3c
+    needs: libarchive
     runs-on: self-hosted
     steps:
       - name: Build LibArchive
@@ -707,7 +722,7 @@ jobs:
 
   test_libarchive_expand_macros_no_alltypes:
     name: Test LibArchive (macro-expanded, no -alltypes)
-    needs: build_3c
+    needs: libarchive
     runs-on: self-hosted
     steps:
       - name: Build LibArchive
@@ -741,7 +756,7 @@ jobs:
 
   test_libarchive_expand_macros_alltypes:
     name: Test LibArchive (macro-expanded, -alltypes)
-    needs: build_3c
+    needs: libarchive
     runs-on: self-hosted
     steps:
       - name: Build LibArchive
@@ -773,10 +788,15 @@ jobs:
           rm -r out.checked
           cd build
           ninja -l $(nproc) -k 0 archive || true
+  lua:
+    name: Lua
+    needs: build_3c
+    runs-on: self-hosted
+    steps: true
 
   test_lua_no_expand_macros_no_alltypes:
     name: Test Lua (not macro-expanded, no -alltypes)
-    needs: build_3c
+    needs: lua
     runs-on: self-hosted
     steps:
       - name: Build Lua
@@ -810,7 +830,7 @@ jobs:
 
   test_lua_no_expand_macros_alltypes:
     name: Test Lua (not macro-expanded, -alltypes)
-    needs: build_3c
+    needs: lua
     runs-on: self-hosted
     steps:
       - name: Build Lua
@@ -845,7 +865,7 @@ jobs:
 
   test_lua_expand_macros_no_alltypes:
     name: Test Lua (macro-expanded, no -alltypes)
-    needs: build_3c
+    needs: lua
     runs-on: self-hosted
     steps:
       - name: Build Lua
@@ -880,7 +900,7 @@ jobs:
 
   test_lua_expand_macros_alltypes:
     name: Test Lua (macro-expanded, -alltypes)
-    needs: build_3c
+    needs: lua
     runs-on: self-hosted
     steps:
       - name: Build Lua
@@ -913,10 +933,15 @@ jobs:
           rm -r out.checked
           sed -i "s/luac_main/main/" src/luac.c
           make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k CFLAGS="-w" linux || true
+  libtiff:
+    name: LibTiff
+    needs: build_3c
+    runs-on: self-hosted
+    steps: true
 
   test_libtiff_no_expand_macros_no_alltypes:
     name: Test LibTiff (not macro-expanded, no -alltypes)
-    needs: build_3c
+    needs: libtiff
     runs-on: self-hosted
     steps:
       - name: Build LibTiff
@@ -954,7 +979,7 @@ jobs:
 
   test_libtiff_no_expand_macros_alltypes:
     name: Test LibTiff (not macro-expanded, -alltypes)
-    needs: build_3c
+    needs: libtiff
     runs-on: self-hosted
     steps:
       - name: Build LibTiff
@@ -993,7 +1018,7 @@ jobs:
 
   test_libtiff_expand_macros_no_alltypes:
     name: Test LibTiff (macro-expanded, no -alltypes)
-    needs: build_3c
+    needs: libtiff
     runs-on: self-hosted
     steps:
       - name: Build LibTiff
@@ -1032,7 +1057,7 @@ jobs:
 
   test_libtiff_expand_macros_alltypes:
     name: Test LibTiff (macro-expanded, -alltypes)
-    needs: build_3c
+    needs: libtiff
     runs-on: self-hosted
     steps:
       - name: Build LibTiff
@@ -1069,10 +1094,15 @@ jobs:
           cp -r out.checked/* .
           rm -r out.checked
           ninja -l $(nproc) -k 0 tiff || true
+  zlib:
+    name: ZLib
+    needs: build_3c
+    runs-on: self-hosted
+    steps: true
 
   test_zlib_no_expand_macros_no_alltypes:
     name: Test ZLib (not macro-expanded, no -alltypes)
-    needs: build_3c
+    needs: zlib
     runs-on: self-hosted
     steps:
       - name: Build ZLib
@@ -1106,7 +1136,7 @@ jobs:
 
   test_zlib_no_expand_macros_alltypes:
     name: Test ZLib (not macro-expanded, -alltypes)
-    needs: build_3c
+    needs: zlib
     runs-on: self-hosted
     steps:
       - name: Build ZLib
@@ -1141,7 +1171,7 @@ jobs:
 
   test_zlib_expand_macros_no_alltypes:
     name: Test ZLib (macro-expanded, no -alltypes)
-    needs: build_3c
+    needs: zlib
     runs-on: self-hosted
     steps:
       - name: Build ZLib
@@ -1176,7 +1206,7 @@ jobs:
 
   test_zlib_expand_macros_alltypes:
     name: Test ZLib (macro-expanded, -alltypes)
-    needs: build_3c
+    needs: zlib
     runs-on: self-hosted
     steps:
       - name: Build ZLib
@@ -1209,10 +1239,15 @@ jobs:
           rm -r out.checked
           cd build
           ninja -l $(nproc) -k 0 zlib || true
+  icecast:
+    name: Icecast
+    needs: build_3c
+    runs-on: self-hosted
+    steps: true
 
   test_icecast_no_expand_macros_no_alltypes:
     name: Test Icecast (not macro-expanded, no -alltypes)
-    needs: build_3c
+    needs: icecast
     runs-on: self-hosted
     steps:
       - name: Build Icecast
@@ -1242,7 +1277,7 @@ jobs:
 
   test_icecast_no_expand_macros_alltypes:
     name: Test Icecast (not macro-expanded, -alltypes)
-    needs: build_3c
+    needs: icecast
     runs-on: self-hosted
     steps:
       - name: Build Icecast
@@ -1273,7 +1308,7 @@ jobs:
 
   test_icecast_expand_macros_no_alltypes:
     name: Test Icecast (macro-expanded, no -alltypes)
-    needs: build_3c
+    needs: icecast
     runs-on: self-hosted
     steps:
       - name: Build Icecast
@@ -1304,7 +1339,7 @@ jobs:
 
   test_icecast_expand_macros_alltypes:
     name: Test Icecast (macro-expanded, -alltypes)
-    needs: build_3c
+    needs: icecast
     runs-on: self-hosted
     steps:
       - name: Build Icecast

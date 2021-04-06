@@ -105,10 +105,15 @@ jobs:
           ninja -l $(nproc) check-3c
 
   # Convert our benchmark programs
+  vsftpd:
+    name: Vsftpd
+    needs: build_3c
+    runs-on: self-hosted
+    steps: true
 
   test_vsftpd_no_expand_macros_no_alltypes:
     name: Test Vsftpd (not macro-expanded, no -alltypes)
-    needs: build_3c
+    needs: vsftpd
     runs-on: self-hosted
     steps:
       - name: Build Vsftpd
@@ -149,7 +154,7 @@ jobs:
 
   test_vsftpd_no_expand_macros_alltypes_only_g_sol:
     name: Test Vsftpd (not macro-expanded, -alltypes, greatest solution)
-    needs: build_3c
+    needs: vsftpd
     runs-on: self-hosted
     steps:
       - name: Build Vsftpd
@@ -192,7 +197,7 @@ jobs:
 
   test_vsftpd_no_expand_macros_alltypes_only_l_sol:
     name: Test Vsftpd (not macro-expanded, -alltypes, least solution)
-    needs: build_3c
+    needs: vsftpd
     runs-on: self-hosted
     steps:
       - name: Build Vsftpd
@@ -235,7 +240,7 @@ jobs:
 
   test_vsftpd_no_expand_macros_alltypes_disable_rds:
     name: Test Vsftpd (not macro-expanded, -alltypes, CCured solution)
-    needs: build_3c
+    needs: vsftpd
     runs-on: self-hosted
     steps:
       - name: Build Vsftpd
@@ -244,7 +249,7 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes_disable_rds
           tar -xvzf ${{env.benchmark_tar_dir}}/vsftpd-3.0.3.tar.gz
           cd vsftpd-3.0.3
-          bear make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang -Wno-enum-conversion"
+          bear make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang -w -Wno-enum-conversion"
 
       - name: Convert Vsftpd
         run: |
@@ -274,11 +279,11 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes_disable_rds/vsftpd-3.0.3
           cp -r out.checked/* .
           rm -r out.checked
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang -Wno-enum-conversion" -k || true
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang -w -Wno-enum-conversion" -k || true
 
   test_vsftpd_no_expand_macros_alltypes:
     name: Test Vsftpd (not macro-expanded, -alltypes)
-    needs: build_3c
+    needs: vsftpd
     runs-on: self-hosted
     steps:
       - name: Build Vsftpd
@@ -320,7 +325,7 @@ jobs:
 
   test_vsftpd_expand_macros_no_alltypes:
     name: Test Vsftpd (macro-expanded, no -alltypes)
-    needs: build_3c
+    needs: vsftpd
     runs-on: self-hosted
     steps:
       - name: Build Vsftpd
@@ -362,7 +367,7 @@ jobs:
 
   test_vsftpd_expand_macros_alltypes_only_g_sol:
     name: Test Vsftpd (macro-expanded, -alltypes, greatest solution)
-    needs: build_3c
+    needs: vsftpd
     runs-on: self-hosted
     steps:
       - name: Build Vsftpd
@@ -406,7 +411,7 @@ jobs:
 
   test_vsftpd_expand_macros_alltypes_only_l_sol:
     name: Test Vsftpd (macro-expanded, -alltypes, least solution)
-    needs: build_3c
+    needs: vsftpd
     runs-on: self-hosted
     steps:
       - name: Build Vsftpd
@@ -450,7 +455,7 @@ jobs:
 
   test_vsftpd_expand_macros_alltypes_disable_rds:
     name: Test Vsftpd (macro-expanded, -alltypes, CCured solution)
-    needs: build_3c
+    needs: vsftpd
     runs-on: self-hosted
     steps:
       - name: Build Vsftpd
@@ -459,7 +464,7 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes_disable_rds
           tar -xvzf ${{env.benchmark_tar_dir}}/vsftpd-3.0.3.tar.gz
           cd vsftpd-3.0.3
-          bear make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang -Wno-enum-conversion"
+          bear make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang -w -Wno-enum-conversion"
 
       - name: Convert Vsftpd
         run: |
@@ -490,11 +495,11 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes_disable_rds/vsftpd-3.0.3
           cp -r out.checked/* .
           rm -r out.checked
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang -Wno-enum-conversion" -k || true
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang -w -Wno-enum-conversion" -k || true
 
   test_vsftpd_expand_macros_alltypes:
     name: Test Vsftpd (macro-expanded, -alltypes)
-    needs: build_3c
+    needs: vsftpd
     runs-on: self-hosted
     steps:
       - name: Build Vsftpd
@@ -534,10 +539,15 @@ jobs:
           cp -r out.checked/* .
           rm -r out.checked
           make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang -w -Wno-enum-conversion" -k || true
+  ptrdist:
+    name: PtrDist
+    needs: build_3c
+    runs-on: self-hosted
+    steps: true
 
   test_ptrdist_no_expand_macros_no_alltypes:
     name: Test PtrDist (not macro-expanded, no -alltypes)
-    needs: build_3c
+    needs: ptrdist
     runs-on: self-hosted
     steps:
       - name: Build PtrDist
@@ -701,7 +711,7 @@ jobs:
 
   test_ptrdist_no_expand_macros_alltypes_only_g_sol:
     name: Test PtrDist (not macro-expanded, -alltypes, greatest solution)
-    needs: build_3c
+    needs: ptrdist
     runs-on: self-hosted
     steps:
       - name: Build PtrDist
@@ -875,7 +885,7 @@ jobs:
 
   test_ptrdist_no_expand_macros_alltypes_only_l_sol:
     name: Test PtrDist (not macro-expanded, -alltypes, least solution)
-    needs: build_3c
+    needs: ptrdist
     runs-on: self-hosted
     steps:
       - name: Build PtrDist
@@ -1049,7 +1059,7 @@ jobs:
 
   test_ptrdist_no_expand_macros_alltypes_disable_rds:
     name: Test PtrDist (not macro-expanded, -alltypes, CCured solution)
-    needs: build_3c
+    needs: ptrdist
     runs-on: self-hosted
     steps:
       - name: Build PtrDist
@@ -1059,15 +1069,16 @@ jobs:
           tar -xvzf ${{env.benchmark_tar_dir}}/ptrdist-1.1.tar.gz
           cd ptrdist-1.1
           ( cd yacr2 ; \
+            sed -Ei 's/^long (.*costMatrix)/ulong \1/' assign.h
             for header in *.h  ; do
               src="$(basename "$header" .h).c"
               new_header="$(basename "$header" .h)_code.h"
               test -e "$src" || continue
-              cp "$header" "$new_header"
-              sed -i "s/#include \"$header\"/#include \"$new_header\"/" "$src"
+              sed -ne '/^#ifdef.*CODE/,/#else.*CODE/{ /^#/!p; }' "$header" >"$new_header"
+              sed -i "/#define.*_CODE/d; /#include \"$header\"/a#include \"$new_header\"" "$src"
             done )
           for i in anagram bc ft ks yacr2 ; do \
-            (cd $i ; bear make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" LOCAL_CFLAGS="-D_ISOC99_SOURCE") \
+            (cd $i ; bear make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" LOCAL_CFLAGS="-w -D_ISOC99_SOURCE") \
           done
 
       - name: Convert anagram
@@ -1098,7 +1109,7 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes_disable_rds/ptrdist-1.1/anagram
           cp -r out.checked/* .
           rm -r out.checked
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-D_ISOC99_SOURCE" || true
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -D_ISOC99_SOURCE" || true
 
       - name: Convert bc
         run: |
@@ -1128,7 +1139,7 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes_disable_rds/ptrdist-1.1/bc
           cp -r out.checked/* .
           rm -r out.checked
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-D_ISOC99_SOURCE" || true
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -D_ISOC99_SOURCE" || true
 
       - name: Convert ft
         run: |
@@ -1158,7 +1169,7 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes_disable_rds/ptrdist-1.1/ft
           cp -r out.checked/* .
           rm -r out.checked
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-D_ISOC99_SOURCE" || true
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -D_ISOC99_SOURCE" || true
 
       - name: Convert ks
         run: |
@@ -1188,7 +1199,7 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes_disable_rds/ptrdist-1.1/ks
           cp -r out.checked/* .
           rm -r out.checked
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-D_ISOC99_SOURCE" || true
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -D_ISOC99_SOURCE" || true
 
       - name: Convert yacr2
         run: |
@@ -1218,11 +1229,11 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes_disable_rds/ptrdist-1.1/yacr2
           cp -r out.checked/* .
           rm -r out.checked
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-D_ISOC99_SOURCE" || true
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -D_ISOC99_SOURCE" || true
 
   test_ptrdist_no_expand_macros_alltypes:
     name: Test PtrDist (not macro-expanded, -alltypes)
-    needs: build_3c
+    needs: ptrdist
     runs-on: self-hosted
     steps:
       - name: Build PtrDist
@@ -1391,7 +1402,7 @@ jobs:
 
   test_ptrdist_expand_macros_no_alltypes:
     name: Test PtrDist (macro-expanded, no -alltypes)
-    needs: build_3c
+    needs: ptrdist
     runs-on: self-hosted
     steps:
       - name: Build PtrDist
@@ -1560,7 +1571,7 @@ jobs:
 
   test_ptrdist_expand_macros_alltypes_only_g_sol:
     name: Test PtrDist (macro-expanded, -alltypes, greatest solution)
-    needs: build_3c
+    needs: ptrdist
     runs-on: self-hosted
     steps:
       - name: Build PtrDist
@@ -1739,7 +1750,7 @@ jobs:
 
   test_ptrdist_expand_macros_alltypes_only_l_sol:
     name: Test PtrDist (macro-expanded, -alltypes, least solution)
-    needs: build_3c
+    needs: ptrdist
     runs-on: self-hosted
     steps:
       - name: Build PtrDist
@@ -1918,7 +1929,7 @@ jobs:
 
   test_ptrdist_expand_macros_alltypes_disable_rds:
     name: Test PtrDist (macro-expanded, -alltypes, CCured solution)
-    needs: build_3c
+    needs: ptrdist
     runs-on: self-hosted
     steps:
       - name: Build PtrDist
@@ -2097,7 +2108,7 @@ jobs:
 
   test_ptrdist_expand_macros_alltypes:
     name: Test PtrDist (macro-expanded, -alltypes)
-    needs: build_3c
+    needs: ptrdist
     runs-on: self-hosted
     steps:
       - name: Build PtrDist
@@ -2107,15 +2118,16 @@ jobs:
           tar -xvzf ${{env.benchmark_tar_dir}}/ptrdist-1.1.tar.gz
           cd ptrdist-1.1
           ( cd yacr2 ; \
+            sed -Ei 's/^long (.*costMatrix)/ulong \1/' assign.h
             for header in *.h  ; do
               src="$(basename "$header" .h).c"
               new_header="$(basename "$header" .h)_code.h"
               test -e "$src" || continue
-              cp "$header" "$new_header"
-              sed -i "s/#include \"$header\"/#include \"$new_header\"/" "$src"
+              sed -ne '/^#ifdef.*CODE/,/#else.*CODE/{ /^#/!p; }' "$header" >"$new_header"
+              sed -i "/#define.*_CODE/d; /#include \"$header\"/a#include \"$new_header\"" "$src"
             done )
           for i in anagram bc ft ks yacr2 ; do \
-            (cd $i ; bear make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" LOCAL_CFLAGS="-D_ISOC99_SOURCE") \
+            (cd $i ; bear make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" LOCAL_CFLAGS="-w -D_ISOC99_SOURCE") \
           done
 
       - name: Convert anagram
@@ -2146,7 +2158,7 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes/ptrdist-1.1/anagram
           cp -r out.checked/* .
           rm -r out.checked
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-D_ISOC99_SOURCE" || true
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -D_ISOC99_SOURCE" || true
 
       - name: Convert bc
         run: |
@@ -2176,7 +2188,7 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes/ptrdist-1.1/bc
           cp -r out.checked/* .
           rm -r out.checked
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-D_ISOC99_SOURCE" || true
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -D_ISOC99_SOURCE" || true
 
       - name: Convert ft
         run: |
@@ -2206,7 +2218,7 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes/ptrdist-1.1/ft
           cp -r out.checked/* .
           rm -r out.checked
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-D_ISOC99_SOURCE" || true
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -D_ISOC99_SOURCE" || true
 
       - name: Convert ks
         run: |
@@ -2236,7 +2248,7 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes/ptrdist-1.1/ks
           cp -r out.checked/* .
           rm -r out.checked
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-D_ISOC99_SOURCE" || true
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -D_ISOC99_SOURCE" || true
 
       - name: Convert yacr2
         run: |
@@ -2266,11 +2278,16 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes/ptrdist-1.1/yacr2
           cp -r out.checked/* .
           rm -r out.checked
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-D_ISOC99_SOURCE" || true
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -D_ISOC99_SOURCE" || true
+  libarchive:
+    name: LibArchive
+    needs: build_3c
+    runs-on: self-hosted
+    steps: true
 
   test_libarchive_no_expand_macros_no_alltypes:
     name: Test LibArchive (not macro-expanded, no -alltypes)
-    needs: build_3c
+    needs: libarchive
     runs-on: self-hosted
     steps:
       - name: Build LibArchive
@@ -2316,7 +2333,7 @@ jobs:
 
   test_libarchive_no_expand_macros_alltypes_only_g_sol:
     name: Test LibArchive (not macro-expanded, -alltypes, greatest solution)
-    needs: build_3c
+    needs: libarchive
     runs-on: self-hosted
     steps:
       - name: Build LibArchive
@@ -2364,7 +2381,7 @@ jobs:
 
   test_libarchive_no_expand_macros_alltypes_only_l_sol:
     name: Test LibArchive (not macro-expanded, -alltypes, least solution)
-    needs: build_3c
+    needs: libarchive
     runs-on: self-hosted
     steps:
       - name: Build LibArchive
@@ -2412,7 +2429,7 @@ jobs:
 
   test_libarchive_no_expand_macros_alltypes_disable_rds:
     name: Test LibArchive (not macro-expanded, -alltypes, CCured solution)
-    needs: build_3c
+    needs: libarchive
     runs-on: self-hosted
     steps:
       - name: Build LibArchive
@@ -2460,7 +2477,7 @@ jobs:
 
   test_libarchive_no_expand_macros_alltypes:
     name: Test LibArchive (not macro-expanded, -alltypes)
-    needs: build_3c
+    needs: libarchive
     runs-on: self-hosted
     steps:
       - name: Build LibArchive
@@ -2507,7 +2524,7 @@ jobs:
 
   test_libarchive_expand_macros_no_alltypes:
     name: Test LibArchive (macro-expanded, no -alltypes)
-    needs: build_3c
+    needs: libarchive
     runs-on: self-hosted
     steps:
       - name: Build LibArchive
@@ -2554,7 +2571,7 @@ jobs:
 
   test_libarchive_expand_macros_alltypes_only_g_sol:
     name: Test LibArchive (macro-expanded, -alltypes, greatest solution)
-    needs: build_3c
+    needs: libarchive
     runs-on: self-hosted
     steps:
       - name: Build LibArchive
@@ -2603,7 +2620,7 @@ jobs:
 
   test_libarchive_expand_macros_alltypes_only_l_sol:
     name: Test LibArchive (macro-expanded, -alltypes, least solution)
-    needs: build_3c
+    needs: libarchive
     runs-on: self-hosted
     steps:
       - name: Build LibArchive
@@ -2652,7 +2669,7 @@ jobs:
 
   test_libarchive_expand_macros_alltypes_disable_rds:
     name: Test LibArchive (macro-expanded, -alltypes, CCured solution)
-    needs: build_3c
+    needs: libarchive
     runs-on: self-hosted
     steps:
       - name: Build LibArchive
@@ -2701,7 +2718,7 @@ jobs:
 
   test_libarchive_expand_macros_alltypes:
     name: Test LibArchive (macro-expanded, -alltypes)
-    needs: build_3c
+    needs: libarchive
     runs-on: self-hosted
     steps:
       - name: Build LibArchive
@@ -2746,10 +2763,15 @@ jobs:
           rm -r out.checked
           cd build
           ninja -l $(nproc) -k 0 archive || true
+  lua:
+    name: Lua
+    needs: build_3c
+    runs-on: self-hosted
+    steps: true
 
   test_lua_no_expand_macros_no_alltypes:
     name: Test Lua (not macro-expanded, no -alltypes)
-    needs: build_3c
+    needs: lua
     runs-on: self-hosted
     steps:
       - name: Build Lua
@@ -2796,7 +2818,7 @@ jobs:
 
   test_lua_no_expand_macros_alltypes_only_g_sol:
     name: Test Lua (not macro-expanded, -alltypes, greatest solution)
-    needs: build_3c
+    needs: lua
     runs-on: self-hosted
     steps:
       - name: Build Lua
@@ -2845,7 +2867,7 @@ jobs:
 
   test_lua_no_expand_macros_alltypes_only_l_sol:
     name: Test Lua (not macro-expanded, -alltypes, least solution)
-    needs: build_3c
+    needs: lua
     runs-on: self-hosted
     steps:
       - name: Build Lua
@@ -2894,7 +2916,7 @@ jobs:
 
   test_lua_no_expand_macros_alltypes_disable_rds:
     name: Test Lua (not macro-expanded, -alltypes, CCured solution)
-    needs: build_3c
+    needs: lua
     runs-on: self-hosted
     steps:
       - name: Build Lua
@@ -2903,7 +2925,7 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes_disable_rds
           tar -xvzf ${{env.benchmark_tar_dir}}/lua-5.4.1.tar.gz
           cd lua-5.4.1
-          bear make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" linux
+          bear make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" CFLAGS="-w" linux
           ( cd src ; \
             clang-rename-10 -pl -i \
               --qualified-name=main \
@@ -2939,11 +2961,11 @@ jobs:
           cp -r out.checked/* .
           rm -r out.checked
           sed -i "s/luac_main/main/" src/luac.c
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k linux || true
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k CFLAGS="-w" linux || true
 
   test_lua_no_expand_macros_alltypes:
     name: Test Lua (not macro-expanded, -alltypes)
-    needs: build_3c
+    needs: lua
     runs-on: self-hosted
     steps:
       - name: Build Lua
@@ -2991,7 +3013,7 @@ jobs:
 
   test_lua_expand_macros_no_alltypes:
     name: Test Lua (macro-expanded, no -alltypes)
-    needs: build_3c
+    needs: lua
     runs-on: self-hosted
     steps:
       - name: Build Lua
@@ -3039,7 +3061,7 @@ jobs:
 
   test_lua_expand_macros_alltypes_only_g_sol:
     name: Test Lua (macro-expanded, -alltypes, greatest solution)
-    needs: build_3c
+    needs: lua
     runs-on: self-hosted
     steps:
       - name: Build Lua
@@ -3085,11 +3107,11 @@ jobs:
           cp -r out.checked/* .
           rm -r out.checked
           sed -i "s/luac_main/main/" src/luac.c
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k linux || true
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k CFLAGS="-w" linux || true
 
   test_lua_expand_macros_alltypes_only_l_sol:
     name: Test Lua (macro-expanded, -alltypes, least solution)
-    needs: build_3c
+    needs: lua
     runs-on: self-hosted
     steps:
       - name: Build Lua
@@ -3098,7 +3120,7 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes_only_l_sol
           tar -xvzf ${{env.benchmark_tar_dir}}/lua-5.4.1.tar.gz
           cd lua-5.4.1
-          bear make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" linux
+          bear make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" CFLAGS="-w" linux
           ( cd src ; \
             clang-rename-10 -pl -i \
               --qualified-name=main \
@@ -3139,7 +3161,7 @@ jobs:
 
   test_lua_expand_macros_alltypes_disable_rds:
     name: Test Lua (macro-expanded, -alltypes, CCured solution)
-    needs: build_3c
+    needs: lua
     runs-on: self-hosted
     steps:
       - name: Build Lua
@@ -3189,7 +3211,7 @@ jobs:
 
   test_lua_expand_macros_alltypes:
     name: Test Lua (macro-expanded, -alltypes)
-    needs: build_3c
+    needs: lua
     runs-on: self-hosted
     steps:
       - name: Build Lua
@@ -3235,10 +3257,15 @@ jobs:
           rm -r out.checked
           sed -i "s/luac_main/main/" src/luac.c
           make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k CFLAGS="-w" linux || true
+  libtiff:
+    name: LibTiff
+    needs: build_3c
+    runs-on: self-hosted
+    steps: true
 
   test_libtiff_no_expand_macros_no_alltypes:
     name: Test LibTiff (not macro-expanded, no -alltypes)
-    needs: build_3c
+    needs: libtiff
     runs-on: self-hosted
     steps:
       - name: Build LibTiff
@@ -3289,7 +3316,7 @@ jobs:
 
   test_libtiff_no_expand_macros_alltypes_only_g_sol:
     name: Test LibTiff (not macro-expanded, -alltypes, greatest solution)
-    needs: build_3c
+    needs: libtiff
     runs-on: self-hosted
     steps:
       - name: Build LibTiff
@@ -3342,7 +3369,7 @@ jobs:
 
   test_libtiff_no_expand_macros_alltypes_only_l_sol:
     name: Test LibTiff (not macro-expanded, -alltypes, least solution)
-    needs: build_3c
+    needs: libtiff
     runs-on: self-hosted
     steps:
       - name: Build LibTiff
@@ -3395,7 +3422,7 @@ jobs:
 
   test_libtiff_no_expand_macros_alltypes_disable_rds:
     name: Test LibTiff (not macro-expanded, -alltypes, CCured solution)
-    needs: build_3c
+    needs: libtiff
     runs-on: self-hosted
     steps:
       - name: Build LibTiff
@@ -3448,7 +3475,7 @@ jobs:
 
   test_libtiff_no_expand_macros_alltypes:
     name: Test LibTiff (not macro-expanded, -alltypes)
-    needs: build_3c
+    needs: libtiff
     runs-on: self-hosted
     steps:
       - name: Build LibTiff
@@ -3500,7 +3527,7 @@ jobs:
 
   test_libtiff_expand_macros_no_alltypes:
     name: Test LibTiff (macro-expanded, no -alltypes)
-    needs: build_3c
+    needs: libtiff
     runs-on: self-hosted
     steps:
       - name: Build LibTiff
@@ -3552,7 +3579,7 @@ jobs:
 
   test_libtiff_expand_macros_alltypes_only_g_sol:
     name: Test LibTiff (macro-expanded, -alltypes, greatest solution)
-    needs: build_3c
+    needs: libtiff
     runs-on: self-hosted
     steps:
       - name: Build LibTiff
@@ -3606,7 +3633,7 @@ jobs:
 
   test_libtiff_expand_macros_alltypes_only_l_sol:
     name: Test LibTiff (macro-expanded, -alltypes, least solution)
-    needs: build_3c
+    needs: libtiff
     runs-on: self-hosted
     steps:
       - name: Build LibTiff
@@ -3660,7 +3687,7 @@ jobs:
 
   test_libtiff_expand_macros_alltypes_disable_rds:
     name: Test LibTiff (macro-expanded, -alltypes, CCured solution)
-    needs: build_3c
+    needs: libtiff
     runs-on: self-hosted
     steps:
       - name: Build LibTiff
@@ -3714,7 +3741,7 @@ jobs:
 
   test_libtiff_expand_macros_alltypes:
     name: Test LibTiff (macro-expanded, -alltypes)
-    needs: build_3c
+    needs: libtiff
     runs-on: self-hosted
     steps:
       - name: Build LibTiff
@@ -3764,10 +3791,15 @@ jobs:
           cp -r out.checked/* .
           rm -r out.checked
           ninja -l $(nproc) -k 0 tiff || true
+  zlib:
+    name: ZLib
+    needs: build_3c
+    runs-on: self-hosted
+    steps: true
 
   test_zlib_no_expand_macros_no_alltypes:
     name: Test ZLib (not macro-expanded, no -alltypes)
-    needs: build_3c
+    needs: zlib
     runs-on: self-hosted
     steps:
       - name: Build ZLib
@@ -3814,7 +3846,7 @@ jobs:
 
   test_zlib_no_expand_macros_alltypes_only_g_sol:
     name: Test ZLib (not macro-expanded, -alltypes, greatest solution)
-    needs: build_3c
+    needs: zlib
     runs-on: self-hosted
     steps:
       - name: Build ZLib
@@ -3863,7 +3895,7 @@ jobs:
 
   test_zlib_no_expand_macros_alltypes_only_l_sol:
     name: Test ZLib (not macro-expanded, -alltypes, least solution)
-    needs: build_3c
+    needs: zlib
     runs-on: self-hosted
     steps:
       - name: Build ZLib
@@ -3912,7 +3944,7 @@ jobs:
 
   test_zlib_no_expand_macros_alltypes_disable_rds:
     name: Test ZLib (not macro-expanded, -alltypes, CCured solution)
-    needs: build_3c
+    needs: zlib
     runs-on: self-hosted
     steps:
       - name: Build ZLib
@@ -3961,7 +3993,7 @@ jobs:
 
   test_zlib_no_expand_macros_alltypes:
     name: Test ZLib (not macro-expanded, -alltypes)
-    needs: build_3c
+    needs: zlib
     runs-on: self-hosted
     steps:
       - name: Build ZLib
@@ -4009,7 +4041,7 @@ jobs:
 
   test_zlib_expand_macros_no_alltypes:
     name: Test ZLib (macro-expanded, no -alltypes)
-    needs: build_3c
+    needs: zlib
     runs-on: self-hosted
     steps:
       - name: Build ZLib
@@ -4057,7 +4089,7 @@ jobs:
 
   test_zlib_expand_macros_alltypes_only_g_sol:
     name: Test ZLib (macro-expanded, -alltypes, greatest solution)
-    needs: build_3c
+    needs: zlib
     runs-on: self-hosted
     steps:
       - name: Build ZLib
@@ -4107,7 +4139,7 @@ jobs:
 
   test_zlib_expand_macros_alltypes_only_l_sol:
     name: Test ZLib (macro-expanded, -alltypes, least solution)
-    needs: build_3c
+    needs: zlib
     runs-on: self-hosted
     steps:
       - name: Build ZLib
@@ -4157,7 +4189,7 @@ jobs:
 
   test_zlib_expand_macros_alltypes_disable_rds:
     name: Test ZLib (macro-expanded, -alltypes, CCured solution)
-    needs: build_3c
+    needs: zlib
     runs-on: self-hosted
     steps:
       - name: Build ZLib
@@ -4207,7 +4239,7 @@ jobs:
 
   test_zlib_expand_macros_alltypes:
     name: Test ZLib (macro-expanded, -alltypes)
-    needs: build_3c
+    needs: zlib
     runs-on: self-hosted
     steps:
       - name: Build ZLib
@@ -4253,10 +4285,15 @@ jobs:
           rm -r out.checked
           cd build
           ninja -l $(nproc) -k 0 zlib || true
+  icecast:
+    name: Icecast
+    needs: build_3c
+    runs-on: self-hosted
+    steps: true
 
   test_icecast_no_expand_macros_no_alltypes:
     name: Test Icecast (not macro-expanded, no -alltypes)
-    needs: build_3c
+    needs: icecast
     runs-on: self-hosted
     steps:
       - name: Build Icecast
@@ -4299,7 +4336,7 @@ jobs:
 
   test_icecast_no_expand_macros_alltypes_only_g_sol:
     name: Test Icecast (not macro-expanded, -alltypes, greatest solution)
-    needs: build_3c
+    needs: icecast
     runs-on: self-hosted
     steps:
       - name: Build Icecast
@@ -4344,7 +4381,7 @@ jobs:
 
   test_icecast_no_expand_macros_alltypes_only_l_sol:
     name: Test Icecast (not macro-expanded, -alltypes, least solution)
-    needs: build_3c
+    needs: icecast
     runs-on: self-hosted
     steps:
       - name: Build Icecast
@@ -4389,7 +4426,7 @@ jobs:
 
   test_icecast_no_expand_macros_alltypes_disable_rds:
     name: Test Icecast (not macro-expanded, -alltypes, CCured solution)
-    needs: build_3c
+    needs: icecast
     runs-on: self-hosted
     steps:
       - name: Build Icecast
@@ -4398,7 +4435,8 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes_disable_rds
           tar -xvzf ${{env.benchmark_tar_dir}}/icecast-2.4.4.tar.gz
           cd icecast-2.4.4
-          CC="${{env.builddir}}/bin/clang" ./configure
+          sed -i '/_GNU_SOURCE/d' configure
+          CC="${{env.builddir}}/bin/clang" CFLAGS="-w" ./configure
           bear make -j $(nproc) -l $(nproc) --output-sync
 
       - name: Convert Icecast
@@ -4433,7 +4471,7 @@ jobs:
 
   test_icecast_no_expand_macros_alltypes:
     name: Test Icecast (not macro-expanded, -alltypes)
-    needs: build_3c
+    needs: icecast
     runs-on: self-hosted
     steps:
       - name: Build Icecast
@@ -4477,7 +4515,7 @@ jobs:
 
   test_icecast_expand_macros_no_alltypes:
     name: Test Icecast (macro-expanded, no -alltypes)
-    needs: build_3c
+    needs: icecast
     runs-on: self-hosted
     steps:
       - name: Build Icecast
@@ -4521,7 +4559,7 @@ jobs:
 
   test_icecast_expand_macros_alltypes_only_g_sol:
     name: Test Icecast (macro-expanded, -alltypes, greatest solution)
-    needs: build_3c
+    needs: icecast
     runs-on: self-hosted
     steps:
       - name: Build Icecast
@@ -4567,7 +4605,7 @@ jobs:
 
   test_icecast_expand_macros_alltypes_only_l_sol:
     name: Test Icecast (macro-expanded, -alltypes, least solution)
-    needs: build_3c
+    needs: icecast
     runs-on: self-hosted
     steps:
       - name: Build Icecast
@@ -4613,7 +4651,7 @@ jobs:
 
   test_icecast_expand_macros_alltypes_disable_rds:
     name: Test Icecast (macro-expanded, -alltypes, CCured solution)
-    needs: build_3c
+    needs: icecast
     runs-on: self-hosted
     steps:
       - name: Build Icecast
@@ -4622,7 +4660,8 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes_disable_rds
           tar -xvzf ${{env.benchmark_tar_dir}}/icecast-2.4.4.tar.gz
           cd icecast-2.4.4
-          CC="${{env.builddir}}/bin/clang" ./configure
+          sed -i '/_GNU_SOURCE/d' configure
+          CC="${{env.builddir}}/bin/clang" CFLAGS="-w" ./configure
           bear make -j $(nproc) -l $(nproc) --output-sync
 
       - name: Convert Icecast
@@ -4658,7 +4697,7 @@ jobs:
 
   test_icecast_expand_macros_alltypes:
     name: Test Icecast (macro-expanded, -alltypes)
-    needs: build_3c
+    needs: icecast
     runs-on: self-hosted
     steps:
       - name: Build Icecast
