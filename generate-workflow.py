@@ -414,10 +414,13 @@ class Variant:
 def generate_parent_job(out: TextIO, binfo: BenchmarkInfo):
     out.write(f'''\
   {binfo.name}:
-    name: {binfo.friendly_name}
+    name: {binfo.friendly_name} Parent Job
     needs: build_3c
     runs-on: self-hosted
-    steps: true
+    steps:
+      - name: Test
+        run: |
+          cd ${{env.builddir}}
 ''')
 
 

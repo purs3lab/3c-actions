@@ -106,10 +106,13 @@ jobs:
 
   # Convert our benchmark programs
   vsftpd:
-    name: Vsftpd
+    name: Vsftpd Parent Job
     needs: build_3c
     runs-on: self-hosted
-    steps: true
+    steps:
+      - name: Test
+        run: |
+          cd ${env.builddir}
 
   test_vsftpd_no_expand_macros_no_alltypes:
     name: Test Vsftpd (not macro-expanded, no -alltypes)
@@ -227,10 +230,13 @@ jobs:
           rm -r out.checked
           make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang -w -Wno-enum-conversion" -k || true
   ptrdist:
-    name: PtrDist
+    name: PtrDist Parent Job
     needs: build_3c
     runs-on: self-hosted
-    steps: true
+    steps:
+      - name: Test
+        run: |
+          cd ${env.builddir}
 
   test_ptrdist_no_expand_macros_no_alltypes:
     name: Test PtrDist (not macro-expanded, no -alltypes)
@@ -648,10 +654,13 @@ jobs:
           rm -r out.checked
           make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -D_ISOC99_SOURCE" || true
   libarchive:
-    name: LibArchive
+    name: LibArchive Parent Job
     needs: build_3c
     runs-on: self-hosted
-    steps: true
+    steps:
+      - name: Test
+        run: |
+          cd ${env.builddir}
 
   test_libarchive_no_expand_macros_no_alltypes:
     name: Test LibArchive (not macro-expanded, no -alltypes)
@@ -789,10 +798,13 @@ jobs:
           cd build
           ninja -l $(nproc) -k 0 archive || true
   lua:
-    name: Lua
+    name: Lua Parent Job
     needs: build_3c
     runs-on: self-hosted
-    steps: true
+    steps:
+      - name: Test
+        run: |
+          cd ${env.builddir}
 
   test_lua_no_expand_macros_no_alltypes:
     name: Test Lua (not macro-expanded, no -alltypes)
@@ -934,10 +946,13 @@ jobs:
           sed -i "s/luac_main/main/" src/luac.c
           make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k CFLAGS="-w" linux || true
   libtiff:
-    name: LibTiff
+    name: LibTiff Parent Job
     needs: build_3c
     runs-on: self-hosted
-    steps: true
+    steps:
+      - name: Test
+        run: |
+          cd ${env.builddir}
 
   test_libtiff_no_expand_macros_no_alltypes:
     name: Test LibTiff (not macro-expanded, no -alltypes)
@@ -1095,10 +1110,13 @@ jobs:
           rm -r out.checked
           ninja -l $(nproc) -k 0 tiff || true
   zlib:
-    name: ZLib
+    name: ZLib Parent Job
     needs: build_3c
     runs-on: self-hosted
-    steps: true
+    steps:
+      - name: Test
+        run: |
+          cd ${env.builddir}
 
   test_zlib_no_expand_macros_no_alltypes:
     name: Test ZLib (not macro-expanded, no -alltypes)
@@ -1240,10 +1258,13 @@ jobs:
           cd build
           ninja -l $(nproc) -k 0 zlib || true
   icecast:
-    name: Icecast
+    name: Icecast Parent Job
     needs: build_3c
     runs-on: self-hosted
-    steps: true
+    steps:
+      - name: Test
+        run: |
+          cd ${env.builddir}
 
   test_icecast_no_expand_macros_no_alltypes:
     name: Test Icecast (not macro-expanded, no -alltypes)
