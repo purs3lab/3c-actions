@@ -139,7 +139,8 @@ benchmarks = [
         done
         '''),
         build_converted_cmd=(
-            f'{make_checkedc} -k LOCAL_CFLAGS="{common_cflags} -D_ISOC99_SOURCE"'),
+            f'{make_checkedc} -k LOCAL_CFLAGS="{common_cflags} -D_ISOC99_SOURCE"'
+        ),
         components=[
             BenchmarkComponent(friendly_name=c, subdir=c)
             for c in ptrdist_components
@@ -445,8 +446,16 @@ def generate_benchmark_job(out: TextIO,
     benchmark_convert_extra = (ensure_trailing_newline(binfo.convert_extra)
                                if binfo.convert_extra is not None else '')
     build_converted_cmd = binfo.build_converted_cmd.rstrip('\n')
-    at_ignore_step = ' (ignore failure)' if variant.alltypes else ''
-    at_ignore_code = ' || true' if variant.alltypes else ''
+    at_filter_step = (' (filter bounds inference errors)'
+                      if variant.alltypes else '')
+    # By default, this shell script runs with the `pipefail` option off. This is
+    # important so that the build failure doesn't cause the entire script to
+    # fail regardless of the result of filter-bounds-inference-errors.py. But we
+    # might want to turn on `pipefail` in general, in which case we'd need to
+    # turn it back off here.
+    at_filter_code = ('''\
+ 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py'''
+                      if variant.alltypes else '')
 
     # The blank line below is important: it gets us blank lines between jobs
     # without a blank line at the very end of the workflow file.
@@ -524,7 +533,7 @@ def generate_benchmark_job(out: TextIO,
 
         steps.append(
             RunStep(
-                'Build converted ' + component_friendly_name + at_ignore_step,
+                'Build converted ' + component_friendly_name + at_filter_step,
                 # convert_project.py sets -output-dir=out.checked as
                 # standard.
                 textwrap.dedent(f'''\
@@ -535,7 +544,7 @@ def generate_benchmark_job(out: TextIO,
                 #
                 (f'cd {component.build_dir}\n'
                  if component.build_dir is not None else '') +
-                f'{build_converted_cmd}{at_ignore_code}\n'))
+                f'{build_converted_cmd}{at_filter_code}\n'))
 
     # We want blank lines between steps but not after the last step of
     # the last benchmark.
