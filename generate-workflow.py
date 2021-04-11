@@ -61,6 +61,8 @@ make_std = 'make -j $(nproc) -l $(nproc) --output-sync'
 make_checkedc = f'{make_std} CC="${{{{env.builddir}}}}/bin/clang"'
 cmake_checkedc = 'cmake -DCMAKE_C_COMPILER=${{env.builddir}}/bin/clang'
 
+# `-w`:
+#
 # We generally want to turn off all compiler warnings since there are many of
 # them in the benchmarks and they distract us from the errors we need to fix. In
 # some cases, warnings may clue us in to the cause of an error, and it may be
@@ -71,9 +73,11 @@ cmake_checkedc = 'cmake -DCMAKE_C_COMPILER=${{env.builddir}}/bin/clang'
 # override, but we still pass this to all benchmarks as standard to make a best
 # effort to turn off warnings.
 #
+# `-ferror-limit=0`: TESTING
+#
 # There is enough variation in how we need to pass compiler options to different
 # benchmarks that we don't factor out anything more here.
-common_cflags = '-w'
+common_cflags = '-w -ferror-limit=0'
 
 # There is a known incompatibility between the vsftpd version we're using and
 # Clang: vsftpd triggers a -Wenum-conversion warning that becomes an error with
@@ -240,6 +244,30 @@ benchmarks = [
         sed -i '/_GNU_SOURCE/d' configure
         CC="${{{{env.builddir}}}}/bin/clang" CFLAGS="{common_cflags}" ./configure
         bear {make_std}
+        '''),
+        build_converted_cmd=f'{make_std} -k'),
+
+    # ImageMagick
+    #
+    # Minimal configuration that contains the code into which we want to
+    # introduce vulnerabilities for demonstration purposes.
+    BenchmarkInfo(
+        #
+        name='imagemagick',
+        friendly_name='ImageMagick',
+        dir_name='ImageMagick-7.0.11-6',
+        # Same _GNU_SOURCE workaround as Icecast.
+        build_cmds=textwrap.dedent(f'''\
+        sed -i -e '/_GNU_SOURCE/d' configure
+        CC="${{{{env.builddir}}}}/bin/clang" CFLAGS="{common_cflags}" \
+            ./configure --disable-shared --without-magick-plus-plus \
+            --without-bzlib --without-djvu --without-fontconfig \
+            --without-freetype --without-gvc --without-jbig --without-jpeg \
+            --without-lcms --without-lqr --without-lzma --without-openexr \
+            --without-openjp2 --without-pango --without-raqm --without-raw \
+            --without-tiff --without-webp --without-x --without-xml \
+            --without-zip --without-zlib --without-zstd --without-utilities
+        bear {make_std} MagickCore/libMagickCore-7.Q16HDRI.la
         '''),
         build_converted_cmd=f'{make_std} -k'),
 ]
