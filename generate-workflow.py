@@ -239,6 +239,7 @@ env:
   branch_for_scheduled_run: "main"
   include_dir: "${{github.workspace}}/depsfolder/checkedc-clang/llvm/projects/checkedc-wrapper/checkedc/include"
   port_tools: "${{github.workspace}}/depsfolder/checkedc-clang/clang/tools/3c/utils/port_tools"
+  checkedc_hdr_repo: "https://github.com/correctcomputation/checkedc"
 
 jobs:
 
@@ -282,7 +283,7 @@ jobs:
           git remote add origin https://github.com/correctcomputation/checkedc-clang
           git fetch --depth 1 origin "${{ github.event.inputs.branch || env.branch_for_scheduled_run }}"
           git checkout FETCH_HEAD
-          git clone --depth 1 https://github.com/microsoft/checkedc ${{github.workspace}}/depsfolder/checkedc-clang/llvm/projects/checkedc-wrapper/checkedc
+          git clone --depth 1 ${{env.checkedc_hdr_repo}} ${{github.workspace}}/depsfolder/checkedc-clang/llvm/projects/checkedc-wrapper/checkedc
 
       - name: Build 3c and clang
         run: |
