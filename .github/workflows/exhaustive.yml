@@ -3331,7 +3331,7 @@ jobs:
           mkdir -p ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes
           tar -xvzf ${{env.benchmark_tar_dir}}/tiff-4.1.0.tar.gz
-          for i in ${{env.benchmark_tar_dir}}/tiff-4.1.0_patches; do patch -s -p0 < $i; done
+          for i in ${{env.benchmark_tar_dir}}/tiff-4.1.0_patches/*; do patch -s -p0 < $i; done
           cd tiff-4.1.0
           cmake -DCMAKE_C_COMPILER=${{env.builddir}}/bin/clang -G Ninja -DCMAKE_C_FLAGS="-w -ferror-limit=0" .
           bear ninja -l $(nproc) tiff
@@ -3383,7 +3383,7 @@ jobs:
           mkdir -p ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes_only_g_sol
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes_only_g_sol
           tar -xvzf ${{env.benchmark_tar_dir}}/tiff-4.1.0.tar.gz
-          for i in ${{env.benchmark_tar_dir}}/tiff-4.1.0_patches; do patch -s -p0 < $i; done
+          for i in ${{env.benchmark_tar_dir}}/tiff-4.1.0_patches/*; do patch -s -p0 < $i; done
           cd tiff-4.1.0
           cmake -DCMAKE_C_COMPILER=${{env.builddir}}/bin/clang -G Ninja -DCMAKE_C_FLAGS="-w -ferror-limit=0" .
           bear ninja -l $(nproc) tiff
@@ -3437,7 +3437,7 @@ jobs:
           mkdir -p ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes_only_l_sol
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes_only_l_sol
           tar -xvzf ${{env.benchmark_tar_dir}}/tiff-4.1.0.tar.gz
-          for i in ${{env.benchmark_tar_dir}}/tiff-4.1.0_patches; do patch -s -p0 < $i; done
+          for i in ${{env.benchmark_tar_dir}}/tiff-4.1.0_patches/*; do patch -s -p0 < $i; done
           cd tiff-4.1.0
           cmake -DCMAKE_C_COMPILER=${{env.builddir}}/bin/clang -G Ninja -DCMAKE_C_FLAGS="-w -ferror-limit=0" .
           bear ninja -l $(nproc) tiff
@@ -3491,7 +3491,7 @@ jobs:
           mkdir -p ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes_disable_rds
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes_disable_rds
           tar -xvzf ${{env.benchmark_tar_dir}}/tiff-4.1.0.tar.gz
-          for i in ${{env.benchmark_tar_dir}}/tiff-4.1.0_patches; do patch -s -p0 < $i; done
+          for i in ${{env.benchmark_tar_dir}}/tiff-4.1.0_patches/*; do patch -s -p0 < $i; done
           cd tiff-4.1.0
           cmake -DCMAKE_C_COMPILER=${{env.builddir}}/bin/clang -G Ninja -DCMAKE_C_FLAGS="-w -ferror-limit=0" .
           bear ninja -l $(nproc) tiff
@@ -3545,7 +3545,7 @@ jobs:
           mkdir -p ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes
           tar -xvzf ${{env.benchmark_tar_dir}}/tiff-4.1.0.tar.gz
-          for i in ${{env.benchmark_tar_dir}}/tiff-4.1.0_patches; do patch -s -p0 < $i; done
+          for i in ${{env.benchmark_tar_dir}}/tiff-4.1.0_patches/*; do patch -s -p0 < $i; done
           cd tiff-4.1.0
           cmake -DCMAKE_C_COMPILER=${{env.builddir}}/bin/clang -G Ninja -DCMAKE_C_FLAGS="-w -ferror-limit=0" .
           bear ninja -l $(nproc) tiff
@@ -3598,7 +3598,7 @@ jobs:
           mkdir -p ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes
           cd ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes
           tar -xvzf ${{env.benchmark_tar_dir}}/tiff-4.1.0.tar.gz
-          for i in ${{env.benchmark_tar_dir}}/tiff-4.1.0_patches; do patch -s -p0 < $i; done
+          for i in ${{env.benchmark_tar_dir}}/tiff-4.1.0_patches/*; do patch -s -p0 < $i; done
           cd tiff-4.1.0
           cmake -DCMAKE_C_COMPILER=${{env.builddir}}/bin/clang -G Ninja -DCMAKE_C_FLAGS="-w -ferror-limit=0" .
           bear ninja -l $(nproc) tiff
@@ -3651,7 +3651,7 @@ jobs:
           mkdir -p ${{env.benchmark_conv_dir}}/expand_macros_alltypes_only_g_sol
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes_only_g_sol
           tar -xvzf ${{env.benchmark_tar_dir}}/tiff-4.1.0.tar.gz
-          for i in ${{env.benchmark_tar_dir}}/tiff-4.1.0_patches; do patch -s -p0 < $i; done
+          for i in ${{env.benchmark_tar_dir}}/tiff-4.1.0_patches/*; do patch -s -p0 < $i; done
           cd tiff-4.1.0
           cmake -DCMAKE_C_COMPILER=${{env.builddir}}/bin/clang -G Ninja -DCMAKE_C_FLAGS="-w -ferror-limit=0" .
           bear ninja -l $(nproc) tiff
@@ -3706,7 +3706,7 @@ jobs:
           mkdir -p ${{env.benchmark_conv_dir}}/expand_macros_alltypes_only_l_sol
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes_only_l_sol
           tar -xvzf ${{env.benchmark_tar_dir}}/tiff-4.1.0.tar.gz
-          for i in ${{env.benchmark_tar_dir}}/tiff-4.1.0_patches; do patch -s -p0 < $i; done
+          for i in ${{env.benchmark_tar_dir}}/tiff-4.1.0_patches/*; do patch -s -p0 < $i; done
           cd tiff-4.1.0
           cmake -DCMAKE_C_COMPILER=${{env.builddir}}/bin/clang -G Ninja -DCMAKE_C_FLAGS="-w -ferror-limit=0" .
           bear ninja -l $(nproc) tiff
@@ -3761,7 +3761,7 @@ jobs:
           mkdir -p ${{env.benchmark_conv_dir}}/expand_macros_alltypes_disable_rds
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes_disable_rds
           tar -xvzf ${{env.benchmark_tar_dir}}/tiff-4.1.0.tar.gz
-          for i in ${{env.benchmark_tar_dir}}/tiff-4.1.0_patches; do patch -s -p0 < $i; done
+          for i in ${{env.benchmark_tar_dir}}/tiff-4.1.0_patches/*; do patch -s -p0 < $i; done
           cd tiff-4.1.0
           cmake -DCMAKE_C_COMPILER=${{env.builddir}}/bin/clang -G Ninja -DCMAKE_C_FLAGS="-w -ferror-limit=0" .
           bear ninja -l $(nproc) tiff
@@ -3816,7 +3816,7 @@ jobs:
           mkdir -p ${{env.benchmark_conv_dir}}/expand_macros_alltypes
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes
           tar -xvzf ${{env.benchmark_tar_dir}}/tiff-4.1.0.tar.gz
-          for i in ${{env.benchmark_tar_dir}}/tiff-4.1.0_patches; do patch -s -p0 < $i; done
+          for i in ${{env.benchmark_tar_dir}}/tiff-4.1.0_patches/*; do patch -s -p0 < $i; done
           cd tiff-4.1.0
           cmake -DCMAKE_C_COMPILER=${{env.builddir}}/bin/clang -G Ninja -DCMAKE_C_FLAGS="-w -ferror-limit=0" .
           bear ninja -l $(nproc) tiff
@@ -4359,7 +4359,7 @@ jobs:
           mkdir -p ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes
           tar -xvzf ${{env.benchmark_tar_dir}}/Icecast-Server-master_de3a07550.tar.gz
-          for i in ${{env.benchmark_tar_dir}}/Icecast-Server-master_de3a075500_patches; do patch -s -p0 < $i; done
+          for i in ${{env.benchmark_tar_dir}}/Icecast-Server-master_de3a075500_patches/*; do patch -s -p0 < $i; done
           cd Icecast-Server-master_de3a07550
           sed -i '/_GNU_SOURCE/d' configure
           CC="${{env.builddir}}/bin/clang" CFLAGS="-w -ferror-limit=0" ./configure
@@ -4403,7 +4403,7 @@ jobs:
           mkdir -p ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes_only_g_sol
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes_only_g_sol
           tar -xvzf ${{env.benchmark_tar_dir}}/Icecast-Server-master_de3a07550.tar.gz
-          for i in ${{env.benchmark_tar_dir}}/Icecast-Server-master_de3a075500_patches; do patch -s -p0 < $i; done
+          for i in ${{env.benchmark_tar_dir}}/Icecast-Server-master_de3a075500_patches/*; do patch -s -p0 < $i; done
           cd Icecast-Server-master_de3a07550
           sed -i '/_GNU_SOURCE/d' configure
           CC="${{env.builddir}}/bin/clang" CFLAGS="-w -ferror-limit=0" ./configure
@@ -4449,7 +4449,7 @@ jobs:
           mkdir -p ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes_only_l_sol
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes_only_l_sol
           tar -xvzf ${{env.benchmark_tar_dir}}/Icecast-Server-master_de3a07550.tar.gz
-          for i in ${{env.benchmark_tar_dir}}/Icecast-Server-master_de3a075500_patches; do patch -s -p0 < $i; done
+          for i in ${{env.benchmark_tar_dir}}/Icecast-Server-master_de3a075500_patches/*; do patch -s -p0 < $i; done
           cd Icecast-Server-master_de3a07550
           sed -i '/_GNU_SOURCE/d' configure
           CC="${{env.builddir}}/bin/clang" CFLAGS="-w -ferror-limit=0" ./configure
@@ -4495,7 +4495,7 @@ jobs:
           mkdir -p ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes_disable_rds
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes_disable_rds
           tar -xvzf ${{env.benchmark_tar_dir}}/Icecast-Server-master_de3a07550.tar.gz
-          for i in ${{env.benchmark_tar_dir}}/Icecast-Server-master_de3a075500_patches; do patch -s -p0 < $i; done
+          for i in ${{env.benchmark_tar_dir}}/Icecast-Server-master_de3a075500_patches/*; do patch -s -p0 < $i; done
           cd Icecast-Server-master_de3a07550
           sed -i '/_GNU_SOURCE/d' configure
           CC="${{env.builddir}}/bin/clang" CFLAGS="-w -ferror-limit=0" ./configure
@@ -4541,7 +4541,7 @@ jobs:
           mkdir -p ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes
           tar -xvzf ${{env.benchmark_tar_dir}}/Icecast-Server-master_de3a07550.tar.gz
-          for i in ${{env.benchmark_tar_dir}}/Icecast-Server-master_de3a075500_patches; do patch -s -p0 < $i; done
+          for i in ${{env.benchmark_tar_dir}}/Icecast-Server-master_de3a075500_patches/*; do patch -s -p0 < $i; done
           cd Icecast-Server-master_de3a07550
           sed -i '/_GNU_SOURCE/d' configure
           CC="${{env.builddir}}/bin/clang" CFLAGS="-w -ferror-limit=0" ./configure
@@ -4586,7 +4586,7 @@ jobs:
           mkdir -p ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes
           cd ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes
           tar -xvzf ${{env.benchmark_tar_dir}}/Icecast-Server-master_de3a07550.tar.gz
-          for i in ${{env.benchmark_tar_dir}}/Icecast-Server-master_de3a075500_patches; do patch -s -p0 < $i; done
+          for i in ${{env.benchmark_tar_dir}}/Icecast-Server-master_de3a075500_patches/*; do patch -s -p0 < $i; done
           cd Icecast-Server-master_de3a07550
           sed -i '/_GNU_SOURCE/d' configure
           CC="${{env.builddir}}/bin/clang" CFLAGS="-w -ferror-limit=0" ./configure
@@ -4631,7 +4631,7 @@ jobs:
           mkdir -p ${{env.benchmark_conv_dir}}/expand_macros_alltypes_only_g_sol
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes_only_g_sol
           tar -xvzf ${{env.benchmark_tar_dir}}/Icecast-Server-master_de3a07550.tar.gz
-          for i in ${{env.benchmark_tar_dir}}/Icecast-Server-master_de3a075500_patches; do patch -s -p0 < $i; done
+          for i in ${{env.benchmark_tar_dir}}/Icecast-Server-master_de3a075500_patches/*; do patch -s -p0 < $i; done
           cd Icecast-Server-master_de3a07550
           sed -i '/_GNU_SOURCE/d' configure
           CC="${{env.builddir}}/bin/clang" CFLAGS="-w -ferror-limit=0" ./configure
@@ -4678,7 +4678,7 @@ jobs:
           mkdir -p ${{env.benchmark_conv_dir}}/expand_macros_alltypes_only_l_sol
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes_only_l_sol
           tar -xvzf ${{env.benchmark_tar_dir}}/Icecast-Server-master_de3a07550.tar.gz
-          for i in ${{env.benchmark_tar_dir}}/Icecast-Server-master_de3a075500_patches; do patch -s -p0 < $i; done
+          for i in ${{env.benchmark_tar_dir}}/Icecast-Server-master_de3a075500_patches/*; do patch -s -p0 < $i; done
           cd Icecast-Server-master_de3a07550
           sed -i '/_GNU_SOURCE/d' configure
           CC="${{env.builddir}}/bin/clang" CFLAGS="-w -ferror-limit=0" ./configure
@@ -4725,7 +4725,7 @@ jobs:
           mkdir -p ${{env.benchmark_conv_dir}}/expand_macros_alltypes_disable_rds
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes_disable_rds
           tar -xvzf ${{env.benchmark_tar_dir}}/Icecast-Server-master_de3a07550.tar.gz
-          for i in ${{env.benchmark_tar_dir}}/Icecast-Server-master_de3a075500_patches; do patch -s -p0 < $i; done
+          for i in ${{env.benchmark_tar_dir}}/Icecast-Server-master_de3a075500_patches/*; do patch -s -p0 < $i; done
           cd Icecast-Server-master_de3a07550
           sed -i '/_GNU_SOURCE/d' configure
           CC="${{env.builddir}}/bin/clang" CFLAGS="-w -ferror-limit=0" ./configure
@@ -4772,7 +4772,7 @@ jobs:
           mkdir -p ${{env.benchmark_conv_dir}}/expand_macros_alltypes
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes
           tar -xvzf ${{env.benchmark_tar_dir}}/Icecast-Server-master_de3a07550.tar.gz
-          for i in ${{env.benchmark_tar_dir}}/Icecast-Server-master_de3a075500_patches; do patch -s -p0 < $i; done
+          for i in ${{env.benchmark_tar_dir}}/Icecast-Server-master_de3a075500_patches/*; do patch -s -p0 < $i; done
           cd Icecast-Server-master_de3a07550
           sed -i '/_GNU_SOURCE/d' configure
           CC="${{env.builddir}}/bin/clang" CFLAGS="-w -ferror-limit=0" ./configure
@@ -4818,7 +4818,7 @@ jobs:
           mkdir -p ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes
           tar -xvzf ${{env.benchmark_tar_dir}}/thttpd-2.29.tar.gz
-          for i in ${{env.benchmark_tar_dir}}/thttpd-2.29_patches; do patch -s -p0 < $i; done
+          for i in ${{env.benchmark_tar_dir}}/thttpd-2.29_patches/*; do patch -s -p0 < $i; done
           cd thttpd-2.29
           CC="${{env.builddir}}/bin/clang" CFLAGS="-w -ferror-limit=0" ./configure
           bear make -j $(nproc) -l $(nproc) --output-sync
@@ -4861,7 +4861,7 @@ jobs:
           mkdir -p ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes_only_g_sol
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes_only_g_sol
           tar -xvzf ${{env.benchmark_tar_dir}}/thttpd-2.29.tar.gz
-          for i in ${{env.benchmark_tar_dir}}/thttpd-2.29_patches; do patch -s -p0 < $i; done
+          for i in ${{env.benchmark_tar_dir}}/thttpd-2.29_patches/*; do patch -s -p0 < $i; done
           cd thttpd-2.29
           CC="${{env.builddir}}/bin/clang" CFLAGS="-w -ferror-limit=0" ./configure
           bear make -j $(nproc) -l $(nproc) --output-sync
@@ -4906,7 +4906,7 @@ jobs:
           mkdir -p ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes_only_l_sol
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes_only_l_sol
           tar -xvzf ${{env.benchmark_tar_dir}}/thttpd-2.29.tar.gz
-          for i in ${{env.benchmark_tar_dir}}/thttpd-2.29_patches; do patch -s -p0 < $i; done
+          for i in ${{env.benchmark_tar_dir}}/thttpd-2.29_patches/*; do patch -s -p0 < $i; done
           cd thttpd-2.29
           CC="${{env.builddir}}/bin/clang" CFLAGS="-w -ferror-limit=0" ./configure
           bear make -j $(nproc) -l $(nproc) --output-sync
@@ -4951,7 +4951,7 @@ jobs:
           mkdir -p ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes_disable_rds
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes_disable_rds
           tar -xvzf ${{env.benchmark_tar_dir}}/thttpd-2.29.tar.gz
-          for i in ${{env.benchmark_tar_dir}}/thttpd-2.29_patches; do patch -s -p0 < $i; done
+          for i in ${{env.benchmark_tar_dir}}/thttpd-2.29_patches/*; do patch -s -p0 < $i; done
           cd thttpd-2.29
           CC="${{env.builddir}}/bin/clang" CFLAGS="-w -ferror-limit=0" ./configure
           bear make -j $(nproc) -l $(nproc) --output-sync
@@ -4996,7 +4996,7 @@ jobs:
           mkdir -p ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes
           tar -xvzf ${{env.benchmark_tar_dir}}/thttpd-2.29.tar.gz
-          for i in ${{env.benchmark_tar_dir}}/thttpd-2.29_patches; do patch -s -p0 < $i; done
+          for i in ${{env.benchmark_tar_dir}}/thttpd-2.29_patches/*; do patch -s -p0 < $i; done
           cd thttpd-2.29
           CC="${{env.builddir}}/bin/clang" CFLAGS="-w -ferror-limit=0" ./configure
           bear make -j $(nproc) -l $(nproc) --output-sync
@@ -5040,7 +5040,7 @@ jobs:
           mkdir -p ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes
           cd ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes
           tar -xvzf ${{env.benchmark_tar_dir}}/thttpd-2.29.tar.gz
-          for i in ${{env.benchmark_tar_dir}}/thttpd-2.29_patches; do patch -s -p0 < $i; done
+          for i in ${{env.benchmark_tar_dir}}/thttpd-2.29_patches/*; do patch -s -p0 < $i; done
           cd thttpd-2.29
           CC="${{env.builddir}}/bin/clang" CFLAGS="-w -ferror-limit=0" ./configure
           bear make -j $(nproc) -l $(nproc) --output-sync
@@ -5084,7 +5084,7 @@ jobs:
           mkdir -p ${{env.benchmark_conv_dir}}/expand_macros_alltypes_only_g_sol
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes_only_g_sol
           tar -xvzf ${{env.benchmark_tar_dir}}/thttpd-2.29.tar.gz
-          for i in ${{env.benchmark_tar_dir}}/thttpd-2.29_patches; do patch -s -p0 < $i; done
+          for i in ${{env.benchmark_tar_dir}}/thttpd-2.29_patches/*; do patch -s -p0 < $i; done
           cd thttpd-2.29
           CC="${{env.builddir}}/bin/clang" CFLAGS="-w -ferror-limit=0" ./configure
           bear make -j $(nproc) -l $(nproc) --output-sync
@@ -5130,7 +5130,7 @@ jobs:
           mkdir -p ${{env.benchmark_conv_dir}}/expand_macros_alltypes_only_l_sol
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes_only_l_sol
           tar -xvzf ${{env.benchmark_tar_dir}}/thttpd-2.29.tar.gz
-          for i in ${{env.benchmark_tar_dir}}/thttpd-2.29_patches; do patch -s -p0 < $i; done
+          for i in ${{env.benchmark_tar_dir}}/thttpd-2.29_patches/*; do patch -s -p0 < $i; done
           cd thttpd-2.29
           CC="${{env.builddir}}/bin/clang" CFLAGS="-w -ferror-limit=0" ./configure
           bear make -j $(nproc) -l $(nproc) --output-sync
@@ -5176,7 +5176,7 @@ jobs:
           mkdir -p ${{env.benchmark_conv_dir}}/expand_macros_alltypes_disable_rds
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes_disable_rds
           tar -xvzf ${{env.benchmark_tar_dir}}/thttpd-2.29.tar.gz
-          for i in ${{env.benchmark_tar_dir}}/thttpd-2.29_patches; do patch -s -p0 < $i; done
+          for i in ${{env.benchmark_tar_dir}}/thttpd-2.29_patches/*; do patch -s -p0 < $i; done
           cd thttpd-2.29
           CC="${{env.builddir}}/bin/clang" CFLAGS="-w -ferror-limit=0" ./configure
           bear make -j $(nproc) -l $(nproc) --output-sync
@@ -5222,7 +5222,7 @@ jobs:
           mkdir -p ${{env.benchmark_conv_dir}}/expand_macros_alltypes
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes
           tar -xvzf ${{env.benchmark_tar_dir}}/thttpd-2.29.tar.gz
-          for i in ${{env.benchmark_tar_dir}}/thttpd-2.29_patches; do patch -s -p0 < $i; done
+          for i in ${{env.benchmark_tar_dir}}/thttpd-2.29_patches/*; do patch -s -p0 < $i; done
           cd thttpd-2.29
           CC="${{env.builddir}}/bin/clang" CFLAGS="-w -ferror-limit=0" ./configure
           bear make -j $(nproc) -l $(nproc) --output-sync

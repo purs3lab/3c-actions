@@ -500,7 +500,7 @@ def generate_benchmark_job(out: TextIO,
     apply_patch_cmd = ''
     if binfo.patch_dir:
         apply_patch_cmd = textwrap.dedent(f'''\
-            for i in ${{{{env.benchmark_tar_dir}}}}/{binfo.patch_dir}; do patch -s -p0 < $i; done
+            for i in ${{{{env.benchmark_tar_dir}}}}/{binfo.patch_dir}/*; do patch -s -p0 < $i; done
         ''')
     change_dir = textwrap.dedent(f'''\
         cd {binfo.dir_name}
