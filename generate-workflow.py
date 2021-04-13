@@ -61,9 +61,9 @@ make_std = 'make -j $(nproc) -l $(nproc) --output-sync'
 make_checkedc = f'{make_std} CC="${{{{env.builddir}}}}/bin/clang"'
 cmake_checkedc = 'cmake -DCMAKE_C_COMPILER=${{env.builddir}}/bin/clang'
 
-# We generally want to turn off all compiler warnings since there are many of
-# them in the benchmarks and they distract us from the errors we need to fix. In
-# some cases, warnings may clue us in to the cause of an error, and it may be
+# `-w`: We generally want to turn off all compiler warnings since there are many
+# of them in the benchmarks and they distract us from the errors we need to fix.
+# In some cases, warnings may clue us in to the cause of an error, and it may be
 # useful to temporarily turn them back on for troubleshooting.
 #
 # Some benchmarks appear to have no warnings in the code anyway (good for them!)
@@ -71,9 +71,17 @@ cmake_checkedc = 'cmake -DCMAKE_C_COMPILER=${{env.builddir}}/bin/clang'
 # override, but we still pass this to all benchmarks as standard to make a best
 # effort to turn off warnings.
 #
+# `-ferror-limit=0`: By default, Clang stops issuing errors after the first 20
+# errors in each translation unit. In some cases, that might be helpful to avoid
+# letting a single root cause produce a huge number of errors that make the
+# statistics a less useful measure of what actually needs to be fixed, but in
+# other cases, ignoring errors in each file after the first 20 introduces a more
+# or less arbitrary distortion in the statistics. Currently, we believe the
+# second effect outweighs the first, so we turn off the error limit.
+#
 # There is enough variation in how we need to pass compiler options to different
 # benchmarks that we don't factor out anything more here.
-common_cflags = '-w'
+common_cflags = '-w -ferror-limit=0'
 
 # There is a known incompatibility between the vsftpd version we're using and
 # Clang: vsftpd triggers a -Wenum-conversion warning that becomes an error with
@@ -312,7 +320,10 @@ jobs:
           git remote add origin https://github.com/correctcomputation/checkedc-clang
           git fetch --depth 1 origin "${{ github.event.inputs.branch || env.branch_for_scheduled_run }}"
           git checkout FETCH_HEAD
-          git clone --depth 1 https://github.com/microsoft/checkedc ${{github.workspace}}/depsfolder/checkedc-clang/llvm/projects/checkedc-wrapper/checkedc
+          # As of 2021-04-12, we're using CCI's `checkedc` repository because it
+          # has a checked declaration for `syslog` that we want to use for our
+          # experiments but have not yet submitted to Microsoft.
+          git clone --depth 1 https://github.com/correctcomputation/checkedc ${{github.workspace}}/depsfolder/checkedc-clang/llvm/projects/checkedc-wrapper/checkedc
 
       - name: Build 3c and clang
         run: |

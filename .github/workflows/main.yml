@@ -65,7 +65,10 @@ jobs:
           git remote add origin https://github.com/correctcomputation/checkedc-clang
           git fetch --depth 1 origin "${{ github.event.inputs.branch || env.branch_for_scheduled_run }}"
           git checkout FETCH_HEAD
-          git clone --depth 1 https://github.com/microsoft/checkedc ${{github.workspace}}/depsfolder/checkedc-clang/llvm/projects/checkedc-wrapper/checkedc
+          # As of 2021-04-12, we're using CCI's `checkedc` repository because it
+          # has a checked declaration for `syslog` that we want to use for our
+          # experiments but have not yet submitted to Microsoft.
+          git clone --depth 1 https://github.com/correctcomputation/checkedc ${{github.workspace}}/depsfolder/checkedc-clang/llvm/projects/checkedc-wrapper/checkedc
 
       - name: Build 3c and clang
         run: |
@@ -117,7 +120,7 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes
           tar -xvzf ${{env.benchmark_tar_dir}}/vsftpd-3.0.3.tar.gz
           cd vsftpd-3.0.3
-          bear make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang -w -Wno-enum-conversion"
+          bear make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang -w -ferror-limit=0 -Wno-enum-conversion"
 
       - name: Convert Vsftpd
         run: |
@@ -132,7 +135,7 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/vsftpd-3.0.3
           cp -r out.checked/* .
           rm -r out.checked
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang -w -Wno-enum-conversion" -k
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang -w -ferror-limit=0 -Wno-enum-conversion" -k
 
   test_vsftpd_no_expand_macros_alltypes:
     name: Test Vsftpd (not macro-expanded, -alltypes)
@@ -145,7 +148,7 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes
           tar -xvzf ${{env.benchmark_tar_dir}}/vsftpd-3.0.3.tar.gz
           cd vsftpd-3.0.3
-          bear make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang -w -Wno-enum-conversion"
+          bear make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang -w -ferror-limit=0 -Wno-enum-conversion"
 
       - name: Convert Vsftpd
         run: |
@@ -161,7 +164,7 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/vsftpd-3.0.3
           cp -r out.checked/* .
           rm -r out.checked
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang -w -Wno-enum-conversion" -k 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang -w -ferror-limit=0 -Wno-enum-conversion" -k 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py
 
   test_vsftpd_expand_macros_no_alltypes:
     name: Test Vsftpd (macro-expanded, no -alltypes)
@@ -174,7 +177,7 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes
           tar -xvzf ${{env.benchmark_tar_dir}}/vsftpd-3.0.3.tar.gz
           cd vsftpd-3.0.3
-          bear make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang -w -Wno-enum-conversion"
+          bear make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang -w -ferror-limit=0 -Wno-enum-conversion"
 
       - name: Convert Vsftpd
         run: |
@@ -190,7 +193,7 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/vsftpd-3.0.3
           cp -r out.checked/* .
           rm -r out.checked
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang -w -Wno-enum-conversion" -k
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang -w -ferror-limit=0 -Wno-enum-conversion" -k
 
   test_vsftpd_expand_macros_alltypes:
     name: Test Vsftpd (macro-expanded, -alltypes)
@@ -203,7 +206,7 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes
           tar -xvzf ${{env.benchmark_tar_dir}}/vsftpd-3.0.3.tar.gz
           cd vsftpd-3.0.3
-          bear make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang -w -Wno-enum-conversion"
+          bear make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang -w -ferror-limit=0 -Wno-enum-conversion"
 
       - name: Convert Vsftpd
         run: |
@@ -220,7 +223,7 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes/vsftpd-3.0.3
           cp -r out.checked/* .
           rm -r out.checked
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang -w -Wno-enum-conversion" -k 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang -w -ferror-limit=0 -Wno-enum-conversion" -k 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py
 
   test_ptrdist_no_expand_macros_no_alltypes:
     name: Test PtrDist (not macro-expanded, no -alltypes)
@@ -243,7 +246,7 @@ jobs:
               sed -i "/#define.*_CODE/d; /#include \"$header\"/a#include \"$new_header\"" "$src"
             done )
           for i in anagram bc ft ks yacr2 ; do \
-            (cd $i ; bear make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" LOCAL_CFLAGS="-w -D_ISOC99_SOURCE") \
+            (cd $i ; bear make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE") \
           done
 
       - name: Convert anagram
@@ -259,7 +262,7 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/ptrdist-1.1/anagram
           cp -r out.checked/* .
           rm -r out.checked
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -D_ISOC99_SOURCE" || echo anagram >>${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/ptrdist-1.1/failed-components-list.txt
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" || echo anagram >>${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/ptrdist-1.1/failed-components-list.txt
 
       - name: Convert bc
         run: |
@@ -274,7 +277,7 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/ptrdist-1.1/bc
           cp -r out.checked/* .
           rm -r out.checked
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -D_ISOC99_SOURCE" || echo bc >>${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/ptrdist-1.1/failed-components-list.txt
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" || echo bc >>${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/ptrdist-1.1/failed-components-list.txt
 
       - name: Convert ft
         run: |
@@ -289,7 +292,7 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/ptrdist-1.1/ft
           cp -r out.checked/* .
           rm -r out.checked
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -D_ISOC99_SOURCE" || echo ft >>${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/ptrdist-1.1/failed-components-list.txt
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" || echo ft >>${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/ptrdist-1.1/failed-components-list.txt
 
       - name: Convert ks
         run: |
@@ -304,7 +307,7 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/ptrdist-1.1/ks
           cp -r out.checked/* .
           rm -r out.checked
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -D_ISOC99_SOURCE" || echo ks >>${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/ptrdist-1.1/failed-components-list.txt
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" || echo ks >>${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/ptrdist-1.1/failed-components-list.txt
 
       - name: Convert yacr2
         run: |
@@ -319,7 +322,7 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/ptrdist-1.1/yacr2
           cp -r out.checked/* .
           rm -r out.checked
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -D_ISOC99_SOURCE" || echo yacr2 >>${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/ptrdist-1.1/failed-components-list.txt
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" || echo yacr2 >>${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/ptrdist-1.1/failed-components-list.txt
 
       - name: Check for deferred post-conversion build failures
         run: |
@@ -350,7 +353,7 @@ jobs:
               sed -i "/#define.*_CODE/d; /#include \"$header\"/a#include \"$new_header\"" "$src"
             done )
           for i in anagram bc ft ks yacr2 ; do \
-            (cd $i ; bear make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" LOCAL_CFLAGS="-w -D_ISOC99_SOURCE") \
+            (cd $i ; bear make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE") \
           done
 
       - name: Convert anagram
@@ -367,7 +370,7 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/ptrdist-1.1/anagram
           cp -r out.checked/* .
           rm -r out.checked
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py || echo anagram >>${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/ptrdist-1.1/failed-components-list.txt
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py || echo anagram >>${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/ptrdist-1.1/failed-components-list.txt
 
       - name: Convert bc
         run: |
@@ -383,7 +386,7 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/ptrdist-1.1/bc
           cp -r out.checked/* .
           rm -r out.checked
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py || echo bc >>${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/ptrdist-1.1/failed-components-list.txt
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py || echo bc >>${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/ptrdist-1.1/failed-components-list.txt
 
       - name: Convert ft
         run: |
@@ -399,7 +402,7 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/ptrdist-1.1/ft
           cp -r out.checked/* .
           rm -r out.checked
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py || echo ft >>${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/ptrdist-1.1/failed-components-list.txt
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py || echo ft >>${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/ptrdist-1.1/failed-components-list.txt
 
       - name: Convert ks
         run: |
@@ -415,7 +418,7 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/ptrdist-1.1/ks
           cp -r out.checked/* .
           rm -r out.checked
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py || echo ks >>${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/ptrdist-1.1/failed-components-list.txt
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py || echo ks >>${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/ptrdist-1.1/failed-components-list.txt
 
       - name: Convert yacr2
         run: |
@@ -431,7 +434,7 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/ptrdist-1.1/yacr2
           cp -r out.checked/* .
           rm -r out.checked
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py || echo yacr2 >>${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/ptrdist-1.1/failed-components-list.txt
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py || echo yacr2 >>${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/ptrdist-1.1/failed-components-list.txt
 
       - name: Check for deferred post-conversion build failures
         run: |
@@ -462,7 +465,7 @@ jobs:
               sed -i "/#define.*_CODE/d; /#include \"$header\"/a#include \"$new_header\"" "$src"
             done )
           for i in anagram bc ft ks yacr2 ; do \
-            (cd $i ; bear make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" LOCAL_CFLAGS="-w -D_ISOC99_SOURCE") \
+            (cd $i ; bear make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE") \
           done
 
       - name: Convert anagram
@@ -479,7 +482,7 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/ptrdist-1.1/anagram
           cp -r out.checked/* .
           rm -r out.checked
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -D_ISOC99_SOURCE" || echo anagram >>${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/ptrdist-1.1/failed-components-list.txt
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" || echo anagram >>${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/ptrdist-1.1/failed-components-list.txt
 
       - name: Convert bc
         run: |
@@ -495,7 +498,7 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/ptrdist-1.1/bc
           cp -r out.checked/* .
           rm -r out.checked
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -D_ISOC99_SOURCE" || echo bc >>${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/ptrdist-1.1/failed-components-list.txt
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" || echo bc >>${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/ptrdist-1.1/failed-components-list.txt
 
       - name: Convert ft
         run: |
@@ -511,7 +514,7 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/ptrdist-1.1/ft
           cp -r out.checked/* .
           rm -r out.checked
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -D_ISOC99_SOURCE" || echo ft >>${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/ptrdist-1.1/failed-components-list.txt
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" || echo ft >>${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/ptrdist-1.1/failed-components-list.txt
 
       - name: Convert ks
         run: |
@@ -527,7 +530,7 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/ptrdist-1.1/ks
           cp -r out.checked/* .
           rm -r out.checked
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -D_ISOC99_SOURCE" || echo ks >>${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/ptrdist-1.1/failed-components-list.txt
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" || echo ks >>${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/ptrdist-1.1/failed-components-list.txt
 
       - name: Convert yacr2
         run: |
@@ -543,7 +546,7 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/ptrdist-1.1/yacr2
           cp -r out.checked/* .
           rm -r out.checked
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -D_ISOC99_SOURCE" || echo yacr2 >>${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/ptrdist-1.1/failed-components-list.txt
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" || echo yacr2 >>${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/ptrdist-1.1/failed-components-list.txt
 
       - name: Check for deferred post-conversion build failures
         run: |
@@ -574,7 +577,7 @@ jobs:
               sed -i "/#define.*_CODE/d; /#include \"$header\"/a#include \"$new_header\"" "$src"
             done )
           for i in anagram bc ft ks yacr2 ; do \
-            (cd $i ; bear make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" LOCAL_CFLAGS="-w -D_ISOC99_SOURCE") \
+            (cd $i ; bear make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE") \
           done
 
       - name: Convert anagram
@@ -592,7 +595,7 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes/ptrdist-1.1/anagram
           cp -r out.checked/* .
           rm -r out.checked
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py || echo anagram >>${{env.benchmark_conv_dir}}/expand_macros_alltypes/ptrdist-1.1/failed-components-list.txt
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py || echo anagram >>${{env.benchmark_conv_dir}}/expand_macros_alltypes/ptrdist-1.1/failed-components-list.txt
 
       - name: Convert bc
         run: |
@@ -609,7 +612,7 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes/ptrdist-1.1/bc
           cp -r out.checked/* .
           rm -r out.checked
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py || echo bc >>${{env.benchmark_conv_dir}}/expand_macros_alltypes/ptrdist-1.1/failed-components-list.txt
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py || echo bc >>${{env.benchmark_conv_dir}}/expand_macros_alltypes/ptrdist-1.1/failed-components-list.txt
 
       - name: Convert ft
         run: |
@@ -626,7 +629,7 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes/ptrdist-1.1/ft
           cp -r out.checked/* .
           rm -r out.checked
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py || echo ft >>${{env.benchmark_conv_dir}}/expand_macros_alltypes/ptrdist-1.1/failed-components-list.txt
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py || echo ft >>${{env.benchmark_conv_dir}}/expand_macros_alltypes/ptrdist-1.1/failed-components-list.txt
 
       - name: Convert ks
         run: |
@@ -643,7 +646,7 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes/ptrdist-1.1/ks
           cp -r out.checked/* .
           rm -r out.checked
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py || echo ks >>${{env.benchmark_conv_dir}}/expand_macros_alltypes/ptrdist-1.1/failed-components-list.txt
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py || echo ks >>${{env.benchmark_conv_dir}}/expand_macros_alltypes/ptrdist-1.1/failed-components-list.txt
 
       - name: Convert yacr2
         run: |
@@ -660,7 +663,7 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes/ptrdist-1.1/yacr2
           cp -r out.checked/* .
           rm -r out.checked
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py || echo yacr2 >>${{env.benchmark_conv_dir}}/expand_macros_alltypes/ptrdist-1.1/failed-components-list.txt
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py || echo yacr2 >>${{env.benchmark_conv_dir}}/expand_macros_alltypes/ptrdist-1.1/failed-components-list.txt
 
       - name: Check for deferred post-conversion build failures
         run: |
@@ -682,7 +685,7 @@ jobs:
           tar -xvzf ${{env.benchmark_tar_dir}}/libarchive-3.4.3.tar.gz
           cd libarchive-3.4.3
           cd build
-          cmake -DCMAKE_C_COMPILER=${{env.builddir}}/bin/clang -G Ninja -DCMAKE_C_FLAGS="-w -D_GNU_SOURCE" ..
+          cmake -DCMAKE_C_COMPILER=${{env.builddir}}/bin/clang -G Ninja -DCMAKE_C_FLAGS="-w -ferror-limit=0 -D_GNU_SOURCE" ..
           bear ninja -l $(nproc) archive
 
       - name: Convert LibArchive
@@ -715,7 +718,7 @@ jobs:
           tar -xvzf ${{env.benchmark_tar_dir}}/libarchive-3.4.3.tar.gz
           cd libarchive-3.4.3
           cd build
-          cmake -DCMAKE_C_COMPILER=${{env.builddir}}/bin/clang -G Ninja -DCMAKE_C_FLAGS="-w -D_GNU_SOURCE" ..
+          cmake -DCMAKE_C_COMPILER=${{env.builddir}}/bin/clang -G Ninja -DCMAKE_C_FLAGS="-w -ferror-limit=0 -D_GNU_SOURCE" ..
           bear ninja -l $(nproc) archive
 
       - name: Convert LibArchive
@@ -749,7 +752,7 @@ jobs:
           tar -xvzf ${{env.benchmark_tar_dir}}/libarchive-3.4.3.tar.gz
           cd libarchive-3.4.3
           cd build
-          cmake -DCMAKE_C_COMPILER=${{env.builddir}}/bin/clang -G Ninja -DCMAKE_C_FLAGS="-w -D_GNU_SOURCE" ..
+          cmake -DCMAKE_C_COMPILER=${{env.builddir}}/bin/clang -G Ninja -DCMAKE_C_FLAGS="-w -ferror-limit=0 -D_GNU_SOURCE" ..
           bear ninja -l $(nproc) archive
 
       - name: Convert LibArchive
@@ -783,7 +786,7 @@ jobs:
           tar -xvzf ${{env.benchmark_tar_dir}}/libarchive-3.4.3.tar.gz
           cd libarchive-3.4.3
           cd build
-          cmake -DCMAKE_C_COMPILER=${{env.builddir}}/bin/clang -G Ninja -DCMAKE_C_FLAGS="-w -D_GNU_SOURCE" ..
+          cmake -DCMAKE_C_COMPILER=${{env.builddir}}/bin/clang -G Ninja -DCMAKE_C_FLAGS="-w -ferror-limit=0 -D_GNU_SOURCE" ..
           bear ninja -l $(nproc) archive
 
       - name: Convert LibArchive
@@ -817,7 +820,7 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes
           tar -xvzf ${{env.benchmark_tar_dir}}/lua-5.4.1.tar.gz
           cd lua-5.4.1
-          bear make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" CFLAGS="-w" linux
+          bear make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" CFLAGS="-w -ferror-limit=0" linux
           ( cd src ; \
             clang-rename-10 -pl -i \
               --qualified-name=main \
@@ -838,7 +841,7 @@ jobs:
           cp -r out.checked/* .
           rm -r out.checked
           sed -i "s/luac_main/main/" src/luac.c
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k CFLAGS="-w" linux
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k CFLAGS="-w -ferror-limit=0" linux
 
   test_lua_no_expand_macros_alltypes:
     name: Test Lua (not macro-expanded, -alltypes)
@@ -851,7 +854,7 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes
           tar -xvzf ${{env.benchmark_tar_dir}}/lua-5.4.1.tar.gz
           cd lua-5.4.1
-          bear make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" CFLAGS="-w" linux
+          bear make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" CFLAGS="-w -ferror-limit=0" linux
           ( cd src ; \
             clang-rename-10 -pl -i \
               --qualified-name=main \
@@ -873,7 +876,7 @@ jobs:
           cp -r out.checked/* .
           rm -r out.checked
           sed -i "s/luac_main/main/" src/luac.c
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k CFLAGS="-w" linux 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k CFLAGS="-w -ferror-limit=0" linux 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py
 
   test_lua_expand_macros_no_alltypes:
     name: Test Lua (macro-expanded, no -alltypes)
@@ -886,7 +889,7 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes
           tar -xvzf ${{env.benchmark_tar_dir}}/lua-5.4.1.tar.gz
           cd lua-5.4.1
-          bear make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" CFLAGS="-w" linux
+          bear make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" CFLAGS="-w -ferror-limit=0" linux
           ( cd src ; \
             clang-rename-10 -pl -i \
               --qualified-name=main \
@@ -908,7 +911,7 @@ jobs:
           cp -r out.checked/* .
           rm -r out.checked
           sed -i "s/luac_main/main/" src/luac.c
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k CFLAGS="-w" linux
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k CFLAGS="-w -ferror-limit=0" linux
 
   test_lua_expand_macros_alltypes:
     name: Test Lua (macro-expanded, -alltypes)
@@ -921,7 +924,7 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes
           tar -xvzf ${{env.benchmark_tar_dir}}/lua-5.4.1.tar.gz
           cd lua-5.4.1
-          bear make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" CFLAGS="-w" linux
+          bear make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" CFLAGS="-w -ferror-limit=0" linux
           ( cd src ; \
             clang-rename-10 -pl -i \
               --qualified-name=main \
@@ -944,7 +947,7 @@ jobs:
           cp -r out.checked/* .
           rm -r out.checked
           sed -i "s/luac_main/main/" src/luac.c
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k CFLAGS="-w" linux 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k CFLAGS="-w -ferror-limit=0" linux 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py
 
   test_libtiff_no_expand_macros_no_alltypes:
     name: Test LibTiff (not macro-expanded, no -alltypes)
@@ -957,7 +960,7 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes
           tar -xvzf ${{env.benchmark_tar_dir}}/tiff-4.1.0.tar.gz
           cd tiff-4.1.0
-          cmake -DCMAKE_C_COMPILER=${{env.builddir}}/bin/clang -G Ninja -DCMAKE_C_FLAGS="-w" .
+          cmake -DCMAKE_C_COMPILER=${{env.builddir}}/bin/clang -G Ninja -DCMAKE_C_FLAGS="-w -ferror-limit=0" .
           bear ninja -l $(nproc) tiff
           ( cd tools ; \
             for i in *.c ; do \
@@ -995,7 +998,7 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes
           tar -xvzf ${{env.benchmark_tar_dir}}/tiff-4.1.0.tar.gz
           cd tiff-4.1.0
-          cmake -DCMAKE_C_COMPILER=${{env.builddir}}/bin/clang -G Ninja -DCMAKE_C_FLAGS="-w" .
+          cmake -DCMAKE_C_COMPILER=${{env.builddir}}/bin/clang -G Ninja -DCMAKE_C_FLAGS="-w -ferror-limit=0" .
           bear ninja -l $(nproc) tiff
           ( cd tools ; \
             for i in *.c ; do \
@@ -1034,7 +1037,7 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes
           tar -xvzf ${{env.benchmark_tar_dir}}/tiff-4.1.0.tar.gz
           cd tiff-4.1.0
-          cmake -DCMAKE_C_COMPILER=${{env.builddir}}/bin/clang -G Ninja -DCMAKE_C_FLAGS="-w" .
+          cmake -DCMAKE_C_COMPILER=${{env.builddir}}/bin/clang -G Ninja -DCMAKE_C_FLAGS="-w -ferror-limit=0" .
           bear ninja -l $(nproc) tiff
           ( cd tools ; \
             for i in *.c ; do \
@@ -1073,7 +1076,7 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes
           tar -xvzf ${{env.benchmark_tar_dir}}/tiff-4.1.0.tar.gz
           cd tiff-4.1.0
-          cmake -DCMAKE_C_COMPILER=${{env.builddir}}/bin/clang -G Ninja -DCMAKE_C_FLAGS="-w" .
+          cmake -DCMAKE_C_COMPILER=${{env.builddir}}/bin/clang -G Ninja -DCMAKE_C_FLAGS="-w -ferror-limit=0" .
           bear ninja -l $(nproc) tiff
           ( cd tools ; \
             for i in *.c ; do \
@@ -1115,7 +1118,7 @@ jobs:
           cd zlib-1.2.11
           mkdir build
           cd build
-          cmake -DCMAKE_C_COMPILER=${{env.builddir}}/bin/clang -G Ninja -DCMAKE_C_FLAGS="-w" ..
+          cmake -DCMAKE_C_COMPILER=${{env.builddir}}/bin/clang -G Ninja -DCMAKE_C_FLAGS="-w -ferror-limit=0" ..
           bear ninja -l $(nproc) zlib
 
       - name: Convert ZLib
@@ -1149,7 +1152,7 @@ jobs:
           cd zlib-1.2.11
           mkdir build
           cd build
-          cmake -DCMAKE_C_COMPILER=${{env.builddir}}/bin/clang -G Ninja -DCMAKE_C_FLAGS="-w" ..
+          cmake -DCMAKE_C_COMPILER=${{env.builddir}}/bin/clang -G Ninja -DCMAKE_C_FLAGS="-w -ferror-limit=0" ..
           bear ninja -l $(nproc) zlib
 
       - name: Convert ZLib
@@ -1184,7 +1187,7 @@ jobs:
           cd zlib-1.2.11
           mkdir build
           cd build
-          cmake -DCMAKE_C_COMPILER=${{env.builddir}}/bin/clang -G Ninja -DCMAKE_C_FLAGS="-w" ..
+          cmake -DCMAKE_C_COMPILER=${{env.builddir}}/bin/clang -G Ninja -DCMAKE_C_FLAGS="-w -ferror-limit=0" ..
           bear ninja -l $(nproc) zlib
 
       - name: Convert ZLib
@@ -1219,7 +1222,7 @@ jobs:
           cd zlib-1.2.11
           mkdir build
           cd build
-          cmake -DCMAKE_C_COMPILER=${{env.builddir}}/bin/clang -G Ninja -DCMAKE_C_FLAGS="-w" ..
+          cmake -DCMAKE_C_COMPILER=${{env.builddir}}/bin/clang -G Ninja -DCMAKE_C_FLAGS="-w -ferror-limit=0" ..
           bear ninja -l $(nproc) zlib
 
       - name: Convert ZLib
@@ -1254,7 +1257,7 @@ jobs:
           tar -xvzf ${{env.benchmark_tar_dir}}/icecast-2.4.4.tar.gz
           cd icecast-2.4.4
           sed -i '/_GNU_SOURCE/d' configure
-          CC="${{env.builddir}}/bin/clang" CFLAGS="-w" ./configure
+          CC="${{env.builddir}}/bin/clang" CFLAGS="-w -ferror-limit=0" ./configure
           bear make -j $(nproc) -l $(nproc) --output-sync
 
       - name: Convert Icecast
@@ -1284,7 +1287,7 @@ jobs:
           tar -xvzf ${{env.benchmark_tar_dir}}/icecast-2.4.4.tar.gz
           cd icecast-2.4.4
           sed -i '/_GNU_SOURCE/d' configure
-          CC="${{env.builddir}}/bin/clang" CFLAGS="-w" ./configure
+          CC="${{env.builddir}}/bin/clang" CFLAGS="-w -ferror-limit=0" ./configure
           bear make -j $(nproc) -l $(nproc) --output-sync
 
       - name: Convert Icecast
@@ -1315,7 +1318,7 @@ jobs:
           tar -xvzf ${{env.benchmark_tar_dir}}/icecast-2.4.4.tar.gz
           cd icecast-2.4.4
           sed -i '/_GNU_SOURCE/d' configure
-          CC="${{env.builddir}}/bin/clang" CFLAGS="-w" ./configure
+          CC="${{env.builddir}}/bin/clang" CFLAGS="-w -ferror-limit=0" ./configure
           bear make -j $(nproc) -l $(nproc) --output-sync
 
       - name: Convert Icecast
@@ -1346,7 +1349,7 @@ jobs:
           tar -xvzf ${{env.benchmark_tar_dir}}/icecast-2.4.4.tar.gz
           cd icecast-2.4.4
           sed -i '/_GNU_SOURCE/d' configure
-          CC="${{env.builddir}}/bin/clang" CFLAGS="-w" ./configure
+          CC="${{env.builddir}}/bin/clang" CFLAGS="-w -ferror-limit=0" ./configure
           bear make -j $(nproc) -l $(nproc) --output-sync
 
       - name: Convert Icecast
