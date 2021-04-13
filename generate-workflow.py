@@ -240,7 +240,7 @@ benchmarks = [
         #
         name='icecast',
         friendly_name='Icecast',
-        dir_name='Icecast-Server-master_de3a07550',
+        dir_name='Icecast-Server-master_de3a075500',
         # Turn off _GNU_SOURCE to work around the problem with transparent
         # unions for `struct sockaddr *`
         # (https://github.com/microsoft/checkedc/issues/441). `configure` was
@@ -262,6 +262,7 @@ benchmarks = [
         dir_name='thttpd-2.29',
         build_cmds=textwrap.dedent(f'''\
         CC="${{{{env.builddir}}}}/bin/clang" CFLAGS="{common_cflags}" ./configure
+        chmod -R 777 *
         bear {make_std}
         '''),
         build_converted_cmd=f'{make_std} -k',

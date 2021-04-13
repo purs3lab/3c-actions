@@ -4358,16 +4358,16 @@ jobs:
         run: |
           mkdir -p ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes
-          tar -xvzf ${{env.benchmark_tar_dir}}/Icecast-Server-master_de3a07550.tar.gz
+          tar -xvzf ${{env.benchmark_tar_dir}}/Icecast-Server-master_de3a075500.tar.gz
           for i in ${{env.benchmark_tar_dir}}/Icecast-Server-master_de3a075500_patches/*; do patch -s -p0 < $i; done
-          cd Icecast-Server-master_de3a07550
+          cd Icecast-Server-master_de3a075500
           sed -i '/_GNU_SOURCE/d' configure
           CC="${{env.builddir}}/bin/clang" CFLAGS="-w -ferror-limit=0" ./configure
           bear make -j $(nproc) -l $(nproc) --output-sync
 
       - name: Convert Icecast
         run: |
-          cd ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/Icecast-Server-master_de3a07550
+          cd ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/Icecast-Server-master_de3a075500
           ${{env.port_tools}}/convert_project.py \
             --includeDir ${{env.include_dir}} \
             --prog_name ${{env.builddir}}/bin/3c \
@@ -4375,7 +4375,7 @@ jobs:
 
       - name: Copy 3c stats of Icecast
         run: |
-          cd ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/Icecast-Server-master_de3a07550
+          cd ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/Icecast-Server-master_de3a075500
           mkdir 3c_performance_stats/
           cp *.json 3c_performance_stats/
 
@@ -4383,12 +4383,12 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: Icecast_no_expand_macros_no_alltypes
-          path: ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/Icecast-Server-master_de3a07550/3c_performance_stats/
+          path: ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/Icecast-Server-master_de3a075500/3c_performance_stats/
           retention-days: 5
 
       - name: Build converted Icecast
         run: |
-          cd ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/Icecast-Server-master_de3a07550
+          cd ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/Icecast-Server-master_de3a075500
           cp -r out.checked/* .
           rm -r out.checked
           make -j $(nproc) -l $(nproc) --output-sync -k
@@ -4402,16 +4402,16 @@ jobs:
         run: |
           mkdir -p ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes_only_g_sol
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes_only_g_sol
-          tar -xvzf ${{env.benchmark_tar_dir}}/Icecast-Server-master_de3a07550.tar.gz
+          tar -xvzf ${{env.benchmark_tar_dir}}/Icecast-Server-master_de3a075500.tar.gz
           for i in ${{env.benchmark_tar_dir}}/Icecast-Server-master_de3a075500_patches/*; do patch -s -p0 < $i; done
-          cd Icecast-Server-master_de3a07550
+          cd Icecast-Server-master_de3a075500
           sed -i '/_GNU_SOURCE/d' configure
           CC="${{env.builddir}}/bin/clang" CFLAGS="-w -ferror-limit=0" ./configure
           bear make -j $(nproc) -l $(nproc) --output-sync
 
       - name: Convert Icecast
         run: |
-          cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes_only_g_sol/Icecast-Server-master_de3a07550
+          cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes_only_g_sol/Icecast-Server-master_de3a075500
           ${{env.port_tools}}/convert_project.py \
             --includeDir ${{env.include_dir}} \
             --prog_name ${{env.builddir}}/bin/3c \
@@ -4421,7 +4421,7 @@ jobs:
 
       - name: Copy 3c stats of Icecast
         run: |
-          cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes_only_g_sol/Icecast-Server-master_de3a07550
+          cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes_only_g_sol/Icecast-Server-master_de3a075500
           mkdir 3c_performance_stats/
           cp *.json 3c_performance_stats/
 
@@ -4429,12 +4429,12 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: Icecast_no_expand_macros_alltypes_only_g_sol
-          path: ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes_only_g_sol/Icecast-Server-master_de3a07550/3c_performance_stats/
+          path: ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes_only_g_sol/Icecast-Server-master_de3a075500/3c_performance_stats/
           retention-days: 5
 
       - name: Build converted Icecast (filter bounds inference errors)
         run: |
-          cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes_only_g_sol/Icecast-Server-master_de3a07550
+          cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes_only_g_sol/Icecast-Server-master_de3a075500
           cp -r out.checked/* .
           rm -r out.checked
           make -j $(nproc) -l $(nproc) --output-sync -k 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py
@@ -4448,16 +4448,16 @@ jobs:
         run: |
           mkdir -p ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes_only_l_sol
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes_only_l_sol
-          tar -xvzf ${{env.benchmark_tar_dir}}/Icecast-Server-master_de3a07550.tar.gz
+          tar -xvzf ${{env.benchmark_tar_dir}}/Icecast-Server-master_de3a075500.tar.gz
           for i in ${{env.benchmark_tar_dir}}/Icecast-Server-master_de3a075500_patches/*; do patch -s -p0 < $i; done
-          cd Icecast-Server-master_de3a07550
+          cd Icecast-Server-master_de3a075500
           sed -i '/_GNU_SOURCE/d' configure
           CC="${{env.builddir}}/bin/clang" CFLAGS="-w -ferror-limit=0" ./configure
           bear make -j $(nproc) -l $(nproc) --output-sync
 
       - name: Convert Icecast
         run: |
-          cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes_only_l_sol/Icecast-Server-master_de3a07550
+          cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes_only_l_sol/Icecast-Server-master_de3a075500
           ${{env.port_tools}}/convert_project.py \
             --includeDir ${{env.include_dir}} \
             --prog_name ${{env.builddir}}/bin/3c \
@@ -4467,7 +4467,7 @@ jobs:
 
       - name: Copy 3c stats of Icecast
         run: |
-          cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes_only_l_sol/Icecast-Server-master_de3a07550
+          cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes_only_l_sol/Icecast-Server-master_de3a075500
           mkdir 3c_performance_stats/
           cp *.json 3c_performance_stats/
 
@@ -4475,12 +4475,12 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: Icecast_no_expand_macros_alltypes_only_l_sol
-          path: ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes_only_l_sol/Icecast-Server-master_de3a07550/3c_performance_stats/
+          path: ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes_only_l_sol/Icecast-Server-master_de3a075500/3c_performance_stats/
           retention-days: 5
 
       - name: Build converted Icecast (filter bounds inference errors)
         run: |
-          cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes_only_l_sol/Icecast-Server-master_de3a07550
+          cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes_only_l_sol/Icecast-Server-master_de3a075500
           cp -r out.checked/* .
           rm -r out.checked
           make -j $(nproc) -l $(nproc) --output-sync -k 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py
@@ -4494,16 +4494,16 @@ jobs:
         run: |
           mkdir -p ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes_disable_rds
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes_disable_rds
-          tar -xvzf ${{env.benchmark_tar_dir}}/Icecast-Server-master_de3a07550.tar.gz
+          tar -xvzf ${{env.benchmark_tar_dir}}/Icecast-Server-master_de3a075500.tar.gz
           for i in ${{env.benchmark_tar_dir}}/Icecast-Server-master_de3a075500_patches/*; do patch -s -p0 < $i; done
-          cd Icecast-Server-master_de3a07550
+          cd Icecast-Server-master_de3a075500
           sed -i '/_GNU_SOURCE/d' configure
           CC="${{env.builddir}}/bin/clang" CFLAGS="-w -ferror-limit=0" ./configure
           bear make -j $(nproc) -l $(nproc) --output-sync
 
       - name: Convert Icecast
         run: |
-          cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes_disable_rds/Icecast-Server-master_de3a07550
+          cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes_disable_rds/Icecast-Server-master_de3a075500
           ${{env.port_tools}}/convert_project.py \
             --includeDir ${{env.include_dir}} \
             --prog_name ${{env.builddir}}/bin/3c \
@@ -4513,7 +4513,7 @@ jobs:
 
       - name: Copy 3c stats of Icecast
         run: |
-          cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes_disable_rds/Icecast-Server-master_de3a07550
+          cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes_disable_rds/Icecast-Server-master_de3a075500
           mkdir 3c_performance_stats/
           cp *.json 3c_performance_stats/
 
@@ -4521,12 +4521,12 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: Icecast_no_expand_macros_alltypes_disable_rds
-          path: ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes_disable_rds/Icecast-Server-master_de3a07550/3c_performance_stats/
+          path: ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes_disable_rds/Icecast-Server-master_de3a075500/3c_performance_stats/
           retention-days: 5
 
       - name: Build converted Icecast (filter bounds inference errors)
         run: |
-          cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes_disable_rds/Icecast-Server-master_de3a07550
+          cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes_disable_rds/Icecast-Server-master_de3a075500
           cp -r out.checked/* .
           rm -r out.checked
           make -j $(nproc) -l $(nproc) --output-sync -k 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py
@@ -4540,16 +4540,16 @@ jobs:
         run: |
           mkdir -p ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes
-          tar -xvzf ${{env.benchmark_tar_dir}}/Icecast-Server-master_de3a07550.tar.gz
+          tar -xvzf ${{env.benchmark_tar_dir}}/Icecast-Server-master_de3a075500.tar.gz
           for i in ${{env.benchmark_tar_dir}}/Icecast-Server-master_de3a075500_patches/*; do patch -s -p0 < $i; done
-          cd Icecast-Server-master_de3a07550
+          cd Icecast-Server-master_de3a075500
           sed -i '/_GNU_SOURCE/d' configure
           CC="${{env.builddir}}/bin/clang" CFLAGS="-w -ferror-limit=0" ./configure
           bear make -j $(nproc) -l $(nproc) --output-sync
 
       - name: Convert Icecast
         run: |
-          cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Icecast-Server-master_de3a07550
+          cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Icecast-Server-master_de3a075500
           ${{env.port_tools}}/convert_project.py \
             --includeDir ${{env.include_dir}} \
             --prog_name ${{env.builddir}}/bin/3c \
@@ -4558,7 +4558,7 @@ jobs:
 
       - name: Copy 3c stats of Icecast
         run: |
-          cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Icecast-Server-master_de3a07550
+          cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Icecast-Server-master_de3a075500
           mkdir 3c_performance_stats/
           cp *.json 3c_performance_stats/
 
@@ -4566,12 +4566,12 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: Icecast_no_expand_macros_alltypes
-          path: ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Icecast-Server-master_de3a07550/3c_performance_stats/
+          path: ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Icecast-Server-master_de3a075500/3c_performance_stats/
           retention-days: 5
 
       - name: Build converted Icecast (filter bounds inference errors)
         run: |
-          cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Icecast-Server-master_de3a07550
+          cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Icecast-Server-master_de3a075500
           cp -r out.checked/* .
           rm -r out.checked
           make -j $(nproc) -l $(nproc) --output-sync -k 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py
@@ -4585,16 +4585,16 @@ jobs:
         run: |
           mkdir -p ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes
           cd ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes
-          tar -xvzf ${{env.benchmark_tar_dir}}/Icecast-Server-master_de3a07550.tar.gz
+          tar -xvzf ${{env.benchmark_tar_dir}}/Icecast-Server-master_de3a075500.tar.gz
           for i in ${{env.benchmark_tar_dir}}/Icecast-Server-master_de3a075500_patches/*; do patch -s -p0 < $i; done
-          cd Icecast-Server-master_de3a07550
+          cd Icecast-Server-master_de3a075500
           sed -i '/_GNU_SOURCE/d' configure
           CC="${{env.builddir}}/bin/clang" CFLAGS="-w -ferror-limit=0" ./configure
           bear make -j $(nproc) -l $(nproc) --output-sync
 
       - name: Convert Icecast
         run: |
-          cd ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/Icecast-Server-master_de3a07550
+          cd ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/Icecast-Server-master_de3a075500
           ${{env.port_tools}}/convert_project.py \
             --includeDir ${{env.include_dir}} \
             --prog_name ${{env.builddir}}/bin/3c \
@@ -4603,7 +4603,7 @@ jobs:
 
       - name: Copy 3c stats of Icecast
         run: |
-          cd ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/Icecast-Server-master_de3a07550
+          cd ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/Icecast-Server-master_de3a075500
           mkdir 3c_performance_stats/
           cp *.json 3c_performance_stats/
 
@@ -4611,12 +4611,12 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: Icecast_expand_macros_no_alltypes
-          path: ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/Icecast-Server-master_de3a07550/3c_performance_stats/
+          path: ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/Icecast-Server-master_de3a075500/3c_performance_stats/
           retention-days: 5
 
       - name: Build converted Icecast
         run: |
-          cd ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/Icecast-Server-master_de3a07550
+          cd ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/Icecast-Server-master_de3a075500
           cp -r out.checked/* .
           rm -r out.checked
           make -j $(nproc) -l $(nproc) --output-sync -k
@@ -4630,16 +4630,16 @@ jobs:
         run: |
           mkdir -p ${{env.benchmark_conv_dir}}/expand_macros_alltypes_only_g_sol
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes_only_g_sol
-          tar -xvzf ${{env.benchmark_tar_dir}}/Icecast-Server-master_de3a07550.tar.gz
+          tar -xvzf ${{env.benchmark_tar_dir}}/Icecast-Server-master_de3a075500.tar.gz
           for i in ${{env.benchmark_tar_dir}}/Icecast-Server-master_de3a075500_patches/*; do patch -s -p0 < $i; done
-          cd Icecast-Server-master_de3a07550
+          cd Icecast-Server-master_de3a075500
           sed -i '/_GNU_SOURCE/d' configure
           CC="${{env.builddir}}/bin/clang" CFLAGS="-w -ferror-limit=0" ./configure
           bear make -j $(nproc) -l $(nproc) --output-sync
 
       - name: Convert Icecast
         run: |
-          cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes_only_g_sol/Icecast-Server-master_de3a07550
+          cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes_only_g_sol/Icecast-Server-master_de3a075500
           ${{env.port_tools}}/convert_project.py \
             --includeDir ${{env.include_dir}} \
             --prog_name ${{env.builddir}}/bin/3c \
@@ -4650,7 +4650,7 @@ jobs:
 
       - name: Copy 3c stats of Icecast
         run: |
-          cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes_only_g_sol/Icecast-Server-master_de3a07550
+          cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes_only_g_sol/Icecast-Server-master_de3a075500
           mkdir 3c_performance_stats/
           cp *.json 3c_performance_stats/
 
@@ -4658,12 +4658,12 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: Icecast_expand_macros_alltypes_only_g_sol
-          path: ${{env.benchmark_conv_dir}}/expand_macros_alltypes_only_g_sol/Icecast-Server-master_de3a07550/3c_performance_stats/
+          path: ${{env.benchmark_conv_dir}}/expand_macros_alltypes_only_g_sol/Icecast-Server-master_de3a075500/3c_performance_stats/
           retention-days: 5
 
       - name: Build converted Icecast (filter bounds inference errors)
         run: |
-          cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes_only_g_sol/Icecast-Server-master_de3a07550
+          cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes_only_g_sol/Icecast-Server-master_de3a075500
           cp -r out.checked/* .
           rm -r out.checked
           make -j $(nproc) -l $(nproc) --output-sync -k 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py
@@ -4677,16 +4677,16 @@ jobs:
         run: |
           mkdir -p ${{env.benchmark_conv_dir}}/expand_macros_alltypes_only_l_sol
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes_only_l_sol
-          tar -xvzf ${{env.benchmark_tar_dir}}/Icecast-Server-master_de3a07550.tar.gz
+          tar -xvzf ${{env.benchmark_tar_dir}}/Icecast-Server-master_de3a075500.tar.gz
           for i in ${{env.benchmark_tar_dir}}/Icecast-Server-master_de3a075500_patches/*; do patch -s -p0 < $i; done
-          cd Icecast-Server-master_de3a07550
+          cd Icecast-Server-master_de3a075500
           sed -i '/_GNU_SOURCE/d' configure
           CC="${{env.builddir}}/bin/clang" CFLAGS="-w -ferror-limit=0" ./configure
           bear make -j $(nproc) -l $(nproc) --output-sync
 
       - name: Convert Icecast
         run: |
-          cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes_only_l_sol/Icecast-Server-master_de3a07550
+          cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes_only_l_sol/Icecast-Server-master_de3a075500
           ${{env.port_tools}}/convert_project.py \
             --includeDir ${{env.include_dir}} \
             --prog_name ${{env.builddir}}/bin/3c \
@@ -4697,7 +4697,7 @@ jobs:
 
       - name: Copy 3c stats of Icecast
         run: |
-          cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes_only_l_sol/Icecast-Server-master_de3a07550
+          cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes_only_l_sol/Icecast-Server-master_de3a075500
           mkdir 3c_performance_stats/
           cp *.json 3c_performance_stats/
 
@@ -4705,12 +4705,12 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: Icecast_expand_macros_alltypes_only_l_sol
-          path: ${{env.benchmark_conv_dir}}/expand_macros_alltypes_only_l_sol/Icecast-Server-master_de3a07550/3c_performance_stats/
+          path: ${{env.benchmark_conv_dir}}/expand_macros_alltypes_only_l_sol/Icecast-Server-master_de3a075500/3c_performance_stats/
           retention-days: 5
 
       - name: Build converted Icecast (filter bounds inference errors)
         run: |
-          cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes_only_l_sol/Icecast-Server-master_de3a07550
+          cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes_only_l_sol/Icecast-Server-master_de3a075500
           cp -r out.checked/* .
           rm -r out.checked
           make -j $(nproc) -l $(nproc) --output-sync -k 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py
@@ -4724,16 +4724,16 @@ jobs:
         run: |
           mkdir -p ${{env.benchmark_conv_dir}}/expand_macros_alltypes_disable_rds
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes_disable_rds
-          tar -xvzf ${{env.benchmark_tar_dir}}/Icecast-Server-master_de3a07550.tar.gz
+          tar -xvzf ${{env.benchmark_tar_dir}}/Icecast-Server-master_de3a075500.tar.gz
           for i in ${{env.benchmark_tar_dir}}/Icecast-Server-master_de3a075500_patches/*; do patch -s -p0 < $i; done
-          cd Icecast-Server-master_de3a07550
+          cd Icecast-Server-master_de3a075500
           sed -i '/_GNU_SOURCE/d' configure
           CC="${{env.builddir}}/bin/clang" CFLAGS="-w -ferror-limit=0" ./configure
           bear make -j $(nproc) -l $(nproc) --output-sync
 
       - name: Convert Icecast
         run: |
-          cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes_disable_rds/Icecast-Server-master_de3a07550
+          cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes_disable_rds/Icecast-Server-master_de3a075500
           ${{env.port_tools}}/convert_project.py \
             --includeDir ${{env.include_dir}} \
             --prog_name ${{env.builddir}}/bin/3c \
@@ -4744,7 +4744,7 @@ jobs:
 
       - name: Copy 3c stats of Icecast
         run: |
-          cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes_disable_rds/Icecast-Server-master_de3a07550
+          cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes_disable_rds/Icecast-Server-master_de3a075500
           mkdir 3c_performance_stats/
           cp *.json 3c_performance_stats/
 
@@ -4752,12 +4752,12 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: Icecast_expand_macros_alltypes_disable_rds
-          path: ${{env.benchmark_conv_dir}}/expand_macros_alltypes_disable_rds/Icecast-Server-master_de3a07550/3c_performance_stats/
+          path: ${{env.benchmark_conv_dir}}/expand_macros_alltypes_disable_rds/Icecast-Server-master_de3a075500/3c_performance_stats/
           retention-days: 5
 
       - name: Build converted Icecast (filter bounds inference errors)
         run: |
-          cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes_disable_rds/Icecast-Server-master_de3a07550
+          cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes_disable_rds/Icecast-Server-master_de3a075500
           cp -r out.checked/* .
           rm -r out.checked
           make -j $(nproc) -l $(nproc) --output-sync -k 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py
@@ -4771,16 +4771,16 @@ jobs:
         run: |
           mkdir -p ${{env.benchmark_conv_dir}}/expand_macros_alltypes
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes
-          tar -xvzf ${{env.benchmark_tar_dir}}/Icecast-Server-master_de3a07550.tar.gz
+          tar -xvzf ${{env.benchmark_tar_dir}}/Icecast-Server-master_de3a075500.tar.gz
           for i in ${{env.benchmark_tar_dir}}/Icecast-Server-master_de3a075500_patches/*; do patch -s -p0 < $i; done
-          cd Icecast-Server-master_de3a07550
+          cd Icecast-Server-master_de3a075500
           sed -i '/_GNU_SOURCE/d' configure
           CC="${{env.builddir}}/bin/clang" CFLAGS="-w -ferror-limit=0" ./configure
           bear make -j $(nproc) -l $(nproc) --output-sync
 
       - name: Convert Icecast
         run: |
-          cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes/Icecast-Server-master_de3a07550
+          cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes/Icecast-Server-master_de3a075500
           ${{env.port_tools}}/convert_project.py \
             --includeDir ${{env.include_dir}} \
             --prog_name ${{env.builddir}}/bin/3c \
@@ -4790,7 +4790,7 @@ jobs:
 
       - name: Copy 3c stats of Icecast
         run: |
-          cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes/Icecast-Server-master_de3a07550
+          cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes/Icecast-Server-master_de3a075500
           mkdir 3c_performance_stats/
           cp *.json 3c_performance_stats/
 
@@ -4798,12 +4798,12 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: Icecast_expand_macros_alltypes
-          path: ${{env.benchmark_conv_dir}}/expand_macros_alltypes/Icecast-Server-master_de3a07550/3c_performance_stats/
+          path: ${{env.benchmark_conv_dir}}/expand_macros_alltypes/Icecast-Server-master_de3a075500/3c_performance_stats/
           retention-days: 5
 
       - name: Build converted Icecast (filter bounds inference errors)
         run: |
-          cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes/Icecast-Server-master_de3a07550
+          cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes/Icecast-Server-master_de3a075500
           cp -r out.checked/* .
           rm -r out.checked
           make -j $(nproc) -l $(nproc) --output-sync -k 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py
@@ -4821,6 +4821,7 @@ jobs:
           for i in ${{env.benchmark_tar_dir}}/thttpd-2.29_patches/*; do patch -s -p0 < $i; done
           cd thttpd-2.29
           CC="${{env.builddir}}/bin/clang" CFLAGS="-w -ferror-limit=0" ./configure
+          chmod -R 777 *
           bear make -j $(nproc) -l $(nproc) --output-sync
 
       - name: Convert Thhtpd
@@ -4864,6 +4865,7 @@ jobs:
           for i in ${{env.benchmark_tar_dir}}/thttpd-2.29_patches/*; do patch -s -p0 < $i; done
           cd thttpd-2.29
           CC="${{env.builddir}}/bin/clang" CFLAGS="-w -ferror-limit=0" ./configure
+          chmod -R 777 *
           bear make -j $(nproc) -l $(nproc) --output-sync
 
       - name: Convert Thhtpd
@@ -4909,6 +4911,7 @@ jobs:
           for i in ${{env.benchmark_tar_dir}}/thttpd-2.29_patches/*; do patch -s -p0 < $i; done
           cd thttpd-2.29
           CC="${{env.builddir}}/bin/clang" CFLAGS="-w -ferror-limit=0" ./configure
+          chmod -R 777 *
           bear make -j $(nproc) -l $(nproc) --output-sync
 
       - name: Convert Thhtpd
@@ -4954,6 +4957,7 @@ jobs:
           for i in ${{env.benchmark_tar_dir}}/thttpd-2.29_patches/*; do patch -s -p0 < $i; done
           cd thttpd-2.29
           CC="${{env.builddir}}/bin/clang" CFLAGS="-w -ferror-limit=0" ./configure
+          chmod -R 777 *
           bear make -j $(nproc) -l $(nproc) --output-sync
 
       - name: Convert Thhtpd
@@ -4999,6 +5003,7 @@ jobs:
           for i in ${{env.benchmark_tar_dir}}/thttpd-2.29_patches/*; do patch -s -p0 < $i; done
           cd thttpd-2.29
           CC="${{env.builddir}}/bin/clang" CFLAGS="-w -ferror-limit=0" ./configure
+          chmod -R 777 *
           bear make -j $(nproc) -l $(nproc) --output-sync
 
       - name: Convert Thhtpd
@@ -5043,6 +5048,7 @@ jobs:
           for i in ${{env.benchmark_tar_dir}}/thttpd-2.29_patches/*; do patch -s -p0 < $i; done
           cd thttpd-2.29
           CC="${{env.builddir}}/bin/clang" CFLAGS="-w -ferror-limit=0" ./configure
+          chmod -R 777 *
           bear make -j $(nproc) -l $(nproc) --output-sync
 
       - name: Convert Thhtpd
@@ -5087,6 +5093,7 @@ jobs:
           for i in ${{env.benchmark_tar_dir}}/thttpd-2.29_patches/*; do patch -s -p0 < $i; done
           cd thttpd-2.29
           CC="${{env.builddir}}/bin/clang" CFLAGS="-w -ferror-limit=0" ./configure
+          chmod -R 777 *
           bear make -j $(nproc) -l $(nproc) --output-sync
 
       - name: Convert Thhtpd
@@ -5133,6 +5140,7 @@ jobs:
           for i in ${{env.benchmark_tar_dir}}/thttpd-2.29_patches/*; do patch -s -p0 < $i; done
           cd thttpd-2.29
           CC="${{env.builddir}}/bin/clang" CFLAGS="-w -ferror-limit=0" ./configure
+          chmod -R 777 *
           bear make -j $(nproc) -l $(nproc) --output-sync
 
       - name: Convert Thhtpd
@@ -5179,6 +5187,7 @@ jobs:
           for i in ${{env.benchmark_tar_dir}}/thttpd-2.29_patches/*; do patch -s -p0 < $i; done
           cd thttpd-2.29
           CC="${{env.builddir}}/bin/clang" CFLAGS="-w -ferror-limit=0" ./configure
+          chmod -R 777 *
           bear make -j $(nproc) -l $(nproc) --output-sync
 
       - name: Convert Thhtpd
@@ -5225,6 +5234,7 @@ jobs:
           for i in ${{env.benchmark_tar_dir}}/thttpd-2.29_patches/*; do patch -s -p0 < $i; done
           cd thttpd-2.29
           CC="${{env.builddir}}/bin/clang" CFLAGS="-w -ferror-limit=0" ./configure
+          chmod -R 777 *
           bear make -j $(nproc) -l $(nproc) --output-sync
 
       - name: Convert Thhtpd
