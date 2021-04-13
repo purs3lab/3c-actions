@@ -959,6 +959,7 @@ jobs:
           mkdir -p ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes
           tar -xvzf ${{env.benchmark_tar_dir}}/tiff-4.1.0.tar.gz
+          for i in ${{env.benchmark_tar_dir}}/tiff-4.1.0_patches/*; do patch -s -p0 < $i; done
           cd tiff-4.1.0
           cmake -DCMAKE_C_COMPILER=${{env.builddir}}/bin/clang -G Ninja -DCMAKE_C_FLAGS="-w -ferror-limit=0" .
           bear ninja -l $(nproc) tiff
@@ -997,6 +998,7 @@ jobs:
           mkdir -p ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes
           tar -xvzf ${{env.benchmark_tar_dir}}/tiff-4.1.0.tar.gz
+          for i in ${{env.benchmark_tar_dir}}/tiff-4.1.0_patches/*; do patch -s -p0 < $i; done
           cd tiff-4.1.0
           cmake -DCMAKE_C_COMPILER=${{env.builddir}}/bin/clang -G Ninja -DCMAKE_C_FLAGS="-w -ferror-limit=0" .
           bear ninja -l $(nproc) tiff
@@ -1036,6 +1038,7 @@ jobs:
           mkdir -p ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes
           cd ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes
           tar -xvzf ${{env.benchmark_tar_dir}}/tiff-4.1.0.tar.gz
+          for i in ${{env.benchmark_tar_dir}}/tiff-4.1.0_patches/*; do patch -s -p0 < $i; done
           cd tiff-4.1.0
           cmake -DCMAKE_C_COMPILER=${{env.builddir}}/bin/clang -G Ninja -DCMAKE_C_FLAGS="-w -ferror-limit=0" .
           bear ninja -l $(nproc) tiff
@@ -1075,6 +1078,7 @@ jobs:
           mkdir -p ${{env.benchmark_conv_dir}}/expand_macros_alltypes
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes
           tar -xvzf ${{env.benchmark_tar_dir}}/tiff-4.1.0.tar.gz
+          for i in ${{env.benchmark_tar_dir}}/tiff-4.1.0_patches/*; do patch -s -p0 < $i; done
           cd tiff-4.1.0
           cmake -DCMAKE_C_COMPILER=${{env.builddir}}/bin/clang -G Ninja -DCMAKE_C_FLAGS="-w -ferror-limit=0" .
           bear ninja -l $(nproc) tiff
@@ -1254,15 +1258,16 @@ jobs:
         run: |
           mkdir -p ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes
-          tar -xvzf ${{env.benchmark_tar_dir}}/icecast-2.4.4.tar.gz
-          cd icecast-2.4.4
+          tar -xvzf ${{env.benchmark_tar_dir}}/Icecast-Server-master_de3a07550.tar.gz
+          for i in ${{env.benchmark_tar_dir}}/Icecast-Server-master_de3a075500_patches/*; do patch -s -p0 < $i; done
+          cd Icecast-Server-master_de3a07550
           sed -i '/_GNU_SOURCE/d' configure
           CC="${{env.builddir}}/bin/clang" CFLAGS="-w -ferror-limit=0" ./configure
           bear make -j $(nproc) -l $(nproc) --output-sync
 
       - name: Convert Icecast
         run: |
-          cd ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/icecast-2.4.4
+          cd ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/Icecast-Server-master_de3a07550
           ${{env.port_tools}}/convert_project.py \
             --includeDir ${{env.include_dir}} \
             --prog_name ${{env.builddir}}/bin/3c \
@@ -1270,7 +1275,7 @@ jobs:
 
       - name: Build converted Icecast
         run: |
-          cd ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/icecast-2.4.4
+          cd ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/Icecast-Server-master_de3a07550
           cp -r out.checked/* .
           rm -r out.checked
           make -j $(nproc) -l $(nproc) --output-sync -k
@@ -1284,15 +1289,16 @@ jobs:
         run: |
           mkdir -p ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes
-          tar -xvzf ${{env.benchmark_tar_dir}}/icecast-2.4.4.tar.gz
-          cd icecast-2.4.4
+          tar -xvzf ${{env.benchmark_tar_dir}}/Icecast-Server-master_de3a07550.tar.gz
+          for i in ${{env.benchmark_tar_dir}}/Icecast-Server-master_de3a075500_patches/*; do patch -s -p0 < $i; done
+          cd Icecast-Server-master_de3a07550
           sed -i '/_GNU_SOURCE/d' configure
           CC="${{env.builddir}}/bin/clang" CFLAGS="-w -ferror-limit=0" ./configure
           bear make -j $(nproc) -l $(nproc) --output-sync
 
       - name: Convert Icecast
         run: |
-          cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/icecast-2.4.4
+          cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Icecast-Server-master_de3a07550
           ${{env.port_tools}}/convert_project.py \
             --includeDir ${{env.include_dir}} \
             --prog_name ${{env.builddir}}/bin/3c \
@@ -1301,7 +1307,7 @@ jobs:
 
       - name: Build converted Icecast (filter bounds inference errors)
         run: |
-          cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/icecast-2.4.4
+          cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Icecast-Server-master_de3a07550
           cp -r out.checked/* .
           rm -r out.checked
           make -j $(nproc) -l $(nproc) --output-sync -k 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py
@@ -1315,15 +1321,16 @@ jobs:
         run: |
           mkdir -p ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes
           cd ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes
-          tar -xvzf ${{env.benchmark_tar_dir}}/icecast-2.4.4.tar.gz
-          cd icecast-2.4.4
+          tar -xvzf ${{env.benchmark_tar_dir}}/Icecast-Server-master_de3a07550.tar.gz
+          for i in ${{env.benchmark_tar_dir}}/Icecast-Server-master_de3a075500_patches/*; do patch -s -p0 < $i; done
+          cd Icecast-Server-master_de3a07550
           sed -i '/_GNU_SOURCE/d' configure
           CC="${{env.builddir}}/bin/clang" CFLAGS="-w -ferror-limit=0" ./configure
           bear make -j $(nproc) -l $(nproc) --output-sync
 
       - name: Convert Icecast
         run: |
-          cd ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/icecast-2.4.4
+          cd ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/Icecast-Server-master_de3a07550
           ${{env.port_tools}}/convert_project.py \
             --includeDir ${{env.include_dir}} \
             --prog_name ${{env.builddir}}/bin/3c \
@@ -1332,7 +1339,7 @@ jobs:
 
       - name: Build converted Icecast
         run: |
-          cd ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/icecast-2.4.4
+          cd ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/Icecast-Server-master_de3a07550
           cp -r out.checked/* .
           rm -r out.checked
           make -j $(nproc) -l $(nproc) --output-sync -k
@@ -1346,15 +1353,16 @@ jobs:
         run: |
           mkdir -p ${{env.benchmark_conv_dir}}/expand_macros_alltypes
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes
-          tar -xvzf ${{env.benchmark_tar_dir}}/icecast-2.4.4.tar.gz
-          cd icecast-2.4.4
+          tar -xvzf ${{env.benchmark_tar_dir}}/Icecast-Server-master_de3a07550.tar.gz
+          for i in ${{env.benchmark_tar_dir}}/Icecast-Server-master_de3a075500_patches/*; do patch -s -p0 < $i; done
+          cd Icecast-Server-master_de3a07550
           sed -i '/_GNU_SOURCE/d' configure
           CC="${{env.builddir}}/bin/clang" CFLAGS="-w -ferror-limit=0" ./configure
           bear make -j $(nproc) -l $(nproc) --output-sync
 
       - name: Convert Icecast
         run: |
-          cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes/icecast-2.4.4
+          cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes/Icecast-Server-master_de3a07550
           ${{env.port_tools}}/convert_project.py \
             --includeDir ${{env.include_dir}} \
             --prog_name ${{env.builddir}}/bin/3c \
@@ -1364,7 +1372,131 @@ jobs:
 
       - name: Build converted Icecast (filter bounds inference errors)
         run: |
-          cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes/icecast-2.4.4
+          cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes/Icecast-Server-master_de3a07550
+          cp -r out.checked/* .
+          rm -r out.checked
+          make -j $(nproc) -l $(nproc) --output-sync -k 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py
+
+  test_thhtpd_no_expand_macros_no_alltypes:
+    name: Test Thhtpd (not macro-expanded, no -alltypes)
+    needs: build_3c
+    runs-on: self-hosted
+    steps:
+      - name: Build Thhtpd
+        run: |
+          mkdir -p ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes
+          cd ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes
+          tar -xvzf ${{env.benchmark_tar_dir}}/thttpd-2.29.tar.gz
+          for i in ${{env.benchmark_tar_dir}}/thttpd-2.29_patches/*; do patch -s -p0 < $i; done
+          cd thttpd-2.29
+          CC="${{env.builddir}}/bin/clang" CFLAGS="-w -ferror-limit=0" ./configure
+          bear make -j $(nproc) -l $(nproc) --output-sync
+
+      - name: Convert Thhtpd
+        run: |
+          cd ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/thttpd-2.29
+          ${{env.port_tools}}/convert_project.py \
+            --includeDir ${{env.include_dir}} \
+            --prog_name ${{env.builddir}}/bin/3c \
+            --project_path .
+
+      - name: Build converted Thhtpd
+        run: |
+          cd ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/thttpd-2.29
+          cp -r out.checked/* .
+          rm -r out.checked
+          make -j $(nproc) -l $(nproc) --output-sync -k
+
+  test_thhtpd_no_expand_macros_alltypes:
+    name: Test Thhtpd (not macro-expanded, -alltypes)
+    needs: build_3c
+    runs-on: self-hosted
+    steps:
+      - name: Build Thhtpd
+        run: |
+          mkdir -p ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes
+          cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes
+          tar -xvzf ${{env.benchmark_tar_dir}}/thttpd-2.29.tar.gz
+          for i in ${{env.benchmark_tar_dir}}/thttpd-2.29_patches/*; do patch -s -p0 < $i; done
+          cd thttpd-2.29
+          CC="${{env.builddir}}/bin/clang" CFLAGS="-w -ferror-limit=0" ./configure
+          bear make -j $(nproc) -l $(nproc) --output-sync
+
+      - name: Convert Thhtpd
+        run: |
+          cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/thttpd-2.29
+          ${{env.port_tools}}/convert_project.py \
+            --includeDir ${{env.include_dir}} \
+            --prog_name ${{env.builddir}}/bin/3c \
+            --extra-3c-arg=-alltypes \
+            --project_path .
+
+      - name: Build converted Thhtpd (filter bounds inference errors)
+        run: |
+          cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/thttpd-2.29
+          cp -r out.checked/* .
+          rm -r out.checked
+          make -j $(nproc) -l $(nproc) --output-sync -k 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py
+
+  test_thhtpd_expand_macros_no_alltypes:
+    name: Test Thhtpd (macro-expanded, no -alltypes)
+    needs: build_3c
+    runs-on: self-hosted
+    steps:
+      - name: Build Thhtpd
+        run: |
+          mkdir -p ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes
+          cd ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes
+          tar -xvzf ${{env.benchmark_tar_dir}}/thttpd-2.29.tar.gz
+          for i in ${{env.benchmark_tar_dir}}/thttpd-2.29_patches/*; do patch -s -p0 < $i; done
+          cd thttpd-2.29
+          CC="${{env.builddir}}/bin/clang" CFLAGS="-w -ferror-limit=0" ./configure
+          bear make -j $(nproc) -l $(nproc) --output-sync
+
+      - name: Convert Thhtpd
+        run: |
+          cd ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/thttpd-2.29
+          ${{env.port_tools}}/convert_project.py \
+            --includeDir ${{env.include_dir}} \
+            --prog_name ${{env.builddir}}/bin/3c \
+            --expand_macros_before_conversion \
+            --project_path .
+
+      - name: Build converted Thhtpd
+        run: |
+          cd ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/thttpd-2.29
+          cp -r out.checked/* .
+          rm -r out.checked
+          make -j $(nproc) -l $(nproc) --output-sync -k
+
+  test_thhtpd_expand_macros_alltypes:
+    name: Test Thhtpd (macro-expanded, -alltypes)
+    needs: build_3c
+    runs-on: self-hosted
+    steps:
+      - name: Build Thhtpd
+        run: |
+          mkdir -p ${{env.benchmark_conv_dir}}/expand_macros_alltypes
+          cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes
+          tar -xvzf ${{env.benchmark_tar_dir}}/thttpd-2.29.tar.gz
+          for i in ${{env.benchmark_tar_dir}}/thttpd-2.29_patches/*; do patch -s -p0 < $i; done
+          cd thttpd-2.29
+          CC="${{env.builddir}}/bin/clang" CFLAGS="-w -ferror-limit=0" ./configure
+          bear make -j $(nproc) -l $(nproc) --output-sync
+
+      - name: Convert Thhtpd
+        run: |
+          cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes/thttpd-2.29
+          ${{env.port_tools}}/convert_project.py \
+            --includeDir ${{env.include_dir}} \
+            --prog_name ${{env.builddir}}/bin/3c \
+            --extra-3c-arg=-alltypes \
+            --expand_macros_before_conversion \
+            --project_path .
+
+      - name: Build converted Thhtpd (filter bounds inference errors)
+        run: |
+          cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes/thttpd-2.29
           cp -r out.checked/* .
           rm -r out.checked
           make -j $(nproc) -l $(nproc) --output-sync -k 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py

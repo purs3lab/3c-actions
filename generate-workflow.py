@@ -34,6 +34,7 @@ class BenchmarkInfo:
     convert_extra: Optional[str] = None
     # Default: One component with all default properties.
     components: Optional[List[BenchmarkComponent]] = None
+    patch_dir: Optional[str] = None
 
 
 # Standard options for `ninja` and parallel `make`.
@@ -215,7 +216,8 @@ benchmarks = [
         --skip '/.*/tif_stream.cxx' \\
         --skip '.*/test/.*\.c' \\
         --skip '.*/contrib/.*\.c' \\
-        ''')),
+        '''),
+        patch_dir='tiff-4.1.0_patches'),
 
     # Zlib
     BenchmarkInfo(
@@ -238,7 +240,7 @@ benchmarks = [
         #
         name='icecast',
         friendly_name='Icecast',
-        dir_name='icecast-2.4.4',
+        dir_name='Icecast-Server-master_de3a07550',
         # Turn off _GNU_SOURCE to work around the problem with transparent
         # unions for `struct sockaddr *`
         # (https://github.com/microsoft/checkedc/issues/441). `configure` was
@@ -249,7 +251,21 @@ benchmarks = [
         CC="${{{{env.builddir}}}}/bin/clang" CFLAGS="{common_cflags}" ./configure
         bear {make_std}
         '''),
-        build_converted_cmd=f'{make_std} -k'),
+        build_converted_cmd=f'{make_std} -k',
+        patch_dir='Icecast-Server-master_de3a075500_patches'),
+
+    # thhtpd
+    BenchmarkInfo(
+        #
+        name='thhtpd',
+        friendly_name='Thhtpd',
+        dir_name='thttpd-2.29',
+        build_cmds=textwrap.dedent(f'''\
+        CC="${{{{env.builddir}}}}/bin/clang" CFLAGS="{common_cflags}" ./configure
+        bear {make_std}
+        '''),
+        build_converted_cmd=f'{make_std} -k',
+        patch_dir='thttpd-2.29_patches'),
 ]
 
 HEADER = '''\
@@ -481,12 +497,20 @@ def generate_benchmark_job(out: TextIO,
 
     benchmark_dir = f'{subvariant_dir}/{binfo.dir_name}'
 
+    apply_patch_cmd = ''
+    if binfo.patch_dir:
+        apply_patch_cmd = textwrap.dedent(f'''\
+            for i in ${{{{env.benchmark_tar_dir}}}}/{binfo.patch_dir}/*; do patch -s -p0 < $i; done
+        ''')
+    change_dir = textwrap.dedent(f'''\
+        cd {binfo.dir_name}
+    ''')
+
     full_build_cmds = textwrap.dedent(f'''\
         mkdir -p {subvariant_dir}
         cd {subvariant_dir}
         tar -xvzf ${{{{env.benchmark_tar_dir}}}}/{binfo.dir_name}.tar.gz
-        cd {binfo.dir_name}
-    ''') + ensure_trailing_newline(binfo.build_cmds)
+    ''') + apply_patch_cmd + change_dir + ensure_trailing_newline(binfo.build_cmds)
 
     steps = [RunStep('Build ' + binfo.friendly_name, full_build_cmds)]
 
