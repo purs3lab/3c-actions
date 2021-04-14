@@ -639,6 +639,9 @@ workflow_file_configs = [
             Variant(alltypes=True,
                     extra_3c_args=['-disable-rds'],
                     friendly_name_suffix=', CCured solution'),
+            Variant(alltypes=True,
+                    extra_3c_args=['-disable-fnedgs'],
+                    friendly_name_suffix=', FuncRevEdges solution'),
             Variant(alltypes=True)
         ],
         generate_stats=True)
