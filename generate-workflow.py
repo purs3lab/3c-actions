@@ -253,18 +253,26 @@ benchmarks = [
         '''),
         build_converted_cmd=f'{make_std} -k'),
 
-    # thhtpd
+    # thttpd
     BenchmarkInfo(
         #
         name='thhtpd',
         friendly_name='Thhtpd',
         dir_name='thttpd-2.29',
+        # It's not safe to build thttpd in parallel: the main and cgi-src
+        # Makefiles may try to build match.o in parallel, which would result in
+        # a duplicate compilation database entry (which breaks the macro
+        # expander) or possibly other corruption. Another possible workaround
+        # might be to force match.o to be built first, but it seems more
+        # reasonable to just turn off parallelism (despite the modest running
+        # time cost) than to hard-code the knowledge of the specific problem
+        # here.
         build_cmds=textwrap.dedent(f'''\
         CC="${{{{env.builddir}}}}/bin/clang" CFLAGS="{common_cflags}" ./configure
         chmod -R 777 *
-        bear {make_std}
+        bear make
         '''),
-        build_converted_cmd=f'{make_std} -k',
+        build_converted_cmd=f'make -k',
         patch_dir='thttpd-2.29_patches'),
 ]
 
