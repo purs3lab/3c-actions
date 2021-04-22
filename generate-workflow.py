@@ -98,6 +98,22 @@ common_cflags = '-w -ferror-limit=0'
 # in case we turn off -w.
 vsftpd_make = f'{make_std} CC="${{{{env.builddir}}}}/bin/clang {common_cflags} -Wno-enum-conversion"'
 
+# We use plain `make` and not `make_std` because it's not safe to build thttpd
+# in parallel: the main and cgi-src Makefiles may try to build match.o in
+# parallel, which would result in a duplicate compilation database entry (which
+# breaks the macro expander) or possibly other corruption. Another possible
+# workaround might be to force match.o to be built first, but it seems more
+# reasonable to just turn off parallelism (despite the modest running time cost)
+# than to hard-code the knowledge of the specific problem here.
+#
+# I wasn't able to find any way to add to thttpd's compiler flags short of this
+# hack. Although thttpd uses Autoconf, it doesn't honor the CFLAGS variable
+# passed to Autoconf, and any arguments added to the CC variable at
+# `./configure` time seem to get discarded. As with vsftpd, we cannot add flags
+# to any of the other variables used in the makefile without losing the existing
+# flags. ~ Matt 2021-04-22
+thttpd_make = f'make CC="${{{{env.builddir}}}}/bin/clang {common_cflags}"'
+
 ptrdist_components = ['anagram', 'bc', 'ft', 'ks', 'yacr2']
 
 # The blank comments below stop YAPF from reformatting things in ways we don't
@@ -256,23 +272,15 @@ benchmarks = [
     # thttpd
     BenchmarkInfo(
         #
-        name='thhtpd',
-        friendly_name='Thhtpd',
+        name='thttpd',
+        friendly_name='Thttpd',
         dir_name='thttpd-2.29',
-        # It's not safe to build thttpd in parallel: the main and cgi-src
-        # Makefiles may try to build match.o in parallel, which would result in
-        # a duplicate compilation database entry (which breaks the macro
-        # expander) or possibly other corruption. Another possible workaround
-        # might be to force match.o to be built first, but it seems more
-        # reasonable to just turn off parallelism (despite the modest running
-        # time cost) than to hard-code the knowledge of the specific problem
-        # here.
         build_cmds=textwrap.dedent(f'''\
-        CC="${{{{env.builddir}}}}/bin/clang" CFLAGS="{common_cflags}" ./configure
+        CC="${{{{env.builddir}}}}/bin/clang" ./configure
         chmod -R 777 *
-        bear make
+        bear {thttpd_make}
         '''),
-        build_converted_cmd=f'make -k',
+        build_converted_cmd=f'{thttpd_make} -k',
         patch_dir='thttpd-2.29_patches'),
 ]
 

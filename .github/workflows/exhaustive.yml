@@ -5749,23 +5749,23 @@ jobs:
           rm -r out.checked
           make -j $(nproc) -l $(nproc) --output-sync -k 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py
 
-  test_thhtpd_no_expand_macros_no_alltypes:
-    name: Test Thhtpd (not macro-expanded, no -alltypes)
+  test_thttpd_no_expand_macros_no_alltypes:
+    name: Test Thttpd (not macro-expanded, no -alltypes)
     needs: build_3c
     runs-on: self-hosted
     steps:
-      - name: Build Thhtpd
+      - name: Build Thttpd
         run: |
           mkdir -p ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes
           tar -xvzf ${{env.benchmark_tar_dir}}/thttpd-2.29.tar.gz
           for i in ${{env.benchmark_tar_dir}}/thttpd-2.29_patches/*; do patch -s -p0 < $i; done
           cd thttpd-2.29
-          CC="${{env.builddir}}/bin/clang" CFLAGS="-w -ferror-limit=0" ./configure
+          CC="${{env.builddir}}/bin/clang" ./configure
           chmod -R 777 *
-          bear make
+          bear make CC="${{env.builddir}}/bin/clang -w -ferror-limit=0"
 
-      - name: Convert Thhtpd
+      - name: Convert Thttpd
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/thttpd-2.29
           ${{env.port_tools}}/convert_project.py \
@@ -5773,43 +5773,43 @@ jobs:
             --prog_name ${{env.builddir}}/bin/3c \
             --project_path .
 
-      - name: Copy 3c stats of Thhtpd
+      - name: Copy 3c stats of Thttpd
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/thttpd-2.29
           mkdir 3c_performance_stats/
           cp *.json 3c_performance_stats/
 
-      - name: Upload 3c stats of Thhtpd
+      - name: Upload 3c stats of Thttpd
         uses: actions/upload-artifact@v2
         with:
-          name: Thhtpd_no_expand_macros_no_alltypes
+          name: Thttpd_no_expand_macros_no_alltypes
           path: ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/thttpd-2.29/3c_performance_stats/
           retention-days: 5
 
-      - name: Build converted Thhtpd
+      - name: Build converted Thttpd
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/thttpd-2.29
           cp -r out.checked/* .
           rm -r out.checked
-          make -k
+          make CC="${{env.builddir}}/bin/clang -w -ferror-limit=0" -k
 
-  test_thhtpd_no_expand_macros_alltypes_only_g_sol:
-    name: Test Thhtpd (not macro-expanded, -alltypes, greatest solution)
+  test_thttpd_no_expand_macros_alltypes_only_g_sol:
+    name: Test Thttpd (not macro-expanded, -alltypes, greatest solution)
     needs: build_3c
     runs-on: self-hosted
     steps:
-      - name: Build Thhtpd
+      - name: Build Thttpd
         run: |
           mkdir -p ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes_only_g_sol
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes_only_g_sol
           tar -xvzf ${{env.benchmark_tar_dir}}/thttpd-2.29.tar.gz
           for i in ${{env.benchmark_tar_dir}}/thttpd-2.29_patches/*; do patch -s -p0 < $i; done
           cd thttpd-2.29
-          CC="${{env.builddir}}/bin/clang" CFLAGS="-w -ferror-limit=0" ./configure
+          CC="${{env.builddir}}/bin/clang" ./configure
           chmod -R 777 *
-          bear make
+          bear make CC="${{env.builddir}}/bin/clang -w -ferror-limit=0"
 
-      - name: Convert Thhtpd
+      - name: Convert Thttpd
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes_only_g_sol/thttpd-2.29
           ${{env.port_tools}}/convert_project.py \
@@ -5819,43 +5819,43 @@ jobs:
             --extra-3c-arg=-only-g-sol \
             --project_path .
 
-      - name: Copy 3c stats of Thhtpd
+      - name: Copy 3c stats of Thttpd
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes_only_g_sol/thttpd-2.29
           mkdir 3c_performance_stats/
           cp *.json 3c_performance_stats/
 
-      - name: Upload 3c stats of Thhtpd
+      - name: Upload 3c stats of Thttpd
         uses: actions/upload-artifact@v2
         with:
-          name: Thhtpd_no_expand_macros_alltypes_only_g_sol
+          name: Thttpd_no_expand_macros_alltypes_only_g_sol
           path: ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes_only_g_sol/thttpd-2.29/3c_performance_stats/
           retention-days: 5
 
-      - name: Build converted Thhtpd (filter bounds inference errors)
+      - name: Build converted Thttpd (filter bounds inference errors)
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes_only_g_sol/thttpd-2.29
           cp -r out.checked/* .
           rm -r out.checked
-          make -k 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py
+          make CC="${{env.builddir}}/bin/clang -w -ferror-limit=0" -k 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py
 
-  test_thhtpd_no_expand_macros_alltypes_only_l_sol:
-    name: Test Thhtpd (not macro-expanded, -alltypes, least solution)
+  test_thttpd_no_expand_macros_alltypes_only_l_sol:
+    name: Test Thttpd (not macro-expanded, -alltypes, least solution)
     needs: build_3c
     runs-on: self-hosted
     steps:
-      - name: Build Thhtpd
+      - name: Build Thttpd
         run: |
           mkdir -p ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes_only_l_sol
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes_only_l_sol
           tar -xvzf ${{env.benchmark_tar_dir}}/thttpd-2.29.tar.gz
           for i in ${{env.benchmark_tar_dir}}/thttpd-2.29_patches/*; do patch -s -p0 < $i; done
           cd thttpd-2.29
-          CC="${{env.builddir}}/bin/clang" CFLAGS="-w -ferror-limit=0" ./configure
+          CC="${{env.builddir}}/bin/clang" ./configure
           chmod -R 777 *
-          bear make
+          bear make CC="${{env.builddir}}/bin/clang -w -ferror-limit=0"
 
-      - name: Convert Thhtpd
+      - name: Convert Thttpd
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes_only_l_sol/thttpd-2.29
           ${{env.port_tools}}/convert_project.py \
@@ -5865,43 +5865,43 @@ jobs:
             --extra-3c-arg=-only-l-sol \
             --project_path .
 
-      - name: Copy 3c stats of Thhtpd
+      - name: Copy 3c stats of Thttpd
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes_only_l_sol/thttpd-2.29
           mkdir 3c_performance_stats/
           cp *.json 3c_performance_stats/
 
-      - name: Upload 3c stats of Thhtpd
+      - name: Upload 3c stats of Thttpd
         uses: actions/upload-artifact@v2
         with:
-          name: Thhtpd_no_expand_macros_alltypes_only_l_sol
+          name: Thttpd_no_expand_macros_alltypes_only_l_sol
           path: ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes_only_l_sol/thttpd-2.29/3c_performance_stats/
           retention-days: 5
 
-      - name: Build converted Thhtpd (filter bounds inference errors)
+      - name: Build converted Thttpd (filter bounds inference errors)
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes_only_l_sol/thttpd-2.29
           cp -r out.checked/* .
           rm -r out.checked
-          make -k 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py
+          make CC="${{env.builddir}}/bin/clang -w -ferror-limit=0" -k 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py
 
-  test_thhtpd_no_expand_macros_alltypes_disable_rds:
-    name: Test Thhtpd (not macro-expanded, -alltypes, CCured solution)
+  test_thttpd_no_expand_macros_alltypes_disable_rds:
+    name: Test Thttpd (not macro-expanded, -alltypes, CCured solution)
     needs: build_3c
     runs-on: self-hosted
     steps:
-      - name: Build Thhtpd
+      - name: Build Thttpd
         run: |
           mkdir -p ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes_disable_rds
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes_disable_rds
           tar -xvzf ${{env.benchmark_tar_dir}}/thttpd-2.29.tar.gz
           for i in ${{env.benchmark_tar_dir}}/thttpd-2.29_patches/*; do patch -s -p0 < $i; done
           cd thttpd-2.29
-          CC="${{env.builddir}}/bin/clang" CFLAGS="-w -ferror-limit=0" ./configure
+          CC="${{env.builddir}}/bin/clang" ./configure
           chmod -R 777 *
-          bear make
+          bear make CC="${{env.builddir}}/bin/clang -w -ferror-limit=0"
 
-      - name: Convert Thhtpd
+      - name: Convert Thttpd
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes_disable_rds/thttpd-2.29
           ${{env.port_tools}}/convert_project.py \
@@ -5911,43 +5911,43 @@ jobs:
             --extra-3c-arg=-disable-rds \
             --project_path .
 
-      - name: Copy 3c stats of Thhtpd
+      - name: Copy 3c stats of Thttpd
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes_disable_rds/thttpd-2.29
           mkdir 3c_performance_stats/
           cp *.json 3c_performance_stats/
 
-      - name: Upload 3c stats of Thhtpd
+      - name: Upload 3c stats of Thttpd
         uses: actions/upload-artifact@v2
         with:
-          name: Thhtpd_no_expand_macros_alltypes_disable_rds
+          name: Thttpd_no_expand_macros_alltypes_disable_rds
           path: ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes_disable_rds/thttpd-2.29/3c_performance_stats/
           retention-days: 5
 
-      - name: Build converted Thhtpd (filter bounds inference errors)
+      - name: Build converted Thttpd (filter bounds inference errors)
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes_disable_rds/thttpd-2.29
           cp -r out.checked/* .
           rm -r out.checked
-          make -k 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py
+          make CC="${{env.builddir}}/bin/clang -w -ferror-limit=0" -k 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py
 
-  test_thhtpd_no_expand_macros_alltypes_disable_fnedgs:
-    name: Test Thhtpd (not macro-expanded, -alltypes, FuncRevEdges solution)
+  test_thttpd_no_expand_macros_alltypes_disable_fnedgs:
+    name: Test Thttpd (not macro-expanded, -alltypes, FuncRevEdges solution)
     needs: build_3c
     runs-on: self-hosted
     steps:
-      - name: Build Thhtpd
+      - name: Build Thttpd
         run: |
           mkdir -p ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes_disable_fnedgs
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes_disable_fnedgs
           tar -xvzf ${{env.benchmark_tar_dir}}/thttpd-2.29.tar.gz
           for i in ${{env.benchmark_tar_dir}}/thttpd-2.29_patches/*; do patch -s -p0 < $i; done
           cd thttpd-2.29
-          CC="${{env.builddir}}/bin/clang" CFLAGS="-w -ferror-limit=0" ./configure
+          CC="${{env.builddir}}/bin/clang" ./configure
           chmod -R 777 *
-          bear make
+          bear make CC="${{env.builddir}}/bin/clang -w -ferror-limit=0"
 
-      - name: Convert Thhtpd
+      - name: Convert Thttpd
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes_disable_fnedgs/thttpd-2.29
           ${{env.port_tools}}/convert_project.py \
@@ -5957,43 +5957,43 @@ jobs:
             --extra-3c-arg=-disable-fnedgs \
             --project_path .
 
-      - name: Copy 3c stats of Thhtpd
+      - name: Copy 3c stats of Thttpd
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes_disable_fnedgs/thttpd-2.29
           mkdir 3c_performance_stats/
           cp *.json 3c_performance_stats/
 
-      - name: Upload 3c stats of Thhtpd
+      - name: Upload 3c stats of Thttpd
         uses: actions/upload-artifact@v2
         with:
-          name: Thhtpd_no_expand_macros_alltypes_disable_fnedgs
+          name: Thttpd_no_expand_macros_alltypes_disable_fnedgs
           path: ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes_disable_fnedgs/thttpd-2.29/3c_performance_stats/
           retention-days: 5
 
-      - name: Build converted Thhtpd (filter bounds inference errors)
+      - name: Build converted Thttpd (filter bounds inference errors)
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes_disable_fnedgs/thttpd-2.29
           cp -r out.checked/* .
           rm -r out.checked
-          make -k 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py
+          make CC="${{env.builddir}}/bin/clang -w -ferror-limit=0" -k 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py
 
-  test_thhtpd_no_expand_macros_alltypes:
-    name: Test Thhtpd (not macro-expanded, -alltypes)
+  test_thttpd_no_expand_macros_alltypes:
+    name: Test Thttpd (not macro-expanded, -alltypes)
     needs: build_3c
     runs-on: self-hosted
     steps:
-      - name: Build Thhtpd
+      - name: Build Thttpd
         run: |
           mkdir -p ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes
           tar -xvzf ${{env.benchmark_tar_dir}}/thttpd-2.29.tar.gz
           for i in ${{env.benchmark_tar_dir}}/thttpd-2.29_patches/*; do patch -s -p0 < $i; done
           cd thttpd-2.29
-          CC="${{env.builddir}}/bin/clang" CFLAGS="-w -ferror-limit=0" ./configure
+          CC="${{env.builddir}}/bin/clang" ./configure
           chmod -R 777 *
-          bear make
+          bear make CC="${{env.builddir}}/bin/clang -w -ferror-limit=0"
 
-      - name: Convert Thhtpd
+      - name: Convert Thttpd
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/thttpd-2.29
           ${{env.port_tools}}/convert_project.py \
@@ -6002,43 +6002,43 @@ jobs:
             --extra-3c-arg=-alltypes \
             --project_path .
 
-      - name: Copy 3c stats of Thhtpd
+      - name: Copy 3c stats of Thttpd
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/thttpd-2.29
           mkdir 3c_performance_stats/
           cp *.json 3c_performance_stats/
 
-      - name: Upload 3c stats of Thhtpd
+      - name: Upload 3c stats of Thttpd
         uses: actions/upload-artifact@v2
         with:
-          name: Thhtpd_no_expand_macros_alltypes
+          name: Thttpd_no_expand_macros_alltypes
           path: ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/thttpd-2.29/3c_performance_stats/
           retention-days: 5
 
-      - name: Build converted Thhtpd (filter bounds inference errors)
+      - name: Build converted Thttpd (filter bounds inference errors)
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/thttpd-2.29
           cp -r out.checked/* .
           rm -r out.checked
-          make -k 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py
+          make CC="${{env.builddir}}/bin/clang -w -ferror-limit=0" -k 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py
 
-  test_thhtpd_expand_macros_no_alltypes:
-    name: Test Thhtpd (macro-expanded, no -alltypes)
+  test_thttpd_expand_macros_no_alltypes:
+    name: Test Thttpd (macro-expanded, no -alltypes)
     needs: build_3c
     runs-on: self-hosted
     steps:
-      - name: Build Thhtpd
+      - name: Build Thttpd
         run: |
           mkdir -p ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes
           cd ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes
           tar -xvzf ${{env.benchmark_tar_dir}}/thttpd-2.29.tar.gz
           for i in ${{env.benchmark_tar_dir}}/thttpd-2.29_patches/*; do patch -s -p0 < $i; done
           cd thttpd-2.29
-          CC="${{env.builddir}}/bin/clang" CFLAGS="-w -ferror-limit=0" ./configure
+          CC="${{env.builddir}}/bin/clang" ./configure
           chmod -R 777 *
-          bear make
+          bear make CC="${{env.builddir}}/bin/clang -w -ferror-limit=0"
 
-      - name: Convert Thhtpd
+      - name: Convert Thttpd
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/thttpd-2.29
           ${{env.port_tools}}/convert_project.py \
@@ -6047,43 +6047,43 @@ jobs:
             --expand_macros_before_conversion \
             --project_path .
 
-      - name: Copy 3c stats of Thhtpd
+      - name: Copy 3c stats of Thttpd
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/thttpd-2.29
           mkdir 3c_performance_stats/
           cp *.json 3c_performance_stats/
 
-      - name: Upload 3c stats of Thhtpd
+      - name: Upload 3c stats of Thttpd
         uses: actions/upload-artifact@v2
         with:
-          name: Thhtpd_expand_macros_no_alltypes
+          name: Thttpd_expand_macros_no_alltypes
           path: ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/thttpd-2.29/3c_performance_stats/
           retention-days: 5
 
-      - name: Build converted Thhtpd
+      - name: Build converted Thttpd
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/thttpd-2.29
           cp -r out.checked/* .
           rm -r out.checked
-          make -k
+          make CC="${{env.builddir}}/bin/clang -w -ferror-limit=0" -k
 
-  test_thhtpd_expand_macros_alltypes_only_g_sol:
-    name: Test Thhtpd (macro-expanded, -alltypes, greatest solution)
+  test_thttpd_expand_macros_alltypes_only_g_sol:
+    name: Test Thttpd (macro-expanded, -alltypes, greatest solution)
     needs: build_3c
     runs-on: self-hosted
     steps:
-      - name: Build Thhtpd
+      - name: Build Thttpd
         run: |
           mkdir -p ${{env.benchmark_conv_dir}}/expand_macros_alltypes_only_g_sol
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes_only_g_sol
           tar -xvzf ${{env.benchmark_tar_dir}}/thttpd-2.29.tar.gz
           for i in ${{env.benchmark_tar_dir}}/thttpd-2.29_patches/*; do patch -s -p0 < $i; done
           cd thttpd-2.29
-          CC="${{env.builddir}}/bin/clang" CFLAGS="-w -ferror-limit=0" ./configure
+          CC="${{env.builddir}}/bin/clang" ./configure
           chmod -R 777 *
-          bear make
+          bear make CC="${{env.builddir}}/bin/clang -w -ferror-limit=0"
 
-      - name: Convert Thhtpd
+      - name: Convert Thttpd
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes_only_g_sol/thttpd-2.29
           ${{env.port_tools}}/convert_project.py \
@@ -6094,43 +6094,43 @@ jobs:
             --extra-3c-arg=-only-g-sol \
             --project_path .
 
-      - name: Copy 3c stats of Thhtpd
+      - name: Copy 3c stats of Thttpd
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes_only_g_sol/thttpd-2.29
           mkdir 3c_performance_stats/
           cp *.json 3c_performance_stats/
 
-      - name: Upload 3c stats of Thhtpd
+      - name: Upload 3c stats of Thttpd
         uses: actions/upload-artifact@v2
         with:
-          name: Thhtpd_expand_macros_alltypes_only_g_sol
+          name: Thttpd_expand_macros_alltypes_only_g_sol
           path: ${{env.benchmark_conv_dir}}/expand_macros_alltypes_only_g_sol/thttpd-2.29/3c_performance_stats/
           retention-days: 5
 
-      - name: Build converted Thhtpd (filter bounds inference errors)
+      - name: Build converted Thttpd (filter bounds inference errors)
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes_only_g_sol/thttpd-2.29
           cp -r out.checked/* .
           rm -r out.checked
-          make -k 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py
+          make CC="${{env.builddir}}/bin/clang -w -ferror-limit=0" -k 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py
 
-  test_thhtpd_expand_macros_alltypes_only_l_sol:
-    name: Test Thhtpd (macro-expanded, -alltypes, least solution)
+  test_thttpd_expand_macros_alltypes_only_l_sol:
+    name: Test Thttpd (macro-expanded, -alltypes, least solution)
     needs: build_3c
     runs-on: self-hosted
     steps:
-      - name: Build Thhtpd
+      - name: Build Thttpd
         run: |
           mkdir -p ${{env.benchmark_conv_dir}}/expand_macros_alltypes_only_l_sol
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes_only_l_sol
           tar -xvzf ${{env.benchmark_tar_dir}}/thttpd-2.29.tar.gz
           for i in ${{env.benchmark_tar_dir}}/thttpd-2.29_patches/*; do patch -s -p0 < $i; done
           cd thttpd-2.29
-          CC="${{env.builddir}}/bin/clang" CFLAGS="-w -ferror-limit=0" ./configure
+          CC="${{env.builddir}}/bin/clang" ./configure
           chmod -R 777 *
-          bear make
+          bear make CC="${{env.builddir}}/bin/clang -w -ferror-limit=0"
 
-      - name: Convert Thhtpd
+      - name: Convert Thttpd
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes_only_l_sol/thttpd-2.29
           ${{env.port_tools}}/convert_project.py \
@@ -6141,43 +6141,43 @@ jobs:
             --extra-3c-arg=-only-l-sol \
             --project_path .
 
-      - name: Copy 3c stats of Thhtpd
+      - name: Copy 3c stats of Thttpd
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes_only_l_sol/thttpd-2.29
           mkdir 3c_performance_stats/
           cp *.json 3c_performance_stats/
 
-      - name: Upload 3c stats of Thhtpd
+      - name: Upload 3c stats of Thttpd
         uses: actions/upload-artifact@v2
         with:
-          name: Thhtpd_expand_macros_alltypes_only_l_sol
+          name: Thttpd_expand_macros_alltypes_only_l_sol
           path: ${{env.benchmark_conv_dir}}/expand_macros_alltypes_only_l_sol/thttpd-2.29/3c_performance_stats/
           retention-days: 5
 
-      - name: Build converted Thhtpd (filter bounds inference errors)
+      - name: Build converted Thttpd (filter bounds inference errors)
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes_only_l_sol/thttpd-2.29
           cp -r out.checked/* .
           rm -r out.checked
-          make -k 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py
+          make CC="${{env.builddir}}/bin/clang -w -ferror-limit=0" -k 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py
 
-  test_thhtpd_expand_macros_alltypes_disable_rds:
-    name: Test Thhtpd (macro-expanded, -alltypes, CCured solution)
+  test_thttpd_expand_macros_alltypes_disable_rds:
+    name: Test Thttpd (macro-expanded, -alltypes, CCured solution)
     needs: build_3c
     runs-on: self-hosted
     steps:
-      - name: Build Thhtpd
+      - name: Build Thttpd
         run: |
           mkdir -p ${{env.benchmark_conv_dir}}/expand_macros_alltypes_disable_rds
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes_disable_rds
           tar -xvzf ${{env.benchmark_tar_dir}}/thttpd-2.29.tar.gz
           for i in ${{env.benchmark_tar_dir}}/thttpd-2.29_patches/*; do patch -s -p0 < $i; done
           cd thttpd-2.29
-          CC="${{env.builddir}}/bin/clang" CFLAGS="-w -ferror-limit=0" ./configure
+          CC="${{env.builddir}}/bin/clang" ./configure
           chmod -R 777 *
-          bear make
+          bear make CC="${{env.builddir}}/bin/clang -w -ferror-limit=0"
 
-      - name: Convert Thhtpd
+      - name: Convert Thttpd
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes_disable_rds/thttpd-2.29
           ${{env.port_tools}}/convert_project.py \
@@ -6188,43 +6188,43 @@ jobs:
             --extra-3c-arg=-disable-rds \
             --project_path .
 
-      - name: Copy 3c stats of Thhtpd
+      - name: Copy 3c stats of Thttpd
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes_disable_rds/thttpd-2.29
           mkdir 3c_performance_stats/
           cp *.json 3c_performance_stats/
 
-      - name: Upload 3c stats of Thhtpd
+      - name: Upload 3c stats of Thttpd
         uses: actions/upload-artifact@v2
         with:
-          name: Thhtpd_expand_macros_alltypes_disable_rds
+          name: Thttpd_expand_macros_alltypes_disable_rds
           path: ${{env.benchmark_conv_dir}}/expand_macros_alltypes_disable_rds/thttpd-2.29/3c_performance_stats/
           retention-days: 5
 
-      - name: Build converted Thhtpd (filter bounds inference errors)
+      - name: Build converted Thttpd (filter bounds inference errors)
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes_disable_rds/thttpd-2.29
           cp -r out.checked/* .
           rm -r out.checked
-          make -k 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py
+          make CC="${{env.builddir}}/bin/clang -w -ferror-limit=0" -k 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py
 
-  test_thhtpd_expand_macros_alltypes_disable_fnedgs:
-    name: Test Thhtpd (macro-expanded, -alltypes, FuncRevEdges solution)
+  test_thttpd_expand_macros_alltypes_disable_fnedgs:
+    name: Test Thttpd (macro-expanded, -alltypes, FuncRevEdges solution)
     needs: build_3c
     runs-on: self-hosted
     steps:
-      - name: Build Thhtpd
+      - name: Build Thttpd
         run: |
           mkdir -p ${{env.benchmark_conv_dir}}/expand_macros_alltypes_disable_fnedgs
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes_disable_fnedgs
           tar -xvzf ${{env.benchmark_tar_dir}}/thttpd-2.29.tar.gz
           for i in ${{env.benchmark_tar_dir}}/thttpd-2.29_patches/*; do patch -s -p0 < $i; done
           cd thttpd-2.29
-          CC="${{env.builddir}}/bin/clang" CFLAGS="-w -ferror-limit=0" ./configure
+          CC="${{env.builddir}}/bin/clang" ./configure
           chmod -R 777 *
-          bear make
+          bear make CC="${{env.builddir}}/bin/clang -w -ferror-limit=0"
 
-      - name: Convert Thhtpd
+      - name: Convert Thttpd
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes_disable_fnedgs/thttpd-2.29
           ${{env.port_tools}}/convert_project.py \
@@ -6235,43 +6235,43 @@ jobs:
             --extra-3c-arg=-disable-fnedgs \
             --project_path .
 
-      - name: Copy 3c stats of Thhtpd
+      - name: Copy 3c stats of Thttpd
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes_disable_fnedgs/thttpd-2.29
           mkdir 3c_performance_stats/
           cp *.json 3c_performance_stats/
 
-      - name: Upload 3c stats of Thhtpd
+      - name: Upload 3c stats of Thttpd
         uses: actions/upload-artifact@v2
         with:
-          name: Thhtpd_expand_macros_alltypes_disable_fnedgs
+          name: Thttpd_expand_macros_alltypes_disable_fnedgs
           path: ${{env.benchmark_conv_dir}}/expand_macros_alltypes_disable_fnedgs/thttpd-2.29/3c_performance_stats/
           retention-days: 5
 
-      - name: Build converted Thhtpd (filter bounds inference errors)
+      - name: Build converted Thttpd (filter bounds inference errors)
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes_disable_fnedgs/thttpd-2.29
           cp -r out.checked/* .
           rm -r out.checked
-          make -k 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py
+          make CC="${{env.builddir}}/bin/clang -w -ferror-limit=0" -k 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py
 
-  test_thhtpd_expand_macros_alltypes:
-    name: Test Thhtpd (macro-expanded, -alltypes)
+  test_thttpd_expand_macros_alltypes:
+    name: Test Thttpd (macro-expanded, -alltypes)
     needs: build_3c
     runs-on: self-hosted
     steps:
-      - name: Build Thhtpd
+      - name: Build Thttpd
         run: |
           mkdir -p ${{env.benchmark_conv_dir}}/expand_macros_alltypes
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes
           tar -xvzf ${{env.benchmark_tar_dir}}/thttpd-2.29.tar.gz
           for i in ${{env.benchmark_tar_dir}}/thttpd-2.29_patches/*; do patch -s -p0 < $i; done
           cd thttpd-2.29
-          CC="${{env.builddir}}/bin/clang" CFLAGS="-w -ferror-limit=0" ./configure
+          CC="${{env.builddir}}/bin/clang" ./configure
           chmod -R 777 *
-          bear make
+          bear make CC="${{env.builddir}}/bin/clang -w -ferror-limit=0"
 
-      - name: Convert Thhtpd
+      - name: Convert Thttpd
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes/thttpd-2.29
           ${{env.port_tools}}/convert_project.py \
@@ -6281,22 +6281,22 @@ jobs:
             --expand_macros_before_conversion \
             --project_path .
 
-      - name: Copy 3c stats of Thhtpd
+      - name: Copy 3c stats of Thttpd
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes/thttpd-2.29
           mkdir 3c_performance_stats/
           cp *.json 3c_performance_stats/
 
-      - name: Upload 3c stats of Thhtpd
+      - name: Upload 3c stats of Thttpd
         uses: actions/upload-artifact@v2
         with:
-          name: Thhtpd_expand_macros_alltypes
+          name: Thttpd_expand_macros_alltypes
           path: ${{env.benchmark_conv_dir}}/expand_macros_alltypes/thttpd-2.29/3c_performance_stats/
           retention-days: 5
 
-      - name: Build converted Thhtpd (filter bounds inference errors)
+      - name: Build converted Thttpd (filter bounds inference errors)
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes/thttpd-2.29
           cp -r out.checked/* .
           rm -r out.checked
-          make -k 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py
+          make CC="${{env.builddir}}/bin/clang -w -ferror-limit=0" -k 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py
