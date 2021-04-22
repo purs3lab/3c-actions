@@ -518,7 +518,8 @@ def generate_benchmark_job(out: TextIO,
         mkdir -p {subvariant_dir}
         cd {subvariant_dir}
         tar -xvzf ${{{{env.benchmark_tar_dir}}}}/{binfo.dir_name}.tar.gz
-    ''') + apply_patch_cmd + change_dir + ensure_trailing_newline(binfo.build_cmds)
+    ''') + apply_patch_cmd + change_dir + ensure_trailing_newline(
+        binfo.build_cmds)
 
     steps = [RunStep('Build ' + binfo.friendly_name, full_build_cmds)]
 
