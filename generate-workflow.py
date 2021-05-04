@@ -165,8 +165,8 @@ benchmarks = [
     # Parson manual
     BenchmarkInfo(
         #
-        name='Parson',
-        friendly_name='Parson',
+        name='Parson-manual',
+        friendly_name='Parson-manual',
         dir_name='parson-manual',
         build_cmds=f'bear {make_checkedc}',
         build_converted_cmd=f'{make_checkedc} -k'),
@@ -174,8 +174,8 @@ benchmarks = [
     # Parson Reverted
     BenchmarkInfo(
         #
-        name='Parson',
-        friendly_name='Parson',
+        name='Parson-reverted',
+        friendly_name='Parson-reverted',
         dir_name='parson-reverted',
         build_cmds=f'bear {make_checkedc}',
         build_converted_cmd=f'{make_checkedc} -k'),
