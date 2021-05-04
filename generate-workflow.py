@@ -153,6 +153,33 @@ benchmarks = [
         build_cmds=f'bear {vsftpd_make}',
         build_converted_cmd=f'{vsftpd_make} -k'),
 
+    # Parson
+    BenchmarkInfo(
+        #
+        name='Parson',
+        friendly_name='Parson',
+        dir_name='parson',
+        build_cmds=f'bear {make_checkedc}',
+        build_converted_cmd=f'{make_checkedc} -k'),
+
+    # Parson manual
+    BenchmarkInfo(
+        #
+        name='Parson',
+        friendly_name='Parson',
+        dir_name='parson-manual',
+        build_cmds=f'bear {make_checkedc}',
+        build_converted_cmd=f'{make_checkedc} -k'),
+
+    # Parson Reverted
+    BenchmarkInfo(
+        #
+        name='Parson',
+        friendly_name='Parson',
+        dir_name='parson-reverted',
+        build_cmds=f'bear {make_checkedc}',
+        build_converted_cmd=f'{make_checkedc} -k'),
+
     # Olden
     BenchmarkInfo(
         #

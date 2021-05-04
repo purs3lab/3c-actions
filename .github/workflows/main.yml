@@ -445,6 +445,342 @@ jobs:
           if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
           make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang -w -ferror-limit=0 -Wno-enum-conversion" -k 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py
 
+  test_Parson_no_expand_macros_no_alltypes:
+    name: Test Parson (not macro-expanded, no -alltypes)
+    needs: build_3c
+    runs-on: self-hosted
+    steps:
+      - name: Build Parson
+        run: |
+          mkdir -p ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes
+          cd ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes
+          tar -xvzf ${{env.benchmark_tar_dir}}/parson.tar.gz
+          cd parson
+          bear make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang"
+
+      - name: Convert Parson
+        run: |
+          cd ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/parson
+          ${{env.port_tools}}/convert_project.py \
+            --includeDir ${{env.include_dir}} \
+            --prog_name ${{env.builddir}}/bin/3c \
+            --project_path .
+
+      - name: Build converted Parson
+        run: |
+          cd ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/parson
+          if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k
+
+  test_Parson_no_expand_macros_alltypes:
+    name: Test Parson (not macro-expanded, -alltypes)
+    needs: build_3c
+    runs-on: self-hosted
+    steps:
+      - name: Build Parson
+        run: |
+          mkdir -p ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes
+          cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes
+          tar -xvzf ${{env.benchmark_tar_dir}}/parson.tar.gz
+          cd parson
+          bear make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang"
+
+      - name: Convert Parson
+        run: |
+          cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/parson
+          ${{env.port_tools}}/convert_project.py \
+            --includeDir ${{env.include_dir}} \
+            --prog_name ${{env.builddir}}/bin/3c \
+            --extra-3c-arg=-alltypes \
+            --project_path .
+
+      - name: Build converted Parson (filter bounds inference errors)
+        run: |
+          cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/parson
+          if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py
+
+  test_Parson_expand_macros_no_alltypes:
+    name: Test Parson (macro-expanded, no -alltypes)
+    needs: build_3c
+    runs-on: self-hosted
+    steps:
+      - name: Build Parson
+        run: |
+          mkdir -p ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes
+          cd ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes
+          tar -xvzf ${{env.benchmark_tar_dir}}/parson.tar.gz
+          cd parson
+          bear make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang"
+
+      - name: Convert Parson
+        run: |
+          cd ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/parson
+          ${{env.port_tools}}/convert_project.py \
+            --includeDir ${{env.include_dir}} \
+            --prog_name ${{env.builddir}}/bin/3c \
+            --expand_macros_before_conversion \
+            --project_path .
+
+      - name: Build converted Parson
+        run: |
+          cd ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/parson
+          if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k
+
+  test_Parson_expand_macros_alltypes:
+    name: Test Parson (macro-expanded, -alltypes)
+    needs: build_3c
+    runs-on: self-hosted
+    steps:
+      - name: Build Parson
+        run: |
+          mkdir -p ${{env.benchmark_conv_dir}}/expand_macros_alltypes
+          cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes
+          tar -xvzf ${{env.benchmark_tar_dir}}/parson.tar.gz
+          cd parson
+          bear make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang"
+
+      - name: Convert Parson
+        run: |
+          cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes/parson
+          ${{env.port_tools}}/convert_project.py \
+            --includeDir ${{env.include_dir}} \
+            --prog_name ${{env.builddir}}/bin/3c \
+            --extra-3c-arg=-alltypes \
+            --expand_macros_before_conversion \
+            --project_path .
+
+      - name: Build converted Parson (filter bounds inference errors)
+        run: |
+          cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes/parson
+          if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py
+
+  test_Parson_no_expand_macros_no_alltypes:
+    name: Test Parson (not macro-expanded, no -alltypes)
+    needs: build_3c
+    runs-on: self-hosted
+    steps:
+      - name: Build Parson
+        run: |
+          mkdir -p ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes
+          cd ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes
+          tar -xvzf ${{env.benchmark_tar_dir}}/parson-manual.tar.gz
+          cd parson-manual
+          bear make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang"
+
+      - name: Convert Parson
+        run: |
+          cd ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/parson-manual
+          ${{env.port_tools}}/convert_project.py \
+            --includeDir ${{env.include_dir}} \
+            --prog_name ${{env.builddir}}/bin/3c \
+            --project_path .
+
+      - name: Build converted Parson
+        run: |
+          cd ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/parson-manual
+          if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k
+
+  test_Parson_no_expand_macros_alltypes:
+    name: Test Parson (not macro-expanded, -alltypes)
+    needs: build_3c
+    runs-on: self-hosted
+    steps:
+      - name: Build Parson
+        run: |
+          mkdir -p ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes
+          cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes
+          tar -xvzf ${{env.benchmark_tar_dir}}/parson-manual.tar.gz
+          cd parson-manual
+          bear make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang"
+
+      - name: Convert Parson
+        run: |
+          cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/parson-manual
+          ${{env.port_tools}}/convert_project.py \
+            --includeDir ${{env.include_dir}} \
+            --prog_name ${{env.builddir}}/bin/3c \
+            --extra-3c-arg=-alltypes \
+            --project_path .
+
+      - name: Build converted Parson (filter bounds inference errors)
+        run: |
+          cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/parson-manual
+          if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py
+
+  test_Parson_expand_macros_no_alltypes:
+    name: Test Parson (macro-expanded, no -alltypes)
+    needs: build_3c
+    runs-on: self-hosted
+    steps:
+      - name: Build Parson
+        run: |
+          mkdir -p ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes
+          cd ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes
+          tar -xvzf ${{env.benchmark_tar_dir}}/parson-manual.tar.gz
+          cd parson-manual
+          bear make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang"
+
+      - name: Convert Parson
+        run: |
+          cd ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/parson-manual
+          ${{env.port_tools}}/convert_project.py \
+            --includeDir ${{env.include_dir}} \
+            --prog_name ${{env.builddir}}/bin/3c \
+            --expand_macros_before_conversion \
+            --project_path .
+
+      - name: Build converted Parson
+        run: |
+          cd ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/parson-manual
+          if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k
+
+  test_Parson_expand_macros_alltypes:
+    name: Test Parson (macro-expanded, -alltypes)
+    needs: build_3c
+    runs-on: self-hosted
+    steps:
+      - name: Build Parson
+        run: |
+          mkdir -p ${{env.benchmark_conv_dir}}/expand_macros_alltypes
+          cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes
+          tar -xvzf ${{env.benchmark_tar_dir}}/parson-manual.tar.gz
+          cd parson-manual
+          bear make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang"
+
+      - name: Convert Parson
+        run: |
+          cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes/parson-manual
+          ${{env.port_tools}}/convert_project.py \
+            --includeDir ${{env.include_dir}} \
+            --prog_name ${{env.builddir}}/bin/3c \
+            --extra-3c-arg=-alltypes \
+            --expand_macros_before_conversion \
+            --project_path .
+
+      - name: Build converted Parson (filter bounds inference errors)
+        run: |
+          cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes/parson-manual
+          if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py
+
+  test_Parson_no_expand_macros_no_alltypes:
+    name: Test Parson (not macro-expanded, no -alltypes)
+    needs: build_3c
+    runs-on: self-hosted
+    steps:
+      - name: Build Parson
+        run: |
+          mkdir -p ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes
+          cd ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes
+          tar -xvzf ${{env.benchmark_tar_dir}}/parson-reverted.tar.gz
+          cd parson-reverted
+          bear make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang"
+
+      - name: Convert Parson
+        run: |
+          cd ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/parson-reverted
+          ${{env.port_tools}}/convert_project.py \
+            --includeDir ${{env.include_dir}} \
+            --prog_name ${{env.builddir}}/bin/3c \
+            --project_path .
+
+      - name: Build converted Parson
+        run: |
+          cd ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/parson-reverted
+          if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k
+
+  test_Parson_no_expand_macros_alltypes:
+    name: Test Parson (not macro-expanded, -alltypes)
+    needs: build_3c
+    runs-on: self-hosted
+    steps:
+      - name: Build Parson
+        run: |
+          mkdir -p ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes
+          cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes
+          tar -xvzf ${{env.benchmark_tar_dir}}/parson-reverted.tar.gz
+          cd parson-reverted
+          bear make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang"
+
+      - name: Convert Parson
+        run: |
+          cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/parson-reverted
+          ${{env.port_tools}}/convert_project.py \
+            --includeDir ${{env.include_dir}} \
+            --prog_name ${{env.builddir}}/bin/3c \
+            --extra-3c-arg=-alltypes \
+            --project_path .
+
+      - name: Build converted Parson (filter bounds inference errors)
+        run: |
+          cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/parson-reverted
+          if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py
+
+  test_Parson_expand_macros_no_alltypes:
+    name: Test Parson (macro-expanded, no -alltypes)
+    needs: build_3c
+    runs-on: self-hosted
+    steps:
+      - name: Build Parson
+        run: |
+          mkdir -p ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes
+          cd ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes
+          tar -xvzf ${{env.benchmark_tar_dir}}/parson-reverted.tar.gz
+          cd parson-reverted
+          bear make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang"
+
+      - name: Convert Parson
+        run: |
+          cd ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/parson-reverted
+          ${{env.port_tools}}/convert_project.py \
+            --includeDir ${{env.include_dir}} \
+            --prog_name ${{env.builddir}}/bin/3c \
+            --expand_macros_before_conversion \
+            --project_path .
+
+      - name: Build converted Parson
+        run: |
+          cd ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/parson-reverted
+          if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k
+
+  test_Parson_expand_macros_alltypes:
+    name: Test Parson (macro-expanded, -alltypes)
+    needs: build_3c
+    runs-on: self-hosted
+    steps:
+      - name: Build Parson
+        run: |
+          mkdir -p ${{env.benchmark_conv_dir}}/expand_macros_alltypes
+          cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes
+          tar -xvzf ${{env.benchmark_tar_dir}}/parson-reverted.tar.gz
+          cd parson-reverted
+          bear make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang"
+
+      - name: Convert Parson
+        run: |
+          cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes/parson-reverted
+          ${{env.port_tools}}/convert_project.py \
+            --includeDir ${{env.include_dir}} \
+            --prog_name ${{env.builddir}}/bin/3c \
+            --extra-3c-arg=-alltypes \
+            --expand_macros_before_conversion \
+            --project_path .
+
+      - name: Build converted Parson (filter bounds inference errors)
+        run: |
+          cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes/parson-reverted
+          if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py
+
   test_Olden_no_expand_macros_no_alltypes:
     name: Test Olden (not macro-expanded, no -alltypes)
     needs: build_3c
