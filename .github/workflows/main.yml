@@ -476,6 +476,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/Olden/bh
           ${{env.port_tools}}/convert_project.py \
+            --extra-3c-arg=-allow-unwritable-changes \
             --includeDir ${{env.include_dir}} \
             --prog_name ${{env.builddir}}/bin/3c \
             --project_path .
@@ -491,6 +492,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/Olden/bisort
           ${{env.port_tools}}/convert_project.py \
+            --extra-3c-arg=-allow-unwritable-changes \
             --includeDir ${{env.include_dir}} \
             --prog_name ${{env.builddir}}/bin/3c \
             --project_path .
@@ -506,6 +508,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/Olden/em3d
           ${{env.port_tools}}/convert_project.py \
+            --extra-3c-arg=-allow-unwritable-changes \
             --includeDir ${{env.include_dir}} \
             --prog_name ${{env.builddir}}/bin/3c \
             --project_path .
@@ -521,6 +524,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/Olden/health
           ${{env.port_tools}}/convert_project.py \
+            --extra-3c-arg=-allow-unwritable-changes \
             --includeDir ${{env.include_dir}} \
             --prog_name ${{env.builddir}}/bin/3c \
             --project_path .
@@ -536,6 +540,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/Olden/mst
           ${{env.port_tools}}/convert_project.py \
+            --extra-3c-arg=-allow-unwritable-changes \
             --includeDir ${{env.include_dir}} \
             --prog_name ${{env.builddir}}/bin/3c \
             --project_path .
@@ -551,6 +556,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/Olden/perimeter
           ${{env.port_tools}}/convert_project.py \
+            --extra-3c-arg=-allow-unwritable-changes \
             --includeDir ${{env.include_dir}} \
             --prog_name ${{env.builddir}}/bin/3c \
             --project_path .
@@ -566,6 +572,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/Olden/power
           ${{env.port_tools}}/convert_project.py \
+            --extra-3c-arg=-allow-unwritable-changes \
             --includeDir ${{env.include_dir}} \
             --prog_name ${{env.builddir}}/bin/3c \
             --project_path .
@@ -581,6 +588,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/Olden/treeadd
           ${{env.port_tools}}/convert_project.py \
+            --extra-3c-arg=-allow-unwritable-changes \
             --includeDir ${{env.include_dir}} \
             --prog_name ${{env.builddir}}/bin/3c \
             --project_path .
@@ -596,6 +604,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/Olden/tsp
           ${{env.port_tools}}/convert_project.py \
+            --extra-3c-arg=-allow-unwritable-changes \
             --includeDir ${{env.include_dir}} \
             --prog_name ${{env.builddir}}/bin/3c \
             --project_path .
@@ -611,6 +620,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/Olden/voronoi
           ${{env.port_tools}}/convert_project.py \
+            --extra-3c-arg=-allow-unwritable-changes \
             --includeDir ${{env.include_dir}} \
             --prog_name ${{env.builddir}}/bin/3c \
             --project_path .
@@ -649,6 +659,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Olden/bh
           ${{env.port_tools}}/convert_project.py \
+            --extra-3c-arg=-allow-unwritable-changes \
             --includeDir ${{env.include_dir}} \
             --prog_name ${{env.builddir}}/bin/3c \
             --extra-3c-arg=-alltypes \
@@ -665,6 +676,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Olden/bisort
           ${{env.port_tools}}/convert_project.py \
+            --extra-3c-arg=-allow-unwritable-changes \
             --includeDir ${{env.include_dir}} \
             --prog_name ${{env.builddir}}/bin/3c \
             --extra-3c-arg=-alltypes \
@@ -681,6 +693,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Olden/em3d
           ${{env.port_tools}}/convert_project.py \
+            --extra-3c-arg=-allow-unwritable-changes \
             --includeDir ${{env.include_dir}} \
             --prog_name ${{env.builddir}}/bin/3c \
             --extra-3c-arg=-alltypes \
@@ -697,6 +710,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Olden/health
           ${{env.port_tools}}/convert_project.py \
+            --extra-3c-arg=-allow-unwritable-changes \
             --includeDir ${{env.include_dir}} \
             --prog_name ${{env.builddir}}/bin/3c \
             --extra-3c-arg=-alltypes \
@@ -713,6 +727,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Olden/mst
           ${{env.port_tools}}/convert_project.py \
+            --extra-3c-arg=-allow-unwritable-changes \
             --includeDir ${{env.include_dir}} \
             --prog_name ${{env.builddir}}/bin/3c \
             --extra-3c-arg=-alltypes \
@@ -729,6 +744,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Olden/perimeter
           ${{env.port_tools}}/convert_project.py \
+            --extra-3c-arg=-allow-unwritable-changes \
             --includeDir ${{env.include_dir}} \
             --prog_name ${{env.builddir}}/bin/3c \
             --extra-3c-arg=-alltypes \
@@ -745,6 +761,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Olden/power
           ${{env.port_tools}}/convert_project.py \
+            --extra-3c-arg=-allow-unwritable-changes \
             --includeDir ${{env.include_dir}} \
             --prog_name ${{env.builddir}}/bin/3c \
             --extra-3c-arg=-alltypes \
@@ -761,6 +778,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Olden/treeadd
           ${{env.port_tools}}/convert_project.py \
+            --extra-3c-arg=-allow-unwritable-changes \
             --includeDir ${{env.include_dir}} \
             --prog_name ${{env.builddir}}/bin/3c \
             --extra-3c-arg=-alltypes \
@@ -777,6 +795,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Olden/tsp
           ${{env.port_tools}}/convert_project.py \
+            --extra-3c-arg=-allow-unwritable-changes \
             --includeDir ${{env.include_dir}} \
             --prog_name ${{env.builddir}}/bin/3c \
             --extra-3c-arg=-alltypes \
@@ -793,6 +812,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Olden/voronoi
           ${{env.port_tools}}/convert_project.py \
+            --extra-3c-arg=-allow-unwritable-changes \
             --includeDir ${{env.include_dir}} \
             --prog_name ${{env.builddir}}/bin/3c \
             --extra-3c-arg=-alltypes \
@@ -832,6 +852,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/Olden/bh
           ${{env.port_tools}}/convert_project.py \
+            --extra-3c-arg=-allow-unwritable-changes \
             --includeDir ${{env.include_dir}} \
             --prog_name ${{env.builddir}}/bin/3c \
             --expand_macros_before_conversion \
@@ -848,6 +869,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/Olden/bisort
           ${{env.port_tools}}/convert_project.py \
+            --extra-3c-arg=-allow-unwritable-changes \
             --includeDir ${{env.include_dir}} \
             --prog_name ${{env.builddir}}/bin/3c \
             --expand_macros_before_conversion \
@@ -864,6 +886,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/Olden/em3d
           ${{env.port_tools}}/convert_project.py \
+            --extra-3c-arg=-allow-unwritable-changes \
             --includeDir ${{env.include_dir}} \
             --prog_name ${{env.builddir}}/bin/3c \
             --expand_macros_before_conversion \
@@ -880,6 +903,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/Olden/health
           ${{env.port_tools}}/convert_project.py \
+            --extra-3c-arg=-allow-unwritable-changes \
             --includeDir ${{env.include_dir}} \
             --prog_name ${{env.builddir}}/bin/3c \
             --expand_macros_before_conversion \
@@ -896,6 +920,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/Olden/mst
           ${{env.port_tools}}/convert_project.py \
+            --extra-3c-arg=-allow-unwritable-changes \
             --includeDir ${{env.include_dir}} \
             --prog_name ${{env.builddir}}/bin/3c \
             --expand_macros_before_conversion \
@@ -912,6 +937,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/Olden/perimeter
           ${{env.port_tools}}/convert_project.py \
+            --extra-3c-arg=-allow-unwritable-changes \
             --includeDir ${{env.include_dir}} \
             --prog_name ${{env.builddir}}/bin/3c \
             --expand_macros_before_conversion \
@@ -928,6 +954,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/Olden/power
           ${{env.port_tools}}/convert_project.py \
+            --extra-3c-arg=-allow-unwritable-changes \
             --includeDir ${{env.include_dir}} \
             --prog_name ${{env.builddir}}/bin/3c \
             --expand_macros_before_conversion \
@@ -944,6 +971,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/Olden/treeadd
           ${{env.port_tools}}/convert_project.py \
+            --extra-3c-arg=-allow-unwritable-changes \
             --includeDir ${{env.include_dir}} \
             --prog_name ${{env.builddir}}/bin/3c \
             --expand_macros_before_conversion \
@@ -960,6 +988,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/Olden/tsp
           ${{env.port_tools}}/convert_project.py \
+            --extra-3c-arg=-allow-unwritable-changes \
             --includeDir ${{env.include_dir}} \
             --prog_name ${{env.builddir}}/bin/3c \
             --expand_macros_before_conversion \
@@ -976,6 +1005,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/Olden/voronoi
           ${{env.port_tools}}/convert_project.py \
+            --extra-3c-arg=-allow-unwritable-changes \
             --includeDir ${{env.include_dir}} \
             --prog_name ${{env.builddir}}/bin/3c \
             --expand_macros_before_conversion \
@@ -1015,6 +1045,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes/Olden/bh
           ${{env.port_tools}}/convert_project.py \
+            --extra-3c-arg=-allow-unwritable-changes \
             --includeDir ${{env.include_dir}} \
             --prog_name ${{env.builddir}}/bin/3c \
             --extra-3c-arg=-alltypes \
@@ -1032,6 +1063,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes/Olden/bisort
           ${{env.port_tools}}/convert_project.py \
+            --extra-3c-arg=-allow-unwritable-changes \
             --includeDir ${{env.include_dir}} \
             --prog_name ${{env.builddir}}/bin/3c \
             --extra-3c-arg=-alltypes \
@@ -1049,6 +1081,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes/Olden/em3d
           ${{env.port_tools}}/convert_project.py \
+            --extra-3c-arg=-allow-unwritable-changes \
             --includeDir ${{env.include_dir}} \
             --prog_name ${{env.builddir}}/bin/3c \
             --extra-3c-arg=-alltypes \
@@ -1066,6 +1099,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes/Olden/health
           ${{env.port_tools}}/convert_project.py \
+            --extra-3c-arg=-allow-unwritable-changes \
             --includeDir ${{env.include_dir}} \
             --prog_name ${{env.builddir}}/bin/3c \
             --extra-3c-arg=-alltypes \
@@ -1083,6 +1117,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes/Olden/mst
           ${{env.port_tools}}/convert_project.py \
+            --extra-3c-arg=-allow-unwritable-changes \
             --includeDir ${{env.include_dir}} \
             --prog_name ${{env.builddir}}/bin/3c \
             --extra-3c-arg=-alltypes \
@@ -1100,6 +1135,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes/Olden/perimeter
           ${{env.port_tools}}/convert_project.py \
+            --extra-3c-arg=-allow-unwritable-changes \
             --includeDir ${{env.include_dir}} \
             --prog_name ${{env.builddir}}/bin/3c \
             --extra-3c-arg=-alltypes \
@@ -1117,6 +1153,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes/Olden/power
           ${{env.port_tools}}/convert_project.py \
+            --extra-3c-arg=-allow-unwritable-changes \
             --includeDir ${{env.include_dir}} \
             --prog_name ${{env.builddir}}/bin/3c \
             --extra-3c-arg=-alltypes \
@@ -1134,6 +1171,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes/Olden/treeadd
           ${{env.port_tools}}/convert_project.py \
+            --extra-3c-arg=-allow-unwritable-changes \
             --includeDir ${{env.include_dir}} \
             --prog_name ${{env.builddir}}/bin/3c \
             --extra-3c-arg=-alltypes \
@@ -1151,6 +1189,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes/Olden/tsp
           ${{env.port_tools}}/convert_project.py \
+            --extra-3c-arg=-allow-unwritable-changes \
             --includeDir ${{env.include_dir}} \
             --prog_name ${{env.builddir}}/bin/3c \
             --extra-3c-arg=-alltypes \
@@ -1168,6 +1207,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes/Olden/voronoi
           ${{env.port_tools}}/convert_project.py \
+            --extra-3c-arg=-allow-unwritable-changes \
             --includeDir ${{env.include_dir}} \
             --prog_name ${{env.builddir}}/bin/3c \
             --extra-3c-arg=-alltypes \
@@ -1208,6 +1248,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/Olden-reverted/bh
           ${{env.port_tools}}/convert_project.py \
+            --extra-3c-arg=-allow-unwritable-changes \
             --includeDir ${{env.include_dir}} \
             --prog_name ${{env.builddir}}/bin/3c \
             --project_path .
@@ -1223,6 +1264,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/Olden-reverted/bisort
           ${{env.port_tools}}/convert_project.py \
+            --extra-3c-arg=-allow-unwritable-changes \
             --includeDir ${{env.include_dir}} \
             --prog_name ${{env.builddir}}/bin/3c \
             --project_path .
@@ -1238,6 +1280,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/Olden-reverted/em3d
           ${{env.port_tools}}/convert_project.py \
+            --extra-3c-arg=-allow-unwritable-changes \
             --includeDir ${{env.include_dir}} \
             --prog_name ${{env.builddir}}/bin/3c \
             --project_path .
@@ -1253,6 +1296,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/Olden-reverted/health
           ${{env.port_tools}}/convert_project.py \
+            --extra-3c-arg=-allow-unwritable-changes \
             --includeDir ${{env.include_dir}} \
             --prog_name ${{env.builddir}}/bin/3c \
             --project_path .
@@ -1268,6 +1312,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/Olden-reverted/mst
           ${{env.port_tools}}/convert_project.py \
+            --extra-3c-arg=-allow-unwritable-changes \
             --includeDir ${{env.include_dir}} \
             --prog_name ${{env.builddir}}/bin/3c \
             --project_path .
@@ -1283,6 +1328,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/Olden-reverted/perimeter
           ${{env.port_tools}}/convert_project.py \
+            --extra-3c-arg=-allow-unwritable-changes \
             --includeDir ${{env.include_dir}} \
             --prog_name ${{env.builddir}}/bin/3c \
             --project_path .
@@ -1298,6 +1344,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/Olden-reverted/power
           ${{env.port_tools}}/convert_project.py \
+            --extra-3c-arg=-allow-unwritable-changes \
             --includeDir ${{env.include_dir}} \
             --prog_name ${{env.builddir}}/bin/3c \
             --project_path .
@@ -1313,6 +1360,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/Olden-reverted/treeadd
           ${{env.port_tools}}/convert_project.py \
+            --extra-3c-arg=-allow-unwritable-changes \
             --includeDir ${{env.include_dir}} \
             --prog_name ${{env.builddir}}/bin/3c \
             --project_path .
@@ -1328,6 +1376,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/Olden-reverted/tsp
           ${{env.port_tools}}/convert_project.py \
+            --extra-3c-arg=-allow-unwritable-changes \
             --includeDir ${{env.include_dir}} \
             --prog_name ${{env.builddir}}/bin/3c \
             --project_path .
@@ -1343,6 +1392,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/Olden-reverted/voronoi
           ${{env.port_tools}}/convert_project.py \
+            --extra-3c-arg=-allow-unwritable-changes \
             --includeDir ${{env.include_dir}} \
             --prog_name ${{env.builddir}}/bin/3c \
             --project_path .
@@ -1381,6 +1431,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Olden-reverted/bh
           ${{env.port_tools}}/convert_project.py \
+            --extra-3c-arg=-allow-unwritable-changes \
             --includeDir ${{env.include_dir}} \
             --prog_name ${{env.builddir}}/bin/3c \
             --extra-3c-arg=-alltypes \
@@ -1397,6 +1448,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Olden-reverted/bisort
           ${{env.port_tools}}/convert_project.py \
+            --extra-3c-arg=-allow-unwritable-changes \
             --includeDir ${{env.include_dir}} \
             --prog_name ${{env.builddir}}/bin/3c \
             --extra-3c-arg=-alltypes \
@@ -1413,6 +1465,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Olden-reverted/em3d
           ${{env.port_tools}}/convert_project.py \
+            --extra-3c-arg=-allow-unwritable-changes \
             --includeDir ${{env.include_dir}} \
             --prog_name ${{env.builddir}}/bin/3c \
             --extra-3c-arg=-alltypes \
@@ -1429,6 +1482,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Olden-reverted/health
           ${{env.port_tools}}/convert_project.py \
+            --extra-3c-arg=-allow-unwritable-changes \
             --includeDir ${{env.include_dir}} \
             --prog_name ${{env.builddir}}/bin/3c \
             --extra-3c-arg=-alltypes \
@@ -1445,6 +1499,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Olden-reverted/mst
           ${{env.port_tools}}/convert_project.py \
+            --extra-3c-arg=-allow-unwritable-changes \
             --includeDir ${{env.include_dir}} \
             --prog_name ${{env.builddir}}/bin/3c \
             --extra-3c-arg=-alltypes \
@@ -1461,6 +1516,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Olden-reverted/perimeter
           ${{env.port_tools}}/convert_project.py \
+            --extra-3c-arg=-allow-unwritable-changes \
             --includeDir ${{env.include_dir}} \
             --prog_name ${{env.builddir}}/bin/3c \
             --extra-3c-arg=-alltypes \
@@ -1477,6 +1533,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Olden-reverted/power
           ${{env.port_tools}}/convert_project.py \
+            --extra-3c-arg=-allow-unwritable-changes \
             --includeDir ${{env.include_dir}} \
             --prog_name ${{env.builddir}}/bin/3c \
             --extra-3c-arg=-alltypes \
@@ -1493,6 +1550,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Olden-reverted/treeadd
           ${{env.port_tools}}/convert_project.py \
+            --extra-3c-arg=-allow-unwritable-changes \
             --includeDir ${{env.include_dir}} \
             --prog_name ${{env.builddir}}/bin/3c \
             --extra-3c-arg=-alltypes \
@@ -1509,6 +1567,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Olden-reverted/tsp
           ${{env.port_tools}}/convert_project.py \
+            --extra-3c-arg=-allow-unwritable-changes \
             --includeDir ${{env.include_dir}} \
             --prog_name ${{env.builddir}}/bin/3c \
             --extra-3c-arg=-alltypes \
@@ -1525,6 +1584,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Olden-reverted/voronoi
           ${{env.port_tools}}/convert_project.py \
+            --extra-3c-arg=-allow-unwritable-changes \
             --includeDir ${{env.include_dir}} \
             --prog_name ${{env.builddir}}/bin/3c \
             --extra-3c-arg=-alltypes \
@@ -1564,6 +1624,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/Olden-reverted/bh
           ${{env.port_tools}}/convert_project.py \
+            --extra-3c-arg=-allow-unwritable-changes \
             --includeDir ${{env.include_dir}} \
             --prog_name ${{env.builddir}}/bin/3c \
             --expand_macros_before_conversion \
@@ -1580,6 +1641,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/Olden-reverted/bisort
           ${{env.port_tools}}/convert_project.py \
+            --extra-3c-arg=-allow-unwritable-changes \
             --includeDir ${{env.include_dir}} \
             --prog_name ${{env.builddir}}/bin/3c \
             --expand_macros_before_conversion \
@@ -1596,6 +1658,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/Olden-reverted/em3d
           ${{env.port_tools}}/convert_project.py \
+            --extra-3c-arg=-allow-unwritable-changes \
             --includeDir ${{env.include_dir}} \
             --prog_name ${{env.builddir}}/bin/3c \
             --expand_macros_before_conversion \
@@ -1612,6 +1675,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/Olden-reverted/health
           ${{env.port_tools}}/convert_project.py \
+            --extra-3c-arg=-allow-unwritable-changes \
             --includeDir ${{env.include_dir}} \
             --prog_name ${{env.builddir}}/bin/3c \
             --expand_macros_before_conversion \
@@ -1628,6 +1692,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/Olden-reverted/mst
           ${{env.port_tools}}/convert_project.py \
+            --extra-3c-arg=-allow-unwritable-changes \
             --includeDir ${{env.include_dir}} \
             --prog_name ${{env.builddir}}/bin/3c \
             --expand_macros_before_conversion \
@@ -1644,6 +1709,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/Olden-reverted/perimeter
           ${{env.port_tools}}/convert_project.py \
+            --extra-3c-arg=-allow-unwritable-changes \
             --includeDir ${{env.include_dir}} \
             --prog_name ${{env.builddir}}/bin/3c \
             --expand_macros_before_conversion \
@@ -1660,6 +1726,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/Olden-reverted/power
           ${{env.port_tools}}/convert_project.py \
+            --extra-3c-arg=-allow-unwritable-changes \
             --includeDir ${{env.include_dir}} \
             --prog_name ${{env.builddir}}/bin/3c \
             --expand_macros_before_conversion \
@@ -1676,6 +1743,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/Olden-reverted/treeadd
           ${{env.port_tools}}/convert_project.py \
+            --extra-3c-arg=-allow-unwritable-changes \
             --includeDir ${{env.include_dir}} \
             --prog_name ${{env.builddir}}/bin/3c \
             --expand_macros_before_conversion \
@@ -1692,6 +1760,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/Olden-reverted/tsp
           ${{env.port_tools}}/convert_project.py \
+            --extra-3c-arg=-allow-unwritable-changes \
             --includeDir ${{env.include_dir}} \
             --prog_name ${{env.builddir}}/bin/3c \
             --expand_macros_before_conversion \
@@ -1708,6 +1777,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/Olden-reverted/voronoi
           ${{env.port_tools}}/convert_project.py \
+            --extra-3c-arg=-allow-unwritable-changes \
             --includeDir ${{env.include_dir}} \
             --prog_name ${{env.builddir}}/bin/3c \
             --expand_macros_before_conversion \
@@ -1747,6 +1817,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes/Olden-reverted/bh
           ${{env.port_tools}}/convert_project.py \
+            --extra-3c-arg=-allow-unwritable-changes \
             --includeDir ${{env.include_dir}} \
             --prog_name ${{env.builddir}}/bin/3c \
             --extra-3c-arg=-alltypes \
@@ -1764,6 +1835,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes/Olden-reverted/bisort
           ${{env.port_tools}}/convert_project.py \
+            --extra-3c-arg=-allow-unwritable-changes \
             --includeDir ${{env.include_dir}} \
             --prog_name ${{env.builddir}}/bin/3c \
             --extra-3c-arg=-alltypes \
@@ -1781,6 +1853,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes/Olden-reverted/em3d
           ${{env.port_tools}}/convert_project.py \
+            --extra-3c-arg=-allow-unwritable-changes \
             --includeDir ${{env.include_dir}} \
             --prog_name ${{env.builddir}}/bin/3c \
             --extra-3c-arg=-alltypes \
@@ -1798,6 +1871,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes/Olden-reverted/health
           ${{env.port_tools}}/convert_project.py \
+            --extra-3c-arg=-allow-unwritable-changes \
             --includeDir ${{env.include_dir}} \
             --prog_name ${{env.builddir}}/bin/3c \
             --extra-3c-arg=-alltypes \
@@ -1815,6 +1889,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes/Olden-reverted/mst
           ${{env.port_tools}}/convert_project.py \
+            --extra-3c-arg=-allow-unwritable-changes \
             --includeDir ${{env.include_dir}} \
             --prog_name ${{env.builddir}}/bin/3c \
             --extra-3c-arg=-alltypes \
@@ -1832,6 +1907,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes/Olden-reverted/perimeter
           ${{env.port_tools}}/convert_project.py \
+            --extra-3c-arg=-allow-unwritable-changes \
             --includeDir ${{env.include_dir}} \
             --prog_name ${{env.builddir}}/bin/3c \
             --extra-3c-arg=-alltypes \
@@ -1849,6 +1925,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes/Olden-reverted/power
           ${{env.port_tools}}/convert_project.py \
+            --extra-3c-arg=-allow-unwritable-changes \
             --includeDir ${{env.include_dir}} \
             --prog_name ${{env.builddir}}/bin/3c \
             --extra-3c-arg=-alltypes \
@@ -1866,6 +1943,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes/Olden-reverted/treeadd
           ${{env.port_tools}}/convert_project.py \
+            --extra-3c-arg=-allow-unwritable-changes \
             --includeDir ${{env.include_dir}} \
             --prog_name ${{env.builddir}}/bin/3c \
             --extra-3c-arg=-alltypes \
@@ -1883,6 +1961,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes/Olden-reverted/tsp
           ${{env.port_tools}}/convert_project.py \
+            --extra-3c-arg=-allow-unwritable-changes \
             --includeDir ${{env.include_dir}} \
             --prog_name ${{env.builddir}}/bin/3c \
             --extra-3c-arg=-alltypes \
@@ -1900,6 +1979,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes/Olden-reverted/voronoi
           ${{env.port_tools}}/convert_project.py \
+            --extra-3c-arg=-allow-unwritable-changes \
             --includeDir ${{env.include_dir}} \
             --prog_name ${{env.builddir}}/bin/3c \
             --extra-3c-arg=-alltypes \
@@ -1940,6 +2020,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/Olden-manual/bh
           ${{env.port_tools}}/convert_project.py \
+            --extra-3c-arg=-allow-unwritable-changes \
             --includeDir ${{env.include_dir}} \
             --prog_name ${{env.builddir}}/bin/3c \
             --project_path .
@@ -1955,6 +2036,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/Olden-manual/bisort
           ${{env.port_tools}}/convert_project.py \
+            --extra-3c-arg=-allow-unwritable-changes \
             --includeDir ${{env.include_dir}} \
             --prog_name ${{env.builddir}}/bin/3c \
             --project_path .
@@ -1970,6 +2052,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/Olden-manual/em3d
           ${{env.port_tools}}/convert_project.py \
+            --extra-3c-arg=-allow-unwritable-changes \
             --includeDir ${{env.include_dir}} \
             --prog_name ${{env.builddir}}/bin/3c \
             --project_path .
@@ -1985,6 +2068,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/Olden-manual/health
           ${{env.port_tools}}/convert_project.py \
+            --extra-3c-arg=-allow-unwritable-changes \
             --includeDir ${{env.include_dir}} \
             --prog_name ${{env.builddir}}/bin/3c \
             --project_path .
@@ -2000,6 +2084,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/Olden-manual/mst
           ${{env.port_tools}}/convert_project.py \
+            --extra-3c-arg=-allow-unwritable-changes \
             --includeDir ${{env.include_dir}} \
             --prog_name ${{env.builddir}}/bin/3c \
             --project_path .
@@ -2015,6 +2100,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/Olden-manual/perimeter
           ${{env.port_tools}}/convert_project.py \
+            --extra-3c-arg=-allow-unwritable-changes \
             --includeDir ${{env.include_dir}} \
             --prog_name ${{env.builddir}}/bin/3c \
             --project_path .
@@ -2030,6 +2116,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/Olden-manual/power
           ${{env.port_tools}}/convert_project.py \
+            --extra-3c-arg=-allow-unwritable-changes \
             --includeDir ${{env.include_dir}} \
             --prog_name ${{env.builddir}}/bin/3c \
             --project_path .
@@ -2045,6 +2132,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/Olden-manual/treeadd
           ${{env.port_tools}}/convert_project.py \
+            --extra-3c-arg=-allow-unwritable-changes \
             --includeDir ${{env.include_dir}} \
             --prog_name ${{env.builddir}}/bin/3c \
             --project_path .
@@ -2060,6 +2148,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/Olden-manual/tsp
           ${{env.port_tools}}/convert_project.py \
+            --extra-3c-arg=-allow-unwritable-changes \
             --includeDir ${{env.include_dir}} \
             --prog_name ${{env.builddir}}/bin/3c \
             --project_path .
@@ -2075,6 +2164,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/Olden-manual/voronoi
           ${{env.port_tools}}/convert_project.py \
+            --extra-3c-arg=-allow-unwritable-changes \
             --includeDir ${{env.include_dir}} \
             --prog_name ${{env.builddir}}/bin/3c \
             --project_path .
@@ -2113,6 +2203,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Olden-manual/bh
           ${{env.port_tools}}/convert_project.py \
+            --extra-3c-arg=-allow-unwritable-changes \
             --includeDir ${{env.include_dir}} \
             --prog_name ${{env.builddir}}/bin/3c \
             --extra-3c-arg=-alltypes \
@@ -2129,6 +2220,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Olden-manual/bisort
           ${{env.port_tools}}/convert_project.py \
+            --extra-3c-arg=-allow-unwritable-changes \
             --includeDir ${{env.include_dir}} \
             --prog_name ${{env.builddir}}/bin/3c \
             --extra-3c-arg=-alltypes \
@@ -2145,6 +2237,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Olden-manual/em3d
           ${{env.port_tools}}/convert_project.py \
+            --extra-3c-arg=-allow-unwritable-changes \
             --includeDir ${{env.include_dir}} \
             --prog_name ${{env.builddir}}/bin/3c \
             --extra-3c-arg=-alltypes \
@@ -2161,6 +2254,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Olden-manual/health
           ${{env.port_tools}}/convert_project.py \
+            --extra-3c-arg=-allow-unwritable-changes \
             --includeDir ${{env.include_dir}} \
             --prog_name ${{env.builddir}}/bin/3c \
             --extra-3c-arg=-alltypes \
@@ -2177,6 +2271,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Olden-manual/mst
           ${{env.port_tools}}/convert_project.py \
+            --extra-3c-arg=-allow-unwritable-changes \
             --includeDir ${{env.include_dir}} \
             --prog_name ${{env.builddir}}/bin/3c \
             --extra-3c-arg=-alltypes \
@@ -2193,6 +2288,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Olden-manual/perimeter
           ${{env.port_tools}}/convert_project.py \
+            --extra-3c-arg=-allow-unwritable-changes \
             --includeDir ${{env.include_dir}} \
             --prog_name ${{env.builddir}}/bin/3c \
             --extra-3c-arg=-alltypes \
@@ -2209,6 +2305,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Olden-manual/power
           ${{env.port_tools}}/convert_project.py \
+            --extra-3c-arg=-allow-unwritable-changes \
             --includeDir ${{env.include_dir}} \
             --prog_name ${{env.builddir}}/bin/3c \
             --extra-3c-arg=-alltypes \
@@ -2225,6 +2322,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Olden-manual/treeadd
           ${{env.port_tools}}/convert_project.py \
+            --extra-3c-arg=-allow-unwritable-changes \
             --includeDir ${{env.include_dir}} \
             --prog_name ${{env.builddir}}/bin/3c \
             --extra-3c-arg=-alltypes \
@@ -2241,6 +2339,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Olden-manual/tsp
           ${{env.port_tools}}/convert_project.py \
+            --extra-3c-arg=-allow-unwritable-changes \
             --includeDir ${{env.include_dir}} \
             --prog_name ${{env.builddir}}/bin/3c \
             --extra-3c-arg=-alltypes \
@@ -2257,6 +2356,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Olden-manual/voronoi
           ${{env.port_tools}}/convert_project.py \
+            --extra-3c-arg=-allow-unwritable-changes \
             --includeDir ${{env.include_dir}} \
             --prog_name ${{env.builddir}}/bin/3c \
             --extra-3c-arg=-alltypes \
@@ -2296,6 +2396,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/Olden-manual/bh
           ${{env.port_tools}}/convert_project.py \
+            --extra-3c-arg=-allow-unwritable-changes \
             --includeDir ${{env.include_dir}} \
             --prog_name ${{env.builddir}}/bin/3c \
             --expand_macros_before_conversion \
@@ -2312,6 +2413,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/Olden-manual/bisort
           ${{env.port_tools}}/convert_project.py \
+            --extra-3c-arg=-allow-unwritable-changes \
             --includeDir ${{env.include_dir}} \
             --prog_name ${{env.builddir}}/bin/3c \
             --expand_macros_before_conversion \
@@ -2328,6 +2430,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/Olden-manual/em3d
           ${{env.port_tools}}/convert_project.py \
+            --extra-3c-arg=-allow-unwritable-changes \
             --includeDir ${{env.include_dir}} \
             --prog_name ${{env.builddir}}/bin/3c \
             --expand_macros_before_conversion \
@@ -2344,6 +2447,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/Olden-manual/health
           ${{env.port_tools}}/convert_project.py \
+            --extra-3c-arg=-allow-unwritable-changes \
             --includeDir ${{env.include_dir}} \
             --prog_name ${{env.builddir}}/bin/3c \
             --expand_macros_before_conversion \
@@ -2360,6 +2464,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/Olden-manual/mst
           ${{env.port_tools}}/convert_project.py \
+            --extra-3c-arg=-allow-unwritable-changes \
             --includeDir ${{env.include_dir}} \
             --prog_name ${{env.builddir}}/bin/3c \
             --expand_macros_before_conversion \
@@ -2376,6 +2481,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/Olden-manual/perimeter
           ${{env.port_tools}}/convert_project.py \
+            --extra-3c-arg=-allow-unwritable-changes \
             --includeDir ${{env.include_dir}} \
             --prog_name ${{env.builddir}}/bin/3c \
             --expand_macros_before_conversion \
@@ -2392,6 +2498,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/Olden-manual/power
           ${{env.port_tools}}/convert_project.py \
+            --extra-3c-arg=-allow-unwritable-changes \
             --includeDir ${{env.include_dir}} \
             --prog_name ${{env.builddir}}/bin/3c \
             --expand_macros_before_conversion \
@@ -2408,6 +2515,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/Olden-manual/treeadd
           ${{env.port_tools}}/convert_project.py \
+            --extra-3c-arg=-allow-unwritable-changes \
             --includeDir ${{env.include_dir}} \
             --prog_name ${{env.builddir}}/bin/3c \
             --expand_macros_before_conversion \
@@ -2424,6 +2532,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/Olden-manual/tsp
           ${{env.port_tools}}/convert_project.py \
+            --extra-3c-arg=-allow-unwritable-changes \
             --includeDir ${{env.include_dir}} \
             --prog_name ${{env.builddir}}/bin/3c \
             --expand_macros_before_conversion \
@@ -2440,6 +2549,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/Olden-manual/voronoi
           ${{env.port_tools}}/convert_project.py \
+            --extra-3c-arg=-allow-unwritable-changes \
             --includeDir ${{env.include_dir}} \
             --prog_name ${{env.builddir}}/bin/3c \
             --expand_macros_before_conversion \
@@ -2479,6 +2589,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes/Olden-manual/bh
           ${{env.port_tools}}/convert_project.py \
+            --extra-3c-arg=-allow-unwritable-changes \
             --includeDir ${{env.include_dir}} \
             --prog_name ${{env.builddir}}/bin/3c \
             --extra-3c-arg=-alltypes \
@@ -2496,6 +2607,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes/Olden-manual/bisort
           ${{env.port_tools}}/convert_project.py \
+            --extra-3c-arg=-allow-unwritable-changes \
             --includeDir ${{env.include_dir}} \
             --prog_name ${{env.builddir}}/bin/3c \
             --extra-3c-arg=-alltypes \
@@ -2513,6 +2625,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes/Olden-manual/em3d
           ${{env.port_tools}}/convert_project.py \
+            --extra-3c-arg=-allow-unwritable-changes \
             --includeDir ${{env.include_dir}} \
             --prog_name ${{env.builddir}}/bin/3c \
             --extra-3c-arg=-alltypes \
@@ -2530,6 +2643,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes/Olden-manual/health
           ${{env.port_tools}}/convert_project.py \
+            --extra-3c-arg=-allow-unwritable-changes \
             --includeDir ${{env.include_dir}} \
             --prog_name ${{env.builddir}}/bin/3c \
             --extra-3c-arg=-alltypes \
@@ -2547,6 +2661,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes/Olden-manual/mst
           ${{env.port_tools}}/convert_project.py \
+            --extra-3c-arg=-allow-unwritable-changes \
             --includeDir ${{env.include_dir}} \
             --prog_name ${{env.builddir}}/bin/3c \
             --extra-3c-arg=-alltypes \
@@ -2564,6 +2679,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes/Olden-manual/perimeter
           ${{env.port_tools}}/convert_project.py \
+            --extra-3c-arg=-allow-unwritable-changes \
             --includeDir ${{env.include_dir}} \
             --prog_name ${{env.builddir}}/bin/3c \
             --extra-3c-arg=-alltypes \
@@ -2581,6 +2697,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes/Olden-manual/power
           ${{env.port_tools}}/convert_project.py \
+            --extra-3c-arg=-allow-unwritable-changes \
             --includeDir ${{env.include_dir}} \
             --prog_name ${{env.builddir}}/bin/3c \
             --extra-3c-arg=-alltypes \
@@ -2598,6 +2715,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes/Olden-manual/treeadd
           ${{env.port_tools}}/convert_project.py \
+            --extra-3c-arg=-allow-unwritable-changes \
             --includeDir ${{env.include_dir}} \
             --prog_name ${{env.builddir}}/bin/3c \
             --extra-3c-arg=-alltypes \
@@ -2615,6 +2733,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes/Olden-manual/tsp
           ${{env.port_tools}}/convert_project.py \
+            --extra-3c-arg=-allow-unwritable-changes \
             --includeDir ${{env.include_dir}} \
             --prog_name ${{env.builddir}}/bin/3c \
             --extra-3c-arg=-alltypes \
@@ -2632,6 +2751,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes/Olden-manual/voronoi
           ${{env.port_tools}}/convert_project.py \
+            --extra-3c-arg=-allow-unwritable-changes \
             --includeDir ${{env.include_dir}} \
             --prog_name ${{env.builddir}}/bin/3c \
             --extra-3c-arg=-alltypes \

@@ -159,6 +159,7 @@ benchmarks = [
         name='Olden',
         friendly_name='Olden',
         dir_name='Olden',
+        convert_extra="--extra-3c-arg=-allow-unwritable-changes \\",
         build_cmds=textwrap.dedent(f'''\
     for i in {' '.join(olden_components)} ; do \\
       (cd $i ; bear {make_checkedc} LOCAL_CFLAGS="{common_cflags} -D_ISOC99_SOURCE") \\
@@ -178,6 +179,7 @@ benchmarks = [
         name='Olden-Reverted',
         friendly_name='Olden-Reverted',
         dir_name='Olden-reverted',
+        convert_extra="--extra-3c-arg=-allow-unwritable-changes \\",
         build_cmds=textwrap.dedent(f'''\
     for i in {' '.join(olden_components)} ; do \\
       (cd $i ; bear {make_checkedc} LOCAL_CFLAGS="{common_cflags} -D_ISOC99_SOURCE") \\
@@ -197,6 +199,7 @@ benchmarks = [
         name='Olden-Manual',
         friendly_name='Olden-Manual',
         dir_name='Olden-manual',
+        convert_extra="--extra-3c-arg=-allow-unwritable-changes \\",
         build_cmds=textwrap.dedent(f'''\
 for i in {' '.join(olden_components)} ; do \\
   (cd $i ; bear {make_checkedc} LOCAL_CFLAGS="{common_cflags} -D_ISOC99_SOURCE") \\
