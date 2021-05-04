@@ -763,7 +763,7 @@ def generate_benchmark_job(out: TextIO,
                 # standard.
                 textwrap.dedent(f'''\
                     cd {component_dir}
-                    if [ -f "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
+                    if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
                 ''') +
                 #
                 (f'cd {component.build_dir}\n'
