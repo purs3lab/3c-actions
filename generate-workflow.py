@@ -12,6 +12,16 @@ import textwrap
 from typing import Dict, List, Optional, TextIO, Any
 
 
+# To make `WorkflowConfig` definitions more concise, this `Variant` class does
+# not include some extra flags that are currently done in Cartesian product with
+# `Variant` objects. Currently, the only such extra flag is expand_macros.
+@dataclass
+class Variant:
+    alltypes: bool
+    extra_3c_args: List[str] = ''
+    friendly_name_suffix: str = ''
+    is_comparative_varient: bool = False
+
 @dataclass
 class BenchmarkComponent:
     # Default: Same as the benchmark's friendly_name.
@@ -35,6 +45,13 @@ class BenchmarkInfo:
     # Default: One component with all default properties.
     components: Optional[List[BenchmarkComponent]] = None
     patch_dir: Optional[str] = None
+    # Disallow this benchmark for comparative varients
+    disallow_for_comparative_varients: bool = False
+
+    def is_allowed(self, var: Variant):
+        # Is this a fancy varient?
+        return not self.disallow_for_comparative_varients or \
+               not var.is_comparative_varient
 
 
 # Standard options for `ninja` and parallel `make`.
@@ -142,7 +159,8 @@ benchmarks = [
         friendly_name='Vsftpd-reverted',
         dir_name='vsftpd-3.0.3-reverted',
         build_cmds=f'bear {vsftpd_make}',
-        build_converted_cmd=f'{vsftpd_make} -k'),
+        build_converted_cmd=f'{vsftpd_make} -k',
+        disallow_for_comparative_varients=True),
 
     # Vsftpd Manually ported.
     BenchmarkInfo(
@@ -151,7 +169,8 @@ benchmarks = [
         friendly_name='Vsftpd-manual',
         dir_name='vsftpd-3.0.3-manual',
         build_cmds=f'bear {vsftpd_make}',
-        build_converted_cmd=f'{vsftpd_make} -k'),
+        build_converted_cmd=f'{vsftpd_make} -k',
+        disallow_for_comparative_varients=True),
 
     # Parson
     BenchmarkInfo(
@@ -169,7 +188,8 @@ benchmarks = [
         friendly_name='Parson-manual',
         dir_name='parson-manual',
         build_cmds=f'bear {make_checkedc}',
-        build_converted_cmd=f'{make_checkedc} -k'),
+        build_converted_cmd=f'{make_checkedc} -k',
+        disallow_for_comparative_varients=True),
 
     # Parson Reverted
     BenchmarkInfo(
@@ -178,7 +198,8 @@ benchmarks = [
         friendly_name='Parson-reverted',
         dir_name='parson-reverted',
         build_cmds=f'bear {make_checkedc}',
-        build_converted_cmd=f'{make_checkedc} -k'),
+        build_converted_cmd=f'{make_checkedc} -k',
+        disallow_for_comparative_varients=True),
 
     # Olden
     BenchmarkInfo(
@@ -218,7 +239,8 @@ benchmarks = [
         components=[
             BenchmarkComponent(friendly_name=c + "-reverted", subdir=c)
             for c in olden_components
-        ]),
+        ],
+        disallow_for_comparative_varients=True),
 
     # Olden Manual
     BenchmarkInfo(
@@ -238,7 +260,8 @@ done
         components=[
             BenchmarkComponent(friendly_name=c + "-manual", subdir=c)
             for c in olden_components
-        ]),
+        ],
+        disallow_for_comparative_varients=True),
 
     # PtrDist
     BenchmarkInfo(
@@ -319,7 +342,8 @@ done
         components=[
             BenchmarkComponent(friendly_name=c + '-reverted', subdir=c)
             for c in ptrdist_manual_components
-        ]),
+        ],
+        disallow_for_comparative_varients=True),
 
     # PtrDist-manual.
     # Ptrdist that is manually converted.
@@ -360,7 +384,8 @@ done
         components=[
             BenchmarkComponent(friendly_name=c + '-reverted', subdir=c)
             for c in ptrdist_manual_components
-        ]),
+        ],
+        disallow_for_comparative_varients=True),
 
     # LibArchive
     BenchmarkInfo(
@@ -636,21 +661,16 @@ def ensure_trailing_newline(s: str):
     return s + '\n' if s != '' and not s.endswith('\n') else s
 
 
-# To make `WorkflowConfig` definitions more concise, this `Variant` class does
-# not include some extra flags that are currently done in Cartesian product with
-# `Variant` objects. Currently, the only such extra flag is expand_macros.
-@dataclass
-class Variant:
-    alltypes: bool
-    extra_3c_args: List[str] = ''
-    friendly_name_suffix: str = ''
-
 
 def generate_benchmark_job(out: TextIO,
                            binfo: BenchmarkInfo,
                            expand_macros: bool,
                            variant: Variant,
                            generate_stats=False):
+    # Check if this benchmark is allowed for the given varient
+    if not binfo.is_allowed(variant):
+        return
+
     # "Subvariant" = Variant object + the extra flags mentioned above. We use
     # the name "subvariant" even though the subvariants may be grouped by extra
     # flag value before variant. (Better naming ideas?)
@@ -848,10 +868,12 @@ workflow_file_configs = [
         variants=[
             Variant(alltypes=True,
                     extra_3c_args=['-only-g-sol'],
-                    friendly_name_suffix=', greatest solution'),
+                    friendly_name_suffix=', greatest solution',
+                    is_comparative_varient=True),
             Variant(alltypes=True,
                     extra_3c_args=['-only-l-sol'],
-                    friendly_name_suffix=', least solution'),
+                    friendly_name_suffix=', least solution',
+                    is_comparative_varient=True),
         ],
         generate_stats=True),
     WorkflowConfig(
@@ -863,10 +885,12 @@ workflow_file_configs = [
         variants=[
             Variant(alltypes=True,
                     extra_3c_args=['-disable-rds'],
-                    friendly_name_suffix=', CCured solution'),
+                    friendly_name_suffix=', CCured solution',
+                    is_comparative_varient=True),
             Variant(alltypes=True,
                     extra_3c_args=['-disable-fnedgs'],
-                    friendly_name_suffix=', FuncRevEdges solution'),
+                    friendly_name_suffix=', FuncRevEdges solution',
+                    is_comparative_varient=True),
         ],
         generate_stats=True)
 ]
