@@ -825,30 +825,48 @@ class WorkflowConfig:
 workflow_file_configs = [
     WorkflowConfig(filename="main",
                    friendly_name="3C benchmark tests",
-                   cron_timestamp="0 7 * * *",
+                   cron_timestamp="0 5 * * *",
                    variants=[Variant(alltypes=False),
                              Variant(alltypes=True)]),
     WorkflowConfig(
-        filename="exhaustive",
+        filename="exhaustivestats",
         friendly_name="Exhaustive testing and Performance Stats",
         # The times need to be well-separated because of
         # https://github.com/correctcomputation/actions/issues/6 .
-        cron_timestamp="0 9 * * *",
+        cron_timestamp="0 6 * * *",
         variants=[
             Variant(alltypes=False),
+            Variant(alltypes=True)
+        ],
+        generate_stats=True),
+    WorkflowConfig(
+        filename="exhaustiveleastgreatest",
+        friendly_name="Exhaustive testing and Performance Stats (Least and Greatest)",
+        # The times need to be well-separated because of
+        # https://github.com/correctcomputation/actions/issues/6 .
+        cron_timestamp="0 7 * * *",
+        variants=[
             Variant(alltypes=True,
                     extra_3c_args=['-only-g-sol'],
                     friendly_name_suffix=', greatest solution'),
             Variant(alltypes=True,
                     extra_3c_args=['-only-l-sol'],
                     friendly_name_suffix=', least solution'),
+        ],
+        generate_stats=True),
+    WorkflowConfig(
+        filename="exhaustiveccured",
+        friendly_name="Exhaustive testing and Performance Stats (CCured)",
+        # The times need to be well-separated because of
+        # https://github.com/correctcomputation/actions/issues/6 .
+        cron_timestamp="0 8 * * *",
+        variants=[
             Variant(alltypes=True,
                     extra_3c_args=['-disable-rds'],
                     friendly_name_suffix=', CCured solution'),
             Variant(alltypes=True,
                     extra_3c_args=['-disable-fnedgs'],
                     friendly_name_suffix=', FuncRevEdges solution'),
-            Variant(alltypes=True)
         ],
         generate_stats=True)
 ]
