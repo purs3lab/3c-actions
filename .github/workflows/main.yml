@@ -1528,7 +1528,7 @@ jobs:
             (cd $i ; bear make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE") \
           done
 
-      - name: Convert bh
+      - name: Convert bh_reverted
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/Olden-reverted/bh
           ${{env.port_tools}}/convert_project.py \
@@ -1537,13 +1537,13 @@ jobs:
             --prog_name ${{env.builddir}}/bin/3c \
             --project_path .
 
-      - name: Build converted bh (defer failure)
+      - name: Build converted bh_reverted (defer failure)
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/Olden-reverted/bh
           if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" || echo bh >>${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/Olden-reverted/failed-components-list.txt
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" || echo bh_reverted >>${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/Olden-reverted/failed-components-list.txt
 
-      - name: Convert bisort
+      - name: Convert bisort_reverted
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/Olden-reverted/bisort
           ${{env.port_tools}}/convert_project.py \
@@ -1552,13 +1552,13 @@ jobs:
             --prog_name ${{env.builddir}}/bin/3c \
             --project_path .
 
-      - name: Build converted bisort (defer failure)
+      - name: Build converted bisort_reverted (defer failure)
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/Olden-reverted/bisort
           if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" || echo bisort >>${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/Olden-reverted/failed-components-list.txt
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" || echo bisort_reverted >>${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/Olden-reverted/failed-components-list.txt
 
-      - name: Convert em3d
+      - name: Convert em3d_reverted
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/Olden-reverted/em3d
           ${{env.port_tools}}/convert_project.py \
@@ -1567,13 +1567,13 @@ jobs:
             --prog_name ${{env.builddir}}/bin/3c \
             --project_path .
 
-      - name: Build converted em3d (defer failure)
+      - name: Build converted em3d_reverted (defer failure)
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/Olden-reverted/em3d
           if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" || echo em3d >>${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/Olden-reverted/failed-components-list.txt
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" || echo em3d_reverted >>${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/Olden-reverted/failed-components-list.txt
 
-      - name: Convert health
+      - name: Convert health_reverted
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/Olden-reverted/health
           ${{env.port_tools}}/convert_project.py \
@@ -1582,13 +1582,13 @@ jobs:
             --prog_name ${{env.builddir}}/bin/3c \
             --project_path .
 
-      - name: Build converted health (defer failure)
+      - name: Build converted health_reverted (defer failure)
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/Olden-reverted/health
           if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" || echo health >>${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/Olden-reverted/failed-components-list.txt
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" || echo health_reverted >>${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/Olden-reverted/failed-components-list.txt
 
-      - name: Convert mst
+      - name: Convert mst_reverted
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/Olden-reverted/mst
           ${{env.port_tools}}/convert_project.py \
@@ -1597,13 +1597,13 @@ jobs:
             --prog_name ${{env.builddir}}/bin/3c \
             --project_path .
 
-      - name: Build converted mst (defer failure)
+      - name: Build converted mst_reverted (defer failure)
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/Olden-reverted/mst
           if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" || echo mst >>${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/Olden-reverted/failed-components-list.txt
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" || echo mst_reverted >>${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/Olden-reverted/failed-components-list.txt
 
-      - name: Convert perimeter
+      - name: Convert perimeter_reverted
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/Olden-reverted/perimeter
           ${{env.port_tools}}/convert_project.py \
@@ -1612,13 +1612,13 @@ jobs:
             --prog_name ${{env.builddir}}/bin/3c \
             --project_path .
 
-      - name: Build converted perimeter (defer failure)
+      - name: Build converted perimeter_reverted (defer failure)
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/Olden-reverted/perimeter
           if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" || echo perimeter >>${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/Olden-reverted/failed-components-list.txt
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" || echo perimeter_reverted >>${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/Olden-reverted/failed-components-list.txt
 
-      - name: Convert power
+      - name: Convert power_reverted
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/Olden-reverted/power
           ${{env.port_tools}}/convert_project.py \
@@ -1627,13 +1627,13 @@ jobs:
             --prog_name ${{env.builddir}}/bin/3c \
             --project_path .
 
-      - name: Build converted power (defer failure)
+      - name: Build converted power_reverted (defer failure)
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/Olden-reverted/power
           if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" || echo power >>${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/Olden-reverted/failed-components-list.txt
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" || echo power_reverted >>${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/Olden-reverted/failed-components-list.txt
 
-      - name: Convert treeadd
+      - name: Convert treeadd_reverted
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/Olden-reverted/treeadd
           ${{env.port_tools}}/convert_project.py \
@@ -1642,13 +1642,13 @@ jobs:
             --prog_name ${{env.builddir}}/bin/3c \
             --project_path .
 
-      - name: Build converted treeadd (defer failure)
+      - name: Build converted treeadd_reverted (defer failure)
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/Olden-reverted/treeadd
           if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" || echo treeadd >>${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/Olden-reverted/failed-components-list.txt
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" || echo treeadd_reverted >>${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/Olden-reverted/failed-components-list.txt
 
-      - name: Convert tsp
+      - name: Convert tsp_reverted
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/Olden-reverted/tsp
           ${{env.port_tools}}/convert_project.py \
@@ -1657,13 +1657,13 @@ jobs:
             --prog_name ${{env.builddir}}/bin/3c \
             --project_path .
 
-      - name: Build converted tsp (defer failure)
+      - name: Build converted tsp_reverted (defer failure)
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/Olden-reverted/tsp
           if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" || echo tsp >>${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/Olden-reverted/failed-components-list.txt
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" || echo tsp_reverted >>${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/Olden-reverted/failed-components-list.txt
 
-      - name: Convert voronoi
+      - name: Convert voronoi_reverted
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/Olden-reverted/voronoi
           ${{env.port_tools}}/convert_project.py \
@@ -1672,11 +1672,11 @@ jobs:
             --prog_name ${{env.builddir}}/bin/3c \
             --project_path .
 
-      - name: Build converted voronoi (defer failure)
+      - name: Build converted voronoi_reverted (defer failure)
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/Olden-reverted/voronoi
           if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" || echo voronoi >>${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/Olden-reverted/failed-components-list.txt
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" || echo voronoi_reverted >>${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/Olden-reverted/failed-components-list.txt
 
       - name: Check for deferred post-conversion build failures
         run: |
@@ -1701,7 +1701,7 @@ jobs:
             (cd $i ; bear make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE") \
           done
 
-      - name: Convert bh
+      - name: Convert bh_reverted
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Olden-reverted/bh
           ${{env.port_tools}}/convert_project.py \
@@ -1711,13 +1711,13 @@ jobs:
             --extra-3c-arg=-alltypes \
             --project_path .
 
-      - name: Build converted bh (filter bounds inference errors) (defer failure)
+      - name: Build converted bh_reverted (filter bounds inference errors) (defer failure)
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Olden-reverted/bh
           if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py || echo bh >>${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Olden-reverted/failed-components-list.txt
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py || echo bh_reverted >>${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Olden-reverted/failed-components-list.txt
 
-      - name: Convert bisort
+      - name: Convert bisort_reverted
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Olden-reverted/bisort
           ${{env.port_tools}}/convert_project.py \
@@ -1727,13 +1727,13 @@ jobs:
             --extra-3c-arg=-alltypes \
             --project_path .
 
-      - name: Build converted bisort (filter bounds inference errors) (defer failure)
+      - name: Build converted bisort_reverted (filter bounds inference errors) (defer failure)
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Olden-reverted/bisort
           if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py || echo bisort >>${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Olden-reverted/failed-components-list.txt
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py || echo bisort_reverted >>${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Olden-reverted/failed-components-list.txt
 
-      - name: Convert em3d
+      - name: Convert em3d_reverted
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Olden-reverted/em3d
           ${{env.port_tools}}/convert_project.py \
@@ -1743,13 +1743,13 @@ jobs:
             --extra-3c-arg=-alltypes \
             --project_path .
 
-      - name: Build converted em3d (filter bounds inference errors) (defer failure)
+      - name: Build converted em3d_reverted (filter bounds inference errors) (defer failure)
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Olden-reverted/em3d
           if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py || echo em3d >>${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Olden-reverted/failed-components-list.txt
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py || echo em3d_reverted >>${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Olden-reverted/failed-components-list.txt
 
-      - name: Convert health
+      - name: Convert health_reverted
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Olden-reverted/health
           ${{env.port_tools}}/convert_project.py \
@@ -1759,13 +1759,13 @@ jobs:
             --extra-3c-arg=-alltypes \
             --project_path .
 
-      - name: Build converted health (filter bounds inference errors) (defer failure)
+      - name: Build converted health_reverted (filter bounds inference errors) (defer failure)
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Olden-reverted/health
           if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py || echo health >>${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Olden-reverted/failed-components-list.txt
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py || echo health_reverted >>${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Olden-reverted/failed-components-list.txt
 
-      - name: Convert mst
+      - name: Convert mst_reverted
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Olden-reverted/mst
           ${{env.port_tools}}/convert_project.py \
@@ -1775,13 +1775,13 @@ jobs:
             --extra-3c-arg=-alltypes \
             --project_path .
 
-      - name: Build converted mst (filter bounds inference errors) (defer failure)
+      - name: Build converted mst_reverted (filter bounds inference errors) (defer failure)
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Olden-reverted/mst
           if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py || echo mst >>${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Olden-reverted/failed-components-list.txt
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py || echo mst_reverted >>${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Olden-reverted/failed-components-list.txt
 
-      - name: Convert perimeter
+      - name: Convert perimeter_reverted
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Olden-reverted/perimeter
           ${{env.port_tools}}/convert_project.py \
@@ -1791,13 +1791,13 @@ jobs:
             --extra-3c-arg=-alltypes \
             --project_path .
 
-      - name: Build converted perimeter (filter bounds inference errors) (defer failure)
+      - name: Build converted perimeter_reverted (filter bounds inference errors) (defer failure)
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Olden-reverted/perimeter
           if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py || echo perimeter >>${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Olden-reverted/failed-components-list.txt
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py || echo perimeter_reverted >>${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Olden-reverted/failed-components-list.txt
 
-      - name: Convert power
+      - name: Convert power_reverted
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Olden-reverted/power
           ${{env.port_tools}}/convert_project.py \
@@ -1807,13 +1807,13 @@ jobs:
             --extra-3c-arg=-alltypes \
             --project_path .
 
-      - name: Build converted power (filter bounds inference errors) (defer failure)
+      - name: Build converted power_reverted (filter bounds inference errors) (defer failure)
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Olden-reverted/power
           if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py || echo power >>${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Olden-reverted/failed-components-list.txt
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py || echo power_reverted >>${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Olden-reverted/failed-components-list.txt
 
-      - name: Convert treeadd
+      - name: Convert treeadd_reverted
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Olden-reverted/treeadd
           ${{env.port_tools}}/convert_project.py \
@@ -1823,13 +1823,13 @@ jobs:
             --extra-3c-arg=-alltypes \
             --project_path .
 
-      - name: Build converted treeadd (filter bounds inference errors) (defer failure)
+      - name: Build converted treeadd_reverted (filter bounds inference errors) (defer failure)
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Olden-reverted/treeadd
           if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py || echo treeadd >>${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Olden-reverted/failed-components-list.txt
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py || echo treeadd_reverted >>${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Olden-reverted/failed-components-list.txt
 
-      - name: Convert tsp
+      - name: Convert tsp_reverted
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Olden-reverted/tsp
           ${{env.port_tools}}/convert_project.py \
@@ -1839,13 +1839,13 @@ jobs:
             --extra-3c-arg=-alltypes \
             --project_path .
 
-      - name: Build converted tsp (filter bounds inference errors) (defer failure)
+      - name: Build converted tsp_reverted (filter bounds inference errors) (defer failure)
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Olden-reverted/tsp
           if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py || echo tsp >>${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Olden-reverted/failed-components-list.txt
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py || echo tsp_reverted >>${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Olden-reverted/failed-components-list.txt
 
-      - name: Convert voronoi
+      - name: Convert voronoi_reverted
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Olden-reverted/voronoi
           ${{env.port_tools}}/convert_project.py \
@@ -1855,11 +1855,11 @@ jobs:
             --extra-3c-arg=-alltypes \
             --project_path .
 
-      - name: Build converted voronoi (filter bounds inference errors) (defer failure)
+      - name: Build converted voronoi_reverted (filter bounds inference errors) (defer failure)
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Olden-reverted/voronoi
           if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py || echo voronoi >>${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Olden-reverted/failed-components-list.txt
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py || echo voronoi_reverted >>${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Olden-reverted/failed-components-list.txt
 
       - name: Check for deferred post-conversion build failures
         run: |
@@ -1884,7 +1884,7 @@ jobs:
             (cd $i ; bear make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE") \
           done
 
-      - name: Convert bh
+      - name: Convert bh_reverted
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/Olden-reverted/bh
           ${{env.port_tools}}/convert_project.py \
@@ -1894,13 +1894,13 @@ jobs:
             --expand_macros_before_conversion \
             --project_path .
 
-      - name: Build converted bh (defer failure)
+      - name: Build converted bh_reverted (defer failure)
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/Olden-reverted/bh
           if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" || echo bh >>${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/Olden-reverted/failed-components-list.txt
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" || echo bh_reverted >>${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/Olden-reverted/failed-components-list.txt
 
-      - name: Convert bisort
+      - name: Convert bisort_reverted
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/Olden-reverted/bisort
           ${{env.port_tools}}/convert_project.py \
@@ -1910,13 +1910,13 @@ jobs:
             --expand_macros_before_conversion \
             --project_path .
 
-      - name: Build converted bisort (defer failure)
+      - name: Build converted bisort_reverted (defer failure)
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/Olden-reverted/bisort
           if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" || echo bisort >>${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/Olden-reverted/failed-components-list.txt
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" || echo bisort_reverted >>${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/Olden-reverted/failed-components-list.txt
 
-      - name: Convert em3d
+      - name: Convert em3d_reverted
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/Olden-reverted/em3d
           ${{env.port_tools}}/convert_project.py \
@@ -1926,13 +1926,13 @@ jobs:
             --expand_macros_before_conversion \
             --project_path .
 
-      - name: Build converted em3d (defer failure)
+      - name: Build converted em3d_reverted (defer failure)
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/Olden-reverted/em3d
           if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" || echo em3d >>${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/Olden-reverted/failed-components-list.txt
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" || echo em3d_reverted >>${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/Olden-reverted/failed-components-list.txt
 
-      - name: Convert health
+      - name: Convert health_reverted
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/Olden-reverted/health
           ${{env.port_tools}}/convert_project.py \
@@ -1942,13 +1942,13 @@ jobs:
             --expand_macros_before_conversion \
             --project_path .
 
-      - name: Build converted health (defer failure)
+      - name: Build converted health_reverted (defer failure)
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/Olden-reverted/health
           if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" || echo health >>${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/Olden-reverted/failed-components-list.txt
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" || echo health_reverted >>${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/Olden-reverted/failed-components-list.txt
 
-      - name: Convert mst
+      - name: Convert mst_reverted
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/Olden-reverted/mst
           ${{env.port_tools}}/convert_project.py \
@@ -1958,13 +1958,13 @@ jobs:
             --expand_macros_before_conversion \
             --project_path .
 
-      - name: Build converted mst (defer failure)
+      - name: Build converted mst_reverted (defer failure)
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/Olden-reverted/mst
           if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" || echo mst >>${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/Olden-reverted/failed-components-list.txt
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" || echo mst_reverted >>${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/Olden-reverted/failed-components-list.txt
 
-      - name: Convert perimeter
+      - name: Convert perimeter_reverted
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/Olden-reverted/perimeter
           ${{env.port_tools}}/convert_project.py \
@@ -1974,13 +1974,13 @@ jobs:
             --expand_macros_before_conversion \
             --project_path .
 
-      - name: Build converted perimeter (defer failure)
+      - name: Build converted perimeter_reverted (defer failure)
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/Olden-reverted/perimeter
           if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" || echo perimeter >>${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/Olden-reverted/failed-components-list.txt
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" || echo perimeter_reverted >>${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/Olden-reverted/failed-components-list.txt
 
-      - name: Convert power
+      - name: Convert power_reverted
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/Olden-reverted/power
           ${{env.port_tools}}/convert_project.py \
@@ -1990,13 +1990,13 @@ jobs:
             --expand_macros_before_conversion \
             --project_path .
 
-      - name: Build converted power (defer failure)
+      - name: Build converted power_reverted (defer failure)
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/Olden-reverted/power
           if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" || echo power >>${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/Olden-reverted/failed-components-list.txt
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" || echo power_reverted >>${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/Olden-reverted/failed-components-list.txt
 
-      - name: Convert treeadd
+      - name: Convert treeadd_reverted
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/Olden-reverted/treeadd
           ${{env.port_tools}}/convert_project.py \
@@ -2006,13 +2006,13 @@ jobs:
             --expand_macros_before_conversion \
             --project_path .
 
-      - name: Build converted treeadd (defer failure)
+      - name: Build converted treeadd_reverted (defer failure)
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/Olden-reverted/treeadd
           if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" || echo treeadd >>${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/Olden-reverted/failed-components-list.txt
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" || echo treeadd_reverted >>${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/Olden-reverted/failed-components-list.txt
 
-      - name: Convert tsp
+      - name: Convert tsp_reverted
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/Olden-reverted/tsp
           ${{env.port_tools}}/convert_project.py \
@@ -2022,13 +2022,13 @@ jobs:
             --expand_macros_before_conversion \
             --project_path .
 
-      - name: Build converted tsp (defer failure)
+      - name: Build converted tsp_reverted (defer failure)
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/Olden-reverted/tsp
           if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" || echo tsp >>${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/Olden-reverted/failed-components-list.txt
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" || echo tsp_reverted >>${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/Olden-reverted/failed-components-list.txt
 
-      - name: Convert voronoi
+      - name: Convert voronoi_reverted
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/Olden-reverted/voronoi
           ${{env.port_tools}}/convert_project.py \
@@ -2038,11 +2038,11 @@ jobs:
             --expand_macros_before_conversion \
             --project_path .
 
-      - name: Build converted voronoi (defer failure)
+      - name: Build converted voronoi_reverted (defer failure)
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/Olden-reverted/voronoi
           if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" || echo voronoi >>${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/Olden-reverted/failed-components-list.txt
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" || echo voronoi_reverted >>${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/Olden-reverted/failed-components-list.txt
 
       - name: Check for deferred post-conversion build failures
         run: |
@@ -2067,7 +2067,7 @@ jobs:
             (cd $i ; bear make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE") \
           done
 
-      - name: Convert bh
+      - name: Convert bh_reverted
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes/Olden-reverted/bh
           ${{env.port_tools}}/convert_project.py \
@@ -2078,13 +2078,13 @@ jobs:
             --expand_macros_before_conversion \
             --project_path .
 
-      - name: Build converted bh (filter bounds inference errors) (defer failure)
+      - name: Build converted bh_reverted (filter bounds inference errors) (defer failure)
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes/Olden-reverted/bh
           if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py || echo bh >>${{env.benchmark_conv_dir}}/expand_macros_alltypes/Olden-reverted/failed-components-list.txt
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py || echo bh_reverted >>${{env.benchmark_conv_dir}}/expand_macros_alltypes/Olden-reverted/failed-components-list.txt
 
-      - name: Convert bisort
+      - name: Convert bisort_reverted
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes/Olden-reverted/bisort
           ${{env.port_tools}}/convert_project.py \
@@ -2095,13 +2095,13 @@ jobs:
             --expand_macros_before_conversion \
             --project_path .
 
-      - name: Build converted bisort (filter bounds inference errors) (defer failure)
+      - name: Build converted bisort_reverted (filter bounds inference errors) (defer failure)
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes/Olden-reverted/bisort
           if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py || echo bisort >>${{env.benchmark_conv_dir}}/expand_macros_alltypes/Olden-reverted/failed-components-list.txt
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py || echo bisort_reverted >>${{env.benchmark_conv_dir}}/expand_macros_alltypes/Olden-reverted/failed-components-list.txt
 
-      - name: Convert em3d
+      - name: Convert em3d_reverted
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes/Olden-reverted/em3d
           ${{env.port_tools}}/convert_project.py \
@@ -2112,13 +2112,13 @@ jobs:
             --expand_macros_before_conversion \
             --project_path .
 
-      - name: Build converted em3d (filter bounds inference errors) (defer failure)
+      - name: Build converted em3d_reverted (filter bounds inference errors) (defer failure)
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes/Olden-reverted/em3d
           if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py || echo em3d >>${{env.benchmark_conv_dir}}/expand_macros_alltypes/Olden-reverted/failed-components-list.txt
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py || echo em3d_reverted >>${{env.benchmark_conv_dir}}/expand_macros_alltypes/Olden-reverted/failed-components-list.txt
 
-      - name: Convert health
+      - name: Convert health_reverted
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes/Olden-reverted/health
           ${{env.port_tools}}/convert_project.py \
@@ -2129,13 +2129,13 @@ jobs:
             --expand_macros_before_conversion \
             --project_path .
 
-      - name: Build converted health (filter bounds inference errors) (defer failure)
+      - name: Build converted health_reverted (filter bounds inference errors) (defer failure)
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes/Olden-reverted/health
           if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py || echo health >>${{env.benchmark_conv_dir}}/expand_macros_alltypes/Olden-reverted/failed-components-list.txt
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py || echo health_reverted >>${{env.benchmark_conv_dir}}/expand_macros_alltypes/Olden-reverted/failed-components-list.txt
 
-      - name: Convert mst
+      - name: Convert mst_reverted
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes/Olden-reverted/mst
           ${{env.port_tools}}/convert_project.py \
@@ -2146,13 +2146,13 @@ jobs:
             --expand_macros_before_conversion \
             --project_path .
 
-      - name: Build converted mst (filter bounds inference errors) (defer failure)
+      - name: Build converted mst_reverted (filter bounds inference errors) (defer failure)
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes/Olden-reverted/mst
           if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py || echo mst >>${{env.benchmark_conv_dir}}/expand_macros_alltypes/Olden-reverted/failed-components-list.txt
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py || echo mst_reverted >>${{env.benchmark_conv_dir}}/expand_macros_alltypes/Olden-reverted/failed-components-list.txt
 
-      - name: Convert perimeter
+      - name: Convert perimeter_reverted
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes/Olden-reverted/perimeter
           ${{env.port_tools}}/convert_project.py \
@@ -2163,13 +2163,13 @@ jobs:
             --expand_macros_before_conversion \
             --project_path .
 
-      - name: Build converted perimeter (filter bounds inference errors) (defer failure)
+      - name: Build converted perimeter_reverted (filter bounds inference errors) (defer failure)
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes/Olden-reverted/perimeter
           if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py || echo perimeter >>${{env.benchmark_conv_dir}}/expand_macros_alltypes/Olden-reverted/failed-components-list.txt
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py || echo perimeter_reverted >>${{env.benchmark_conv_dir}}/expand_macros_alltypes/Olden-reverted/failed-components-list.txt
 
-      - name: Convert power
+      - name: Convert power_reverted
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes/Olden-reverted/power
           ${{env.port_tools}}/convert_project.py \
@@ -2180,13 +2180,13 @@ jobs:
             --expand_macros_before_conversion \
             --project_path .
 
-      - name: Build converted power (filter bounds inference errors) (defer failure)
+      - name: Build converted power_reverted (filter bounds inference errors) (defer failure)
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes/Olden-reverted/power
           if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py || echo power >>${{env.benchmark_conv_dir}}/expand_macros_alltypes/Olden-reverted/failed-components-list.txt
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py || echo power_reverted >>${{env.benchmark_conv_dir}}/expand_macros_alltypes/Olden-reverted/failed-components-list.txt
 
-      - name: Convert treeadd
+      - name: Convert treeadd_reverted
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes/Olden-reverted/treeadd
           ${{env.port_tools}}/convert_project.py \
@@ -2197,13 +2197,13 @@ jobs:
             --expand_macros_before_conversion \
             --project_path .
 
-      - name: Build converted treeadd (filter bounds inference errors) (defer failure)
+      - name: Build converted treeadd_reverted (filter bounds inference errors) (defer failure)
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes/Olden-reverted/treeadd
           if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py || echo treeadd >>${{env.benchmark_conv_dir}}/expand_macros_alltypes/Olden-reverted/failed-components-list.txt
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py || echo treeadd_reverted >>${{env.benchmark_conv_dir}}/expand_macros_alltypes/Olden-reverted/failed-components-list.txt
 
-      - name: Convert tsp
+      - name: Convert tsp_reverted
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes/Olden-reverted/tsp
           ${{env.port_tools}}/convert_project.py \
@@ -2214,13 +2214,13 @@ jobs:
             --expand_macros_before_conversion \
             --project_path .
 
-      - name: Build converted tsp (filter bounds inference errors) (defer failure)
+      - name: Build converted tsp_reverted (filter bounds inference errors) (defer failure)
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes/Olden-reverted/tsp
           if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py || echo tsp >>${{env.benchmark_conv_dir}}/expand_macros_alltypes/Olden-reverted/failed-components-list.txt
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py || echo tsp_reverted >>${{env.benchmark_conv_dir}}/expand_macros_alltypes/Olden-reverted/failed-components-list.txt
 
-      - name: Convert voronoi
+      - name: Convert voronoi_reverted
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes/Olden-reverted/voronoi
           ${{env.port_tools}}/convert_project.py \
@@ -2231,11 +2231,11 @@ jobs:
             --expand_macros_before_conversion \
             --project_path .
 
-      - name: Build converted voronoi (filter bounds inference errors) (defer failure)
+      - name: Build converted voronoi_reverted (filter bounds inference errors) (defer failure)
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes/Olden-reverted/voronoi
           if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py || echo voronoi >>${{env.benchmark_conv_dir}}/expand_macros_alltypes/Olden-reverted/failed-components-list.txt
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py || echo voronoi_reverted >>${{env.benchmark_conv_dir}}/expand_macros_alltypes/Olden-reverted/failed-components-list.txt
 
       - name: Check for deferred post-conversion build failures
         run: |
@@ -2260,7 +2260,7 @@ jobs:
             (cd $i ; bear make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE") \
           done
 
-      - name: Convert bh
+      - name: Convert bh_manual
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/Olden-manual/bh
           ${{env.port_tools}}/convert_project.py \
@@ -2269,13 +2269,13 @@ jobs:
             --prog_name ${{env.builddir}}/bin/3c \
             --project_path .
 
-      - name: Build converted bh (defer failure)
+      - name: Build converted bh_manual (defer failure)
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/Olden-manual/bh
           if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" || echo bh >>${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/Olden-manual/failed-components-list.txt
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" || echo bh_manual >>${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/Olden-manual/failed-components-list.txt
 
-      - name: Convert bisort
+      - name: Convert bisort_manual
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/Olden-manual/bisort
           ${{env.port_tools}}/convert_project.py \
@@ -2284,13 +2284,13 @@ jobs:
             --prog_name ${{env.builddir}}/bin/3c \
             --project_path .
 
-      - name: Build converted bisort (defer failure)
+      - name: Build converted bisort_manual (defer failure)
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/Olden-manual/bisort
           if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" || echo bisort >>${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/Olden-manual/failed-components-list.txt
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" || echo bisort_manual >>${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/Olden-manual/failed-components-list.txt
 
-      - name: Convert em3d
+      - name: Convert em3d_manual
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/Olden-manual/em3d
           ${{env.port_tools}}/convert_project.py \
@@ -2299,13 +2299,13 @@ jobs:
             --prog_name ${{env.builddir}}/bin/3c \
             --project_path .
 
-      - name: Build converted em3d (defer failure)
+      - name: Build converted em3d_manual (defer failure)
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/Olden-manual/em3d
           if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" || echo em3d >>${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/Olden-manual/failed-components-list.txt
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" || echo em3d_manual >>${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/Olden-manual/failed-components-list.txt
 
-      - name: Convert health
+      - name: Convert health_manual
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/Olden-manual/health
           ${{env.port_tools}}/convert_project.py \
@@ -2314,13 +2314,13 @@ jobs:
             --prog_name ${{env.builddir}}/bin/3c \
             --project_path .
 
-      - name: Build converted health (defer failure)
+      - name: Build converted health_manual (defer failure)
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/Olden-manual/health
           if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" || echo health >>${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/Olden-manual/failed-components-list.txt
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" || echo health_manual >>${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/Olden-manual/failed-components-list.txt
 
-      - name: Convert mst
+      - name: Convert mst_manual
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/Olden-manual/mst
           ${{env.port_tools}}/convert_project.py \
@@ -2329,13 +2329,13 @@ jobs:
             --prog_name ${{env.builddir}}/bin/3c \
             --project_path .
 
-      - name: Build converted mst (defer failure)
+      - name: Build converted mst_manual (defer failure)
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/Olden-manual/mst
           if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" || echo mst >>${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/Olden-manual/failed-components-list.txt
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" || echo mst_manual >>${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/Olden-manual/failed-components-list.txt
 
-      - name: Convert perimeter
+      - name: Convert perimeter_manual
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/Olden-manual/perimeter
           ${{env.port_tools}}/convert_project.py \
@@ -2344,13 +2344,13 @@ jobs:
             --prog_name ${{env.builddir}}/bin/3c \
             --project_path .
 
-      - name: Build converted perimeter (defer failure)
+      - name: Build converted perimeter_manual (defer failure)
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/Olden-manual/perimeter
           if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" || echo perimeter >>${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/Olden-manual/failed-components-list.txt
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" || echo perimeter_manual >>${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/Olden-manual/failed-components-list.txt
 
-      - name: Convert power
+      - name: Convert power_manual
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/Olden-manual/power
           ${{env.port_tools}}/convert_project.py \
@@ -2359,13 +2359,13 @@ jobs:
             --prog_name ${{env.builddir}}/bin/3c \
             --project_path .
 
-      - name: Build converted power (defer failure)
+      - name: Build converted power_manual (defer failure)
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/Olden-manual/power
           if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" || echo power >>${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/Olden-manual/failed-components-list.txt
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" || echo power_manual >>${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/Olden-manual/failed-components-list.txt
 
-      - name: Convert treeadd
+      - name: Convert treeadd_manual
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/Olden-manual/treeadd
           ${{env.port_tools}}/convert_project.py \
@@ -2374,13 +2374,13 @@ jobs:
             --prog_name ${{env.builddir}}/bin/3c \
             --project_path .
 
-      - name: Build converted treeadd (defer failure)
+      - name: Build converted treeadd_manual (defer failure)
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/Olden-manual/treeadd
           if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" || echo treeadd >>${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/Olden-manual/failed-components-list.txt
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" || echo treeadd_manual >>${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/Olden-manual/failed-components-list.txt
 
-      - name: Convert tsp
+      - name: Convert tsp_manual
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/Olden-manual/tsp
           ${{env.port_tools}}/convert_project.py \
@@ -2389,13 +2389,13 @@ jobs:
             --prog_name ${{env.builddir}}/bin/3c \
             --project_path .
 
-      - name: Build converted tsp (defer failure)
+      - name: Build converted tsp_manual (defer failure)
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/Olden-manual/tsp
           if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" || echo tsp >>${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/Olden-manual/failed-components-list.txt
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" || echo tsp_manual >>${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/Olden-manual/failed-components-list.txt
 
-      - name: Convert voronoi
+      - name: Convert voronoi_manual
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/Olden-manual/voronoi
           ${{env.port_tools}}/convert_project.py \
@@ -2404,11 +2404,11 @@ jobs:
             --prog_name ${{env.builddir}}/bin/3c \
             --project_path .
 
-      - name: Build converted voronoi (defer failure)
+      - name: Build converted voronoi_manual (defer failure)
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/Olden-manual/voronoi
           if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" || echo voronoi >>${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/Olden-manual/failed-components-list.txt
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" || echo voronoi_manual >>${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/Olden-manual/failed-components-list.txt
 
       - name: Check for deferred post-conversion build failures
         run: |
@@ -2433,7 +2433,7 @@ jobs:
             (cd $i ; bear make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE") \
           done
 
-      - name: Convert bh
+      - name: Convert bh_manual
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Olden-manual/bh
           ${{env.port_tools}}/convert_project.py \
@@ -2443,13 +2443,13 @@ jobs:
             --extra-3c-arg=-alltypes \
             --project_path .
 
-      - name: Build converted bh (filter bounds inference errors) (defer failure)
+      - name: Build converted bh_manual (filter bounds inference errors) (defer failure)
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Olden-manual/bh
           if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py || echo bh >>${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Olden-manual/failed-components-list.txt
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py || echo bh_manual >>${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Olden-manual/failed-components-list.txt
 
-      - name: Convert bisort
+      - name: Convert bisort_manual
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Olden-manual/bisort
           ${{env.port_tools}}/convert_project.py \
@@ -2459,13 +2459,13 @@ jobs:
             --extra-3c-arg=-alltypes \
             --project_path .
 
-      - name: Build converted bisort (filter bounds inference errors) (defer failure)
+      - name: Build converted bisort_manual (filter bounds inference errors) (defer failure)
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Olden-manual/bisort
           if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py || echo bisort >>${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Olden-manual/failed-components-list.txt
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py || echo bisort_manual >>${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Olden-manual/failed-components-list.txt
 
-      - name: Convert em3d
+      - name: Convert em3d_manual
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Olden-manual/em3d
           ${{env.port_tools}}/convert_project.py \
@@ -2475,13 +2475,13 @@ jobs:
             --extra-3c-arg=-alltypes \
             --project_path .
 
-      - name: Build converted em3d (filter bounds inference errors) (defer failure)
+      - name: Build converted em3d_manual (filter bounds inference errors) (defer failure)
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Olden-manual/em3d
           if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py || echo em3d >>${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Olden-manual/failed-components-list.txt
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py || echo em3d_manual >>${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Olden-manual/failed-components-list.txt
 
-      - name: Convert health
+      - name: Convert health_manual
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Olden-manual/health
           ${{env.port_tools}}/convert_project.py \
@@ -2491,13 +2491,13 @@ jobs:
             --extra-3c-arg=-alltypes \
             --project_path .
 
-      - name: Build converted health (filter bounds inference errors) (defer failure)
+      - name: Build converted health_manual (filter bounds inference errors) (defer failure)
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Olden-manual/health
           if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py || echo health >>${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Olden-manual/failed-components-list.txt
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py || echo health_manual >>${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Olden-manual/failed-components-list.txt
 
-      - name: Convert mst
+      - name: Convert mst_manual
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Olden-manual/mst
           ${{env.port_tools}}/convert_project.py \
@@ -2507,13 +2507,13 @@ jobs:
             --extra-3c-arg=-alltypes \
             --project_path .
 
-      - name: Build converted mst (filter bounds inference errors) (defer failure)
+      - name: Build converted mst_manual (filter bounds inference errors) (defer failure)
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Olden-manual/mst
           if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py || echo mst >>${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Olden-manual/failed-components-list.txt
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py || echo mst_manual >>${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Olden-manual/failed-components-list.txt
 
-      - name: Convert perimeter
+      - name: Convert perimeter_manual
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Olden-manual/perimeter
           ${{env.port_tools}}/convert_project.py \
@@ -2523,13 +2523,13 @@ jobs:
             --extra-3c-arg=-alltypes \
             --project_path .
 
-      - name: Build converted perimeter (filter bounds inference errors) (defer failure)
+      - name: Build converted perimeter_manual (filter bounds inference errors) (defer failure)
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Olden-manual/perimeter
           if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py || echo perimeter >>${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Olden-manual/failed-components-list.txt
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py || echo perimeter_manual >>${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Olden-manual/failed-components-list.txt
 
-      - name: Convert power
+      - name: Convert power_manual
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Olden-manual/power
           ${{env.port_tools}}/convert_project.py \
@@ -2539,13 +2539,13 @@ jobs:
             --extra-3c-arg=-alltypes \
             --project_path .
 
-      - name: Build converted power (filter bounds inference errors) (defer failure)
+      - name: Build converted power_manual (filter bounds inference errors) (defer failure)
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Olden-manual/power
           if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py || echo power >>${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Olden-manual/failed-components-list.txt
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py || echo power_manual >>${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Olden-manual/failed-components-list.txt
 
-      - name: Convert treeadd
+      - name: Convert treeadd_manual
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Olden-manual/treeadd
           ${{env.port_tools}}/convert_project.py \
@@ -2555,13 +2555,13 @@ jobs:
             --extra-3c-arg=-alltypes \
             --project_path .
 
-      - name: Build converted treeadd (filter bounds inference errors) (defer failure)
+      - name: Build converted treeadd_manual (filter bounds inference errors) (defer failure)
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Olden-manual/treeadd
           if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py || echo treeadd >>${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Olden-manual/failed-components-list.txt
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py || echo treeadd_manual >>${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Olden-manual/failed-components-list.txt
 
-      - name: Convert tsp
+      - name: Convert tsp_manual
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Olden-manual/tsp
           ${{env.port_tools}}/convert_project.py \
@@ -2571,13 +2571,13 @@ jobs:
             --extra-3c-arg=-alltypes \
             --project_path .
 
-      - name: Build converted tsp (filter bounds inference errors) (defer failure)
+      - name: Build converted tsp_manual (filter bounds inference errors) (defer failure)
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Olden-manual/tsp
           if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py || echo tsp >>${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Olden-manual/failed-components-list.txt
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py || echo tsp_manual >>${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Olden-manual/failed-components-list.txt
 
-      - name: Convert voronoi
+      - name: Convert voronoi_manual
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Olden-manual/voronoi
           ${{env.port_tools}}/convert_project.py \
@@ -2587,11 +2587,11 @@ jobs:
             --extra-3c-arg=-alltypes \
             --project_path .
 
-      - name: Build converted voronoi (filter bounds inference errors) (defer failure)
+      - name: Build converted voronoi_manual (filter bounds inference errors) (defer failure)
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Olden-manual/voronoi
           if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py || echo voronoi >>${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Olden-manual/failed-components-list.txt
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py || echo voronoi_manual >>${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Olden-manual/failed-components-list.txt
 
       - name: Check for deferred post-conversion build failures
         run: |
@@ -2616,7 +2616,7 @@ jobs:
             (cd $i ; bear make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE") \
           done
 
-      - name: Convert bh
+      - name: Convert bh_manual
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/Olden-manual/bh
           ${{env.port_tools}}/convert_project.py \
@@ -2626,13 +2626,13 @@ jobs:
             --expand_macros_before_conversion \
             --project_path .
 
-      - name: Build converted bh (defer failure)
+      - name: Build converted bh_manual (defer failure)
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/Olden-manual/bh
           if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" || echo bh >>${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/Olden-manual/failed-components-list.txt
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" || echo bh_manual >>${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/Olden-manual/failed-components-list.txt
 
-      - name: Convert bisort
+      - name: Convert bisort_manual
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/Olden-manual/bisort
           ${{env.port_tools}}/convert_project.py \
@@ -2642,13 +2642,13 @@ jobs:
             --expand_macros_before_conversion \
             --project_path .
 
-      - name: Build converted bisort (defer failure)
+      - name: Build converted bisort_manual (defer failure)
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/Olden-manual/bisort
           if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" || echo bisort >>${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/Olden-manual/failed-components-list.txt
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" || echo bisort_manual >>${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/Olden-manual/failed-components-list.txt
 
-      - name: Convert em3d
+      - name: Convert em3d_manual
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/Olden-manual/em3d
           ${{env.port_tools}}/convert_project.py \
@@ -2658,13 +2658,13 @@ jobs:
             --expand_macros_before_conversion \
             --project_path .
 
-      - name: Build converted em3d (defer failure)
+      - name: Build converted em3d_manual (defer failure)
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/Olden-manual/em3d
           if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" || echo em3d >>${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/Olden-manual/failed-components-list.txt
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" || echo em3d_manual >>${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/Olden-manual/failed-components-list.txt
 
-      - name: Convert health
+      - name: Convert health_manual
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/Olden-manual/health
           ${{env.port_tools}}/convert_project.py \
@@ -2674,13 +2674,13 @@ jobs:
             --expand_macros_before_conversion \
             --project_path .
 
-      - name: Build converted health (defer failure)
+      - name: Build converted health_manual (defer failure)
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/Olden-manual/health
           if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" || echo health >>${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/Olden-manual/failed-components-list.txt
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" || echo health_manual >>${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/Olden-manual/failed-components-list.txt
 
-      - name: Convert mst
+      - name: Convert mst_manual
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/Olden-manual/mst
           ${{env.port_tools}}/convert_project.py \
@@ -2690,13 +2690,13 @@ jobs:
             --expand_macros_before_conversion \
             --project_path .
 
-      - name: Build converted mst (defer failure)
+      - name: Build converted mst_manual (defer failure)
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/Olden-manual/mst
           if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" || echo mst >>${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/Olden-manual/failed-components-list.txt
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" || echo mst_manual >>${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/Olden-manual/failed-components-list.txt
 
-      - name: Convert perimeter
+      - name: Convert perimeter_manual
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/Olden-manual/perimeter
           ${{env.port_tools}}/convert_project.py \
@@ -2706,13 +2706,13 @@ jobs:
             --expand_macros_before_conversion \
             --project_path .
 
-      - name: Build converted perimeter (defer failure)
+      - name: Build converted perimeter_manual (defer failure)
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/Olden-manual/perimeter
           if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" || echo perimeter >>${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/Olden-manual/failed-components-list.txt
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" || echo perimeter_manual >>${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/Olden-manual/failed-components-list.txt
 
-      - name: Convert power
+      - name: Convert power_manual
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/Olden-manual/power
           ${{env.port_tools}}/convert_project.py \
@@ -2722,13 +2722,13 @@ jobs:
             --expand_macros_before_conversion \
             --project_path .
 
-      - name: Build converted power (defer failure)
+      - name: Build converted power_manual (defer failure)
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/Olden-manual/power
           if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" || echo power >>${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/Olden-manual/failed-components-list.txt
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" || echo power_manual >>${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/Olden-manual/failed-components-list.txt
 
-      - name: Convert treeadd
+      - name: Convert treeadd_manual
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/Olden-manual/treeadd
           ${{env.port_tools}}/convert_project.py \
@@ -2738,13 +2738,13 @@ jobs:
             --expand_macros_before_conversion \
             --project_path .
 
-      - name: Build converted treeadd (defer failure)
+      - name: Build converted treeadd_manual (defer failure)
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/Olden-manual/treeadd
           if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" || echo treeadd >>${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/Olden-manual/failed-components-list.txt
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" || echo treeadd_manual >>${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/Olden-manual/failed-components-list.txt
 
-      - name: Convert tsp
+      - name: Convert tsp_manual
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/Olden-manual/tsp
           ${{env.port_tools}}/convert_project.py \
@@ -2754,13 +2754,13 @@ jobs:
             --expand_macros_before_conversion \
             --project_path .
 
-      - name: Build converted tsp (defer failure)
+      - name: Build converted tsp_manual (defer failure)
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/Olden-manual/tsp
           if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" || echo tsp >>${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/Olden-manual/failed-components-list.txt
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" || echo tsp_manual >>${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/Olden-manual/failed-components-list.txt
 
-      - name: Convert voronoi
+      - name: Convert voronoi_manual
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/Olden-manual/voronoi
           ${{env.port_tools}}/convert_project.py \
@@ -2770,11 +2770,11 @@ jobs:
             --expand_macros_before_conversion \
             --project_path .
 
-      - name: Build converted voronoi (defer failure)
+      - name: Build converted voronoi_manual (defer failure)
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/Olden-manual/voronoi
           if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" || echo voronoi >>${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/Olden-manual/failed-components-list.txt
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" || echo voronoi_manual >>${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/Olden-manual/failed-components-list.txt
 
       - name: Check for deferred post-conversion build failures
         run: |
@@ -2799,7 +2799,7 @@ jobs:
             (cd $i ; bear make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE") \
           done
 
-      - name: Convert bh
+      - name: Convert bh_manual
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes/Olden-manual/bh
           ${{env.port_tools}}/convert_project.py \
@@ -2810,13 +2810,13 @@ jobs:
             --expand_macros_before_conversion \
             --project_path .
 
-      - name: Build converted bh (filter bounds inference errors) (defer failure)
+      - name: Build converted bh_manual (filter bounds inference errors) (defer failure)
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes/Olden-manual/bh
           if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py || echo bh >>${{env.benchmark_conv_dir}}/expand_macros_alltypes/Olden-manual/failed-components-list.txt
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py || echo bh_manual >>${{env.benchmark_conv_dir}}/expand_macros_alltypes/Olden-manual/failed-components-list.txt
 
-      - name: Convert bisort
+      - name: Convert bisort_manual
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes/Olden-manual/bisort
           ${{env.port_tools}}/convert_project.py \
@@ -2827,13 +2827,13 @@ jobs:
             --expand_macros_before_conversion \
             --project_path .
 
-      - name: Build converted bisort (filter bounds inference errors) (defer failure)
+      - name: Build converted bisort_manual (filter bounds inference errors) (defer failure)
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes/Olden-manual/bisort
           if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py || echo bisort >>${{env.benchmark_conv_dir}}/expand_macros_alltypes/Olden-manual/failed-components-list.txt
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py || echo bisort_manual >>${{env.benchmark_conv_dir}}/expand_macros_alltypes/Olden-manual/failed-components-list.txt
 
-      - name: Convert em3d
+      - name: Convert em3d_manual
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes/Olden-manual/em3d
           ${{env.port_tools}}/convert_project.py \
@@ -2844,13 +2844,13 @@ jobs:
             --expand_macros_before_conversion \
             --project_path .
 
-      - name: Build converted em3d (filter bounds inference errors) (defer failure)
+      - name: Build converted em3d_manual (filter bounds inference errors) (defer failure)
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes/Olden-manual/em3d
           if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py || echo em3d >>${{env.benchmark_conv_dir}}/expand_macros_alltypes/Olden-manual/failed-components-list.txt
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py || echo em3d_manual >>${{env.benchmark_conv_dir}}/expand_macros_alltypes/Olden-manual/failed-components-list.txt
 
-      - name: Convert health
+      - name: Convert health_manual
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes/Olden-manual/health
           ${{env.port_tools}}/convert_project.py \
@@ -2861,13 +2861,13 @@ jobs:
             --expand_macros_before_conversion \
             --project_path .
 
-      - name: Build converted health (filter bounds inference errors) (defer failure)
+      - name: Build converted health_manual (filter bounds inference errors) (defer failure)
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes/Olden-manual/health
           if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py || echo health >>${{env.benchmark_conv_dir}}/expand_macros_alltypes/Olden-manual/failed-components-list.txt
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py || echo health_manual >>${{env.benchmark_conv_dir}}/expand_macros_alltypes/Olden-manual/failed-components-list.txt
 
-      - name: Convert mst
+      - name: Convert mst_manual
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes/Olden-manual/mst
           ${{env.port_tools}}/convert_project.py \
@@ -2878,13 +2878,13 @@ jobs:
             --expand_macros_before_conversion \
             --project_path .
 
-      - name: Build converted mst (filter bounds inference errors) (defer failure)
+      - name: Build converted mst_manual (filter bounds inference errors) (defer failure)
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes/Olden-manual/mst
           if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py || echo mst >>${{env.benchmark_conv_dir}}/expand_macros_alltypes/Olden-manual/failed-components-list.txt
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py || echo mst_manual >>${{env.benchmark_conv_dir}}/expand_macros_alltypes/Olden-manual/failed-components-list.txt
 
-      - name: Convert perimeter
+      - name: Convert perimeter_manual
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes/Olden-manual/perimeter
           ${{env.port_tools}}/convert_project.py \
@@ -2895,13 +2895,13 @@ jobs:
             --expand_macros_before_conversion \
             --project_path .
 
-      - name: Build converted perimeter (filter bounds inference errors) (defer failure)
+      - name: Build converted perimeter_manual (filter bounds inference errors) (defer failure)
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes/Olden-manual/perimeter
           if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py || echo perimeter >>${{env.benchmark_conv_dir}}/expand_macros_alltypes/Olden-manual/failed-components-list.txt
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py || echo perimeter_manual >>${{env.benchmark_conv_dir}}/expand_macros_alltypes/Olden-manual/failed-components-list.txt
 
-      - name: Convert power
+      - name: Convert power_manual
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes/Olden-manual/power
           ${{env.port_tools}}/convert_project.py \
@@ -2912,13 +2912,13 @@ jobs:
             --expand_macros_before_conversion \
             --project_path .
 
-      - name: Build converted power (filter bounds inference errors) (defer failure)
+      - name: Build converted power_manual (filter bounds inference errors) (defer failure)
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes/Olden-manual/power
           if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py || echo power >>${{env.benchmark_conv_dir}}/expand_macros_alltypes/Olden-manual/failed-components-list.txt
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py || echo power_manual >>${{env.benchmark_conv_dir}}/expand_macros_alltypes/Olden-manual/failed-components-list.txt
 
-      - name: Convert treeadd
+      - name: Convert treeadd_manual
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes/Olden-manual/treeadd
           ${{env.port_tools}}/convert_project.py \
@@ -2929,13 +2929,13 @@ jobs:
             --expand_macros_before_conversion \
             --project_path .
 
-      - name: Build converted treeadd (filter bounds inference errors) (defer failure)
+      - name: Build converted treeadd_manual (filter bounds inference errors) (defer failure)
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes/Olden-manual/treeadd
           if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py || echo treeadd >>${{env.benchmark_conv_dir}}/expand_macros_alltypes/Olden-manual/failed-components-list.txt
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py || echo treeadd_manual >>${{env.benchmark_conv_dir}}/expand_macros_alltypes/Olden-manual/failed-components-list.txt
 
-      - name: Convert tsp
+      - name: Convert tsp_manual
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes/Olden-manual/tsp
           ${{env.port_tools}}/convert_project.py \
@@ -2946,13 +2946,13 @@ jobs:
             --expand_macros_before_conversion \
             --project_path .
 
-      - name: Build converted tsp (filter bounds inference errors) (defer failure)
+      - name: Build converted tsp_manual (filter bounds inference errors) (defer failure)
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes/Olden-manual/tsp
           if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py || echo tsp >>${{env.benchmark_conv_dir}}/expand_macros_alltypes/Olden-manual/failed-components-list.txt
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py || echo tsp_manual >>${{env.benchmark_conv_dir}}/expand_macros_alltypes/Olden-manual/failed-components-list.txt
 
-      - name: Convert voronoi
+      - name: Convert voronoi_manual
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes/Olden-manual/voronoi
           ${{env.port_tools}}/convert_project.py \
@@ -2963,11 +2963,11 @@ jobs:
             --expand_macros_before_conversion \
             --project_path .
 
-      - name: Build converted voronoi (filter bounds inference errors) (defer failure)
+      - name: Build converted voronoi_manual (filter bounds inference errors) (defer failure)
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes/Olden-manual/voronoi
           if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py || echo voronoi >>${{env.benchmark_conv_dir}}/expand_macros_alltypes/Olden-manual/failed-components-list.txt
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py || echo voronoi_manual >>${{env.benchmark_conv_dir}}/expand_macros_alltypes/Olden-manual/failed-components-list.txt
 
       - name: Check for deferred post-conversion build failures
         run: |

@@ -139,7 +139,7 @@ benchmarks = [
     BenchmarkInfo(
         #
         name='vsftpd-reverted',
-        friendly_name='Vsftpd-Reverted',
+        friendly_name='Vsftpd-reverted',
         dir_name='vsftpd-3.0.3-reverted',
         build_cmds=f'bear {vsftpd_make}',
         build_converted_cmd=f'{vsftpd_make} -k'),
@@ -148,7 +148,7 @@ benchmarks = [
     BenchmarkInfo(
         #
         name='vsftpd-manual',
-        friendly_name='Vsftpd-Manually-Converted',
+        friendly_name='Vsftpd-manual',
         dir_name='vsftpd-3.0.3-manual',
         build_cmds=f'bear {vsftpd_make}',
         build_converted_cmd=f'{vsftpd_make} -k'),
@@ -204,7 +204,7 @@ benchmarks = [
     BenchmarkInfo(
         #
         name='Olden-Reverted',
-        friendly_name='Olden-Reverted',
+        friendly_name='Olden-reverted',
         dir_name='Olden-reverted',
         convert_extra="--extra-3c-arg=-allow-unwritable-changes \\",
         build_cmds=textwrap.dedent(f'''\
@@ -216,7 +216,7 @@ benchmarks = [
             f'{make_checkedc} -k LOCAL_CFLAGS="{common_cflags} -D_ISOC99_SOURCE"'
         ),
         components=[
-            BenchmarkComponent(friendly_name=c, subdir=c)
+            BenchmarkComponent(friendly_name=c + "-reverted", subdir=c)
             for c in olden_components
         ]),
 
@@ -236,7 +236,7 @@ done
             f'{make_checkedc} -k LOCAL_CFLAGS="{common_cflags} -D_ISOC99_SOURCE"'
         ),
         components=[
-            BenchmarkComponent(friendly_name=c, subdir=c)
+            BenchmarkComponent(friendly_name=c + "-manual", subdir=c)
             for c in olden_components
         ]),
 
@@ -317,7 +317,7 @@ done
             f'{make_checkedc} -k LOCAL_CFLAGS="{common_cflags} -D_ISOC99_SOURCE"'
         ),
         components=[
-            BenchmarkComponent(friendly_name=c, subdir=c)
+            BenchmarkComponent(friendly_name=c + '-reverted', subdir=c)
             for c in ptrdist_manual_components
         ]),
 
@@ -358,7 +358,7 @@ done
             f'{make_checkedc} -k LOCAL_CFLAGS="{common_cflags} -D_ISOC99_SOURCE"'
         ),
         components=[
-            BenchmarkComponent(friendly_name=c, subdir=c)
+            BenchmarkComponent(friendly_name=c + '-reverted', subdir=c)
             for c in ptrdist_manual_components
         ]),
 
