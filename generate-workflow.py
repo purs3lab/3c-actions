@@ -152,26 +152,6 @@ benchmarks = [
         build_cmds=f'bear {vsftpd_make}',
         build_converted_cmd=f'{vsftpd_make} -k'),
 
-    # Vsftpd Reverted (after manual porting)
-    BenchmarkInfo(
-        #
-        name='vsftpd-reverted',
-        friendly_name='Vsftpd-reverted',
-        dir_name='vsftpd-3.0.3-reverted',
-        build_cmds=f'bear {vsftpd_make}',
-        build_converted_cmd=f'{vsftpd_make} -k',
-        disallow_for_comparative_varients=True),
-
-    # Vsftpd Manually ported.
-    BenchmarkInfo(
-        #
-        name='vsftpd-manual',
-        friendly_name='Vsftpd-manual',
-        dir_name='vsftpd-3.0.3-manual',
-        build_cmds=f'bear {vsftpd_make}',
-        build_converted_cmd=f'{vsftpd_make} -k',
-        disallow_for_comparative_varients=True),
-
     # Parson
     BenchmarkInfo(
         #
@@ -180,26 +160,6 @@ benchmarks = [
         dir_name='parson',
         build_cmds=f'bear {make_checkedc}',
         build_converted_cmd=f'{make_checkedc} -k'),
-
-    # Parson manual
-    BenchmarkInfo(
-        #
-        name='Parson-manual',
-        friendly_name='Parson-manual',
-        dir_name='parson-manual',
-        build_cmds=f'bear {make_checkedc}',
-        build_converted_cmd=f'{make_checkedc} -k',
-        disallow_for_comparative_varients=True),
-
-    # Parson Reverted
-    BenchmarkInfo(
-        #
-        name='Parson-reverted',
-        friendly_name='Parson-reverted',
-        dir_name='parson-reverted',
-        build_cmds=f'bear {make_checkedc}',
-        build_converted_cmd=f'{make_checkedc} -k',
-        disallow_for_comparative_varients=True),
 
     # Olden
     BenchmarkInfo(
@@ -220,48 +180,6 @@ benchmarks = [
             BenchmarkComponent(friendly_name=c, subdir=c)
             for c in olden_components
         ]),
-
-    # Olden Reverted
-    BenchmarkInfo(
-        #
-        name='Olden-Reverted',
-        friendly_name='Olden-reverted',
-        dir_name='Olden-reverted',
-        convert_extra="--extra-3c-arg=-allow-unwritable-changes \\",
-        build_cmds=textwrap.dedent(f'''\
-    for i in {' '.join(olden_components)} ; do \\
-      (cd $i ; bear {make_checkedc} LOCAL_CFLAGS="{common_cflags} -D_ISOC99_SOURCE") \\
-    done
-    '''),
-        build_converted_cmd=(
-            f'{make_checkedc} -k LOCAL_CFLAGS="{common_cflags} -D_ISOC99_SOURCE"'
-        ),
-        components=[
-            BenchmarkComponent(friendly_name=c + "-reverted", subdir=c)
-            for c in olden_components
-        ],
-        disallow_for_comparative_varients=True),
-
-    # Olden Manual
-    BenchmarkInfo(
-        #
-        name='Olden-Manual',
-        friendly_name='Olden-Manual',
-        dir_name='Olden-manual',
-        convert_extra="--extra-3c-arg=-allow-unwritable-changes \\",
-        build_cmds=textwrap.dedent(f'''\
-for i in {' '.join(olden_components)} ; do \\
-  (cd $i ; bear {make_checkedc} LOCAL_CFLAGS="{common_cflags} -D_ISOC99_SOURCE") \\
-done
-'''),
-        build_converted_cmd=(
-            f'{make_checkedc} -k LOCAL_CFLAGS="{common_cflags} -D_ISOC99_SOURCE"'
-        ),
-        components=[
-            BenchmarkComponent(friendly_name=c + "-manual", subdir=c)
-            for c in olden_components
-        ],
-        disallow_for_comparative_varients=True),
 
     # PtrDist
     BenchmarkInfo(
@@ -302,90 +220,6 @@ done
             BenchmarkComponent(friendly_name=c, subdir=c)
             for c in ptrdist_components
         ]),
-
-    # PtrDist-reverted.
-    # Ptrdist that is manually converted and reverted using c3.
-    BenchmarkInfo(
-        #
-        name='ptrdist-reverted',
-        friendly_name='PtrDistReverted',
-        dir_name='ptrdist-1.1-reverted',
-        # Patch yacr2 to work around correctcomputation/checkedc-clang#374. For
-        # certain header files foo.h, foo.c defines a macro FOO_CODE that
-        # activates a different #if branch in foo.h that defines global
-        # variables instead of declaring them. This is an unusual practice:
-        # normally foo.h would declare the variables whether or not it is being
-        # included by foo.c, and then foo.c would additionally define them. We
-        # simulate the normal practice by copying only the parts of foo.h
-        # conditional on FOO_CODE to a new file foo_code.h, making foo.c include
-        # foo_code.h in addition to foo.h, and deleting the `#define FOO_CODE`.
-        #
-        # Also fix type conflict between `costMatrix` declaration and
-        # definition, exposed when both are in the same translation unit.
-        build_cmds=textwrap.dedent(f'''\
-        ( cd yacr2 ; \\
-          sed -Ei 's/^long (.*costMatrix)/ulong \\1/' assign.h
-          for header in *.h  ; do
-            src="$(basename "$header" .h).c"
-            new_header="$(basename "$header" .h)_code.h"
-            test -e "$src" || continue
-            sed -ne '/^#ifdef.*CODE/,/#else.*CODE/{{ /^#/!p; }}' "$header" >"$new_header"
-            sed -i "/#define.*_CODE/d; /#include \\"$header\\"/a#include \\"$new_header\\"" "$src"
-          done )
-        for i in {' '.join(ptrdist_manual_components)} ; do \\
-          (cd $i ; bear {make_checkedc} LOCAL_CFLAGS="{common_cflags} -D_ISOC99_SOURCE") \\
-        done
-        '''),
-        build_converted_cmd=(
-            f'{make_checkedc} -k LOCAL_CFLAGS="{common_cflags} -D_ISOC99_SOURCE"'
-        ),
-        components=[
-            BenchmarkComponent(friendly_name=c + '-reverted', subdir=c)
-            for c in ptrdist_manual_components
-        ],
-        disallow_for_comparative_varients=True),
-
-    # PtrDist-manual.
-    # Ptrdist that is manually converted.
-    BenchmarkInfo(
-        #
-        name='ptrdist-manual',
-        friendly_name='PtrDistManual',
-        dir_name='ptrdist-1.1-manual',
-        # Patch yacr2 to work around correctcomputation/checkedc-clang#374. For
-        # certain header files foo.h, foo.c defines a macro FOO_CODE that
-        # activates a different #if branch in foo.h that defines global
-        # variables instead of declaring them. This is an unusual practice:
-        # normally foo.h would declare the variables whether or not it is being
-        # included by foo.c, and then foo.c would additionally define them. We
-        # simulate the normal practice by copying only the parts of foo.h
-        # conditional on FOO_CODE to a new file foo_code.h, making foo.c include
-        # foo_code.h in addition to foo.h, and deleting the `#define FOO_CODE`.
-        #
-        # Also fix type conflict between `costMatrix` declaration and
-        # definition, exposed when both are in the same translation unit.
-        build_cmds=textwrap.dedent(f'''\
-    ( cd yacr2 ; \\
-      sed -Ei 's/^long (.*costMatrix)/ulong \\1/' assign.h
-      for header in *.h  ; do
-        src="$(basename "$header" .h).c"
-        new_header="$(basename "$header" .h)_code.h"
-        test -e "$src" || continue
-        sed -ne '/^#ifdef.*CODE/,/#else.*CODE/{{ /^#/!p; }}' "$header" >"$new_header"
-        sed -i "/#define.*_CODE/d; /#include \\"$header\\"/a#include \\"$new_header\\"" "$src"
-      done )
-    for i in {' '.join(ptrdist_manual_components)} ; do \\
-      (cd $i ; bear {make_checkedc} LOCAL_CFLAGS="{common_cflags} -D_ISOC99_SOURCE") \\
-    done
-    '''),
-        build_converted_cmd=(
-            f'{make_checkedc} -k LOCAL_CFLAGS="{common_cflags} -D_ISOC99_SOURCE"'
-        ),
-        components=[
-            BenchmarkComponent(friendly_name=c + '-reverted', subdir=c)
-            for c in ptrdist_manual_components
-        ],
-        disallow_for_comparative_varients=True),
 
     # LibArchive
     BenchmarkInfo(
