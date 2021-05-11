@@ -7,7 +7,7 @@ name: Exhaustive testing and Performance Stats
 on:
   # Run every day at the following time.
   schedule:
-    - cron: "0 6 * * *"
+    - cron: "0 0 0 0 0"
   workflow_dispatch:
     inputs:
       branch:

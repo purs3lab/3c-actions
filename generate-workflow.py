@@ -685,7 +685,7 @@ workflow_file_configs = [
         friendly_name="Exhaustive testing and Performance Stats",
         # The times need to be well-separated because of
         # https://github.com/correctcomputation/actions/issues/6 .
-        cron_timestamp="0 6 * * *",
+        cron_timestamp="0 0 0 0 0",
         variants=[
             Variant(alltypes=False),
             Variant(alltypes=True)
@@ -696,7 +696,7 @@ workflow_file_configs = [
         friendly_name="Exhaustive testing and Performance Stats (Least and Greatest)",
         # The times need to be well-separated because of
         # https://github.com/correctcomputation/actions/issues/6 .
-        cron_timestamp="0 7 * * *",
+        cron_timestamp="0 0 0 0 0",
         variants=[
             Variant(alltypes=True,
                     extra_3c_args=['-only-g-sol'],
@@ -713,7 +713,7 @@ workflow_file_configs = [
         friendly_name="Exhaustive testing and Performance Stats (CCured)",
         # The times need to be well-separated because of
         # https://github.com/correctcomputation/actions/issues/6 .
-        cron_timestamp="0 8 * * *",
+        cron_timestamp="0 0 0 0 0",
         variants=[
             Variant(alltypes=True,
                     extra_3c_args=['-disable-rds'],
