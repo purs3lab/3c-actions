@@ -22,6 +22,7 @@ class Variant:
     friendly_name_suffix: str = ''
     is_comparative_varient: bool = False
 
+
 @dataclass
 class BenchmarkComponent:
     # Default: Same as the benchmark's friendly_name.
@@ -343,8 +344,7 @@ name: {workflow.name}
 
 on:
   # Run every day at the following time.
-  schedule:
-    - cron: "{workflow.scheduletime}"
+  {workflow.schedule}
   workflow_dispatch:
     inputs:
       branch:
@@ -492,7 +492,6 @@ class ActionStep(Step):
 
 def ensure_trailing_newline(s: str):
     return s + '\n' if s != '' and not s.endswith('\n') else s
-
 
 
 def generate_benchmark_job(out: TextIO,
@@ -669,8 +668,8 @@ fi
 class WorkflowConfig:
     filename: str
     friendly_name: str
-    cron_timestamp: str
     variants: List[Variant]
+    cron_timestamp: str = None
     generate_stats: bool = False
 
 
@@ -683,9 +682,7 @@ workflow_file_configs = [
     WorkflowConfig(
         filename="exhaustivestats",
         friendly_name="Exhaustive testing and Performance Stats",
-        # The times need to be well-separated because of
-        # https://github.com/correctcomputation/actions/issues/6 .
-        cron_timestamp="0 0 0 0 0",
+
         variants=[
             Variant(alltypes=False),
             Variant(alltypes=True)
@@ -694,9 +691,6 @@ workflow_file_configs = [
     WorkflowConfig(
         filename="exhaustiveleastgreatest",
         friendly_name="Exhaustive testing and Performance Stats (Least and Greatest)",
-        # The times need to be well-separated because of
-        # https://github.com/correctcomputation/actions/issues/6 .
-        cron_timestamp="0 0 0 0 0",
         variants=[
             Variant(alltypes=True,
                     extra_3c_args=['-only-g-sol'],
@@ -711,9 +705,6 @@ workflow_file_configs = [
     WorkflowConfig(
         filename="exhaustiveccured",
         friendly_name="Exhaustive testing and Performance Stats (CCured)",
-        # The times need to be well-separated because of
-        # https://github.com/correctcomputation/actions/issues/6 .
-        cron_timestamp="0 0 0 0 0",
         variants=[
             Variant(alltypes=True,
                     extra_3c_args=['-disable-rds'],
@@ -731,8 +722,11 @@ for config in workflow_file_configs:
     with open(f'.github/workflows/{config.filename}.yml', 'w') as out:
         # format header using workflow name and schedule time.
         formatted_hdr = HEADER.replace('{workflow.name}', config.friendly_name)
-        formatted_hdr = formatted_hdr.replace('{workflow.scheduletime}',
-                                              config.cron_timestamp)
+        cron_timestamp = ""
+        if config.cron_timestamp is not None:
+            cron_timestamp = textwrap.dedent(f'''schedule:\n    - cron: "{config.cron_timestamp}"''')
+        formatted_hdr = formatted_hdr.replace('{workflow.schedule}',
+                                              cron_timestamp)
         out.write(formatted_hdr)
         for binfo in benchmarks:
             for expand_macros in (False, True):
