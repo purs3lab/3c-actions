@@ -5,8 +5,6 @@
 name: Exhaustive testing and Performance Stats (CCured)
 
 on:
-  # Run every day at the following time.
-  
   workflow_dispatch:
     inputs:
       branch:

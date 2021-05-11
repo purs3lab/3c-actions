@@ -5,8 +5,6 @@
 name: Exhaustive testing and Performance Stats (Least and Greatest)
 
 on:
-  # Run every day at the following time.
-  
   workflow_dispatch:
     inputs:
       branch:
