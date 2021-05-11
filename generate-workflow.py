@@ -22,6 +22,7 @@ class Variant:
     friendly_name_suffix: str = ''
     is_comparative_varient: bool = False
 
+
 @dataclass
 class BenchmarkComponent:
     # Default: Same as the benchmark's friendly_name.
@@ -489,7 +490,6 @@ class ActionStep(Step):
 
 def ensure_trailing_newline(s: str):
     return s + '\n' if s != '' and not s.endswith('\n') else s
-
 
 
 def generate_benchmark_job(out: TextIO,
