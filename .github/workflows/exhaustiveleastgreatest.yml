@@ -3534,3 +3534,177 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes_only_l_sol/thttpd-2.29
           if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
           make CC="${{env.builddir}}/bin/clang -w -ferror-limit=0" -k 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py
+
+  test_imagemagick_no_expand_macros_alltypes_only_g_sol:
+    name: Test ImageMagick (not macro-expanded, -alltypes, greatest solution)
+    needs: build_3c
+    runs-on: self-hosted
+    steps:
+      - name: Build ImageMagick
+        run: |
+          mkdir -p ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes_only_g_sol
+          cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes_only_g_sol
+          tar -xvzf ${{env.benchmark_tar_dir}}/ImageMagick-7.0.11-6.tar.gz
+          cd ImageMagick-7.0.11-6
+          sed -i -e '/_GNU_SOURCE/d' configure
+          CC="${{env.builddir}}/bin/clang" CFLAGS="-w -ferror-limit=0"             ./configure --disable-shared --without-magick-plus-plus             --without-bzlib --without-djvu --without-fontconfig             --without-freetype --without-gvc --without-jbig --without-jpeg             --without-lcms --without-lqr --without-lzma --without-openexr             --without-openjp2 --without-pango --without-raqm --without-raw             --without-tiff --without-webp --without-x --without-xml             --without-zip --without-zlib --without-zstd --without-utilities
+          bear make -j $(nproc) -l $(nproc) --output-sync MagickCore/libMagickCore-7.Q16HDRI.la
+
+      - name: Convert ImageMagick
+        run: |
+          cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes_only_g_sol/ImageMagick-7.0.11-6
+          ${{env.port_tools}}/convert_project.py \
+            --prog_name ${{env.builddir}}/bin/3c \
+            --extra-3c-arg=-alltypes \
+            --extra-3c-arg=-only-g-sol \
+            --project_path .
+
+      - name: Copy 3c stats of ImageMagick
+        run: |
+          cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes_only_g_sol/ImageMagick-7.0.11-6
+          mkdir 3c_performance_stats/
+          cp *.json 3c_performance_stats/
+
+      - name: Upload 3c stats of ImageMagick
+        uses: actions/upload-artifact@v2
+        with:
+          name: ImageMagick_no_expand_macros_alltypes_only_g_sol
+          path: ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes_only_g_sol/ImageMagick-7.0.11-6/3c_performance_stats/
+          retention-days: 5
+
+      - name: Build converted ImageMagick (filter bounds inference errors)
+        run: |
+          cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes_only_g_sol/ImageMagick-7.0.11-6
+          if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
+          make -j $(nproc) -l $(nproc) --output-sync -k MagickCore/libMagickCore-7.Q16HDRI.la 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py
+
+  test_imagemagick_no_expand_macros_alltypes_only_l_sol:
+    name: Test ImageMagick (not macro-expanded, -alltypes, least solution)
+    needs: build_3c
+    runs-on: self-hosted
+    steps:
+      - name: Build ImageMagick
+        run: |
+          mkdir -p ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes_only_l_sol
+          cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes_only_l_sol
+          tar -xvzf ${{env.benchmark_tar_dir}}/ImageMagick-7.0.11-6.tar.gz
+          cd ImageMagick-7.0.11-6
+          sed -i -e '/_GNU_SOURCE/d' configure
+          CC="${{env.builddir}}/bin/clang" CFLAGS="-w -ferror-limit=0"             ./configure --disable-shared --without-magick-plus-plus             --without-bzlib --without-djvu --without-fontconfig             --without-freetype --without-gvc --without-jbig --without-jpeg             --without-lcms --without-lqr --without-lzma --without-openexr             --without-openjp2 --without-pango --without-raqm --without-raw             --without-tiff --without-webp --without-x --without-xml             --without-zip --without-zlib --without-zstd --without-utilities
+          bear make -j $(nproc) -l $(nproc) --output-sync MagickCore/libMagickCore-7.Q16HDRI.la
+
+      - name: Convert ImageMagick
+        run: |
+          cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes_only_l_sol/ImageMagick-7.0.11-6
+          ${{env.port_tools}}/convert_project.py \
+            --prog_name ${{env.builddir}}/bin/3c \
+            --extra-3c-arg=-alltypes \
+            --extra-3c-arg=-only-l-sol \
+            --project_path .
+
+      - name: Copy 3c stats of ImageMagick
+        run: |
+          cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes_only_l_sol/ImageMagick-7.0.11-6
+          mkdir 3c_performance_stats/
+          cp *.json 3c_performance_stats/
+
+      - name: Upload 3c stats of ImageMagick
+        uses: actions/upload-artifact@v2
+        with:
+          name: ImageMagick_no_expand_macros_alltypes_only_l_sol
+          path: ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes_only_l_sol/ImageMagick-7.0.11-6/3c_performance_stats/
+          retention-days: 5
+
+      - name: Build converted ImageMagick (filter bounds inference errors)
+        run: |
+          cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes_only_l_sol/ImageMagick-7.0.11-6
+          if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
+          make -j $(nproc) -l $(nproc) --output-sync -k MagickCore/libMagickCore-7.Q16HDRI.la 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py
+
+  test_imagemagick_expand_macros_alltypes_only_g_sol:
+    name: Test ImageMagick (macro-expanded, -alltypes, greatest solution)
+    needs: build_3c
+    runs-on: self-hosted
+    steps:
+      - name: Build ImageMagick
+        run: |
+          mkdir -p ${{env.benchmark_conv_dir}}/expand_macros_alltypes_only_g_sol
+          cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes_only_g_sol
+          tar -xvzf ${{env.benchmark_tar_dir}}/ImageMagick-7.0.11-6.tar.gz
+          cd ImageMagick-7.0.11-6
+          sed -i -e '/_GNU_SOURCE/d' configure
+          CC="${{env.builddir}}/bin/clang" CFLAGS="-w -ferror-limit=0"             ./configure --disable-shared --without-magick-plus-plus             --without-bzlib --without-djvu --without-fontconfig             --without-freetype --without-gvc --without-jbig --without-jpeg             --without-lcms --without-lqr --without-lzma --without-openexr             --without-openjp2 --without-pango --without-raqm --without-raw             --without-tiff --without-webp --without-x --without-xml             --without-zip --without-zlib --without-zstd --without-utilities
+          bear make -j $(nproc) -l $(nproc) --output-sync MagickCore/libMagickCore-7.Q16HDRI.la
+
+      - name: Convert ImageMagick
+        run: |
+          cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes_only_g_sol/ImageMagick-7.0.11-6
+          ${{env.port_tools}}/convert_project.py \
+            --prog_name ${{env.builddir}}/bin/3c \
+            --extra-3c-arg=-alltypes \
+            --expand_macros_before_conversion \
+            --extra-3c-arg=-only-g-sol \
+            --project_path .
+
+      - name: Copy 3c stats of ImageMagick
+        run: |
+          cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes_only_g_sol/ImageMagick-7.0.11-6
+          mkdir 3c_performance_stats/
+          cp *.json 3c_performance_stats/
+
+      - name: Upload 3c stats of ImageMagick
+        uses: actions/upload-artifact@v2
+        with:
+          name: ImageMagick_expand_macros_alltypes_only_g_sol
+          path: ${{env.benchmark_conv_dir}}/expand_macros_alltypes_only_g_sol/ImageMagick-7.0.11-6/3c_performance_stats/
+          retention-days: 5
+
+      - name: Build converted ImageMagick (filter bounds inference errors)
+        run: |
+          cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes_only_g_sol/ImageMagick-7.0.11-6
+          if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
+          make -j $(nproc) -l $(nproc) --output-sync -k MagickCore/libMagickCore-7.Q16HDRI.la 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py
+
+  test_imagemagick_expand_macros_alltypes_only_l_sol:
+    name: Test ImageMagick (macro-expanded, -alltypes, least solution)
+    needs: build_3c
+    runs-on: self-hosted
+    steps:
+      - name: Build ImageMagick
+        run: |
+          mkdir -p ${{env.benchmark_conv_dir}}/expand_macros_alltypes_only_l_sol
+          cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes_only_l_sol
+          tar -xvzf ${{env.benchmark_tar_dir}}/ImageMagick-7.0.11-6.tar.gz
+          cd ImageMagick-7.0.11-6
+          sed -i -e '/_GNU_SOURCE/d' configure
+          CC="${{env.builddir}}/bin/clang" CFLAGS="-w -ferror-limit=0"             ./configure --disable-shared --without-magick-plus-plus             --without-bzlib --without-djvu --without-fontconfig             --without-freetype --without-gvc --without-jbig --without-jpeg             --without-lcms --without-lqr --without-lzma --without-openexr             --without-openjp2 --without-pango --without-raqm --without-raw             --without-tiff --without-webp --without-x --without-xml             --without-zip --without-zlib --without-zstd --without-utilities
+          bear make -j $(nproc) -l $(nproc) --output-sync MagickCore/libMagickCore-7.Q16HDRI.la
+
+      - name: Convert ImageMagick
+        run: |
+          cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes_only_l_sol/ImageMagick-7.0.11-6
+          ${{env.port_tools}}/convert_project.py \
+            --prog_name ${{env.builddir}}/bin/3c \
+            --extra-3c-arg=-alltypes \
+            --expand_macros_before_conversion \
+            --extra-3c-arg=-only-l-sol \
+            --project_path .
+
+      - name: Copy 3c stats of ImageMagick
+        run: |
+          cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes_only_l_sol/ImageMagick-7.0.11-6
+          mkdir 3c_performance_stats/
+          cp *.json 3c_performance_stats/
+
+      - name: Upload 3c stats of ImageMagick
+        uses: actions/upload-artifact@v2
+        with:
+          name: ImageMagick_expand_macros_alltypes_only_l_sol
+          path: ${{env.benchmark_conv_dir}}/expand_macros_alltypes_only_l_sol/ImageMagick-7.0.11-6/3c_performance_stats/
+          retention-days: 5
+
+      - name: Build converted ImageMagick (filter bounds inference errors)
+        run: |
+          cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes_only_l_sol/ImageMagick-7.0.11-6
+          if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
+          make -j $(nproc) -l $(nproc) --output-sync -k MagickCore/libMagickCore-7.Q16HDRI.la 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py

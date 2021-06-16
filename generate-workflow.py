@@ -333,6 +333,35 @@ benchmarks = [
         '''),
         build_converted_cmd=f'{thttpd_make} -k',
         patch_dir='thttpd-2.29_patches'),
+
+    # ImageMagick
+    #
+    # Minimal configuration (and build target) that contain the code into which
+    # we want to introduce vulnerabilities for demonstration purposes. The
+    # running time and memory usage of 3C on the default ImageMagick
+    # configuration are impractically high as of 2021-04-10. We can expand the
+    # configuration a bit if we want to demonstrate 3C on additional specific
+    # parts of the code.
+    BenchmarkInfo(
+        #
+        name='imagemagick',
+        friendly_name='ImageMagick',
+        dir_name='ImageMagick-7.0.11-6',
+        # Same _GNU_SOURCE workaround as Icecast.
+        build_cmds=textwrap.dedent(f'''\
+        sed -i -e '/_GNU_SOURCE/d' configure
+        CC="${{{{env.builddir}}}}/bin/clang" CFLAGS="{common_cflags}" \
+            ./configure --disable-shared --without-magick-plus-plus \
+            --without-bzlib --without-djvu --without-fontconfig \
+            --without-freetype --without-gvc --without-jbig --without-jpeg \
+            --without-lcms --without-lqr --without-lzma --without-openexr \
+            --without-openjp2 --without-pango --without-raqm --without-raw \
+            --without-tiff --without-webp --without-x --without-xml \
+            --without-zip --without-zlib --without-zstd --without-utilities
+        bear {make_std} MagickCore/libMagickCore-7.Q16HDRI.la
+        '''),
+        build_converted_cmd=
+        f'{make_std} -k MagickCore/libMagickCore-7.Q16HDRI.la'),
 ]
 
 HEADER = '''\
