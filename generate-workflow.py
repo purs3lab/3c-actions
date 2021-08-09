@@ -168,8 +168,8 @@ benchmarks = [
         name='TinyBigNum',
         friendly_name='TinyBigNum',
         dir_name='tiny-bignum-c',
-        build_cmds=f'bear {vsftpd_make}',
-        build_converted_cmd=f'{vsftpd_make} -k'),
+        build_cmds=f'bear {make_checkedc}',
+        build_converted_cmd=f'{make_checkedc} -k'),
 
     # Olden
     BenchmarkInfo(
