@@ -335,7 +335,7 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes
           tar -xvzf ${{env.benchmark_tar_dir}}/tiny-bignum-c.tar.gz
           cd tiny-bignum-c
-          bear make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang -w -ferror-limit=0 -Wno-enum-conversion"
+          bear make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang"
 
       - name: Convert TinyBigNum
         run: |
@@ -348,7 +348,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_no_alltypes/tiny-bignum-c
           if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang -w -ferror-limit=0 -Wno-enum-conversion" -k
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k
 
   test_TinyBigNum_no_expand_macros_alltypes:
     name: Test TinyBigNum (not macro-expanded, -alltypes)
@@ -361,7 +361,7 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes
           tar -xvzf ${{env.benchmark_tar_dir}}/tiny-bignum-c.tar.gz
           cd tiny-bignum-c
-          bear make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang -w -ferror-limit=0 -Wno-enum-conversion"
+          bear make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang"
 
       - name: Convert TinyBigNum
         run: |
@@ -375,7 +375,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/tiny-bignum-c
           if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang -w -ferror-limit=0 -Wno-enum-conversion" -k 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py
 
   test_TinyBigNum_expand_macros_no_alltypes:
     name: Test TinyBigNum (macro-expanded, no -alltypes)
@@ -388,7 +388,7 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes
           tar -xvzf ${{env.benchmark_tar_dir}}/tiny-bignum-c.tar.gz
           cd tiny-bignum-c
-          bear make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang -w -ferror-limit=0 -Wno-enum-conversion"
+          bear make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang"
 
       - name: Convert TinyBigNum
         run: |
@@ -402,7 +402,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_no_alltypes/tiny-bignum-c
           if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang -w -ferror-limit=0 -Wno-enum-conversion" -k
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k
 
   test_TinyBigNum_expand_macros_alltypes:
     name: Test TinyBigNum (macro-expanded, -alltypes)
@@ -415,7 +415,7 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes
           tar -xvzf ${{env.benchmark_tar_dir}}/tiny-bignum-c.tar.gz
           cd tiny-bignum-c
-          bear make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang -w -ferror-limit=0 -Wno-enum-conversion"
+          bear make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang"
 
       - name: Convert TinyBigNum
         run: |
@@ -430,7 +430,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes/tiny-bignum-c
           if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang -w -ferror-limit=0 -Wno-enum-conversion" -k 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py
 
   test_Olden_no_expand_macros_no_alltypes:
     name: Test Olden (not macro-expanded, no -alltypes)

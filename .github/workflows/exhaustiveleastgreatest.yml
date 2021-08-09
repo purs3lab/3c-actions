@@ -448,7 +448,7 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes_only_g_sol
           tar -xvzf ${{env.benchmark_tar_dir}}/tiny-bignum-c.tar.gz
           cd tiny-bignum-c
-          bear make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang -w -ferror-limit=0 -Wno-enum-conversion"
+          bear make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang"
 
       - name: Convert TinyBigNum
         run: |
@@ -476,7 +476,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes_only_g_sol/tiny-bignum-c
           if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang -w -ferror-limit=0 -Wno-enum-conversion" -k 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py
 
   test_TinyBigNum_no_expand_macros_alltypes_only_l_sol:
     name: Test TinyBigNum (not macro-expanded, -alltypes, least solution)
@@ -489,7 +489,7 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes_only_l_sol
           tar -xvzf ${{env.benchmark_tar_dir}}/tiny-bignum-c.tar.gz
           cd tiny-bignum-c
-          bear make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang -w -ferror-limit=0 -Wno-enum-conversion"
+          bear make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang"
 
       - name: Convert TinyBigNum
         run: |
@@ -517,7 +517,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes_only_l_sol/tiny-bignum-c
           if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang -w -ferror-limit=0 -Wno-enum-conversion" -k 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py
 
   test_TinyBigNum_expand_macros_alltypes_only_g_sol:
     name: Test TinyBigNum (macro-expanded, -alltypes, greatest solution)
@@ -530,7 +530,7 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes_only_g_sol
           tar -xvzf ${{env.benchmark_tar_dir}}/tiny-bignum-c.tar.gz
           cd tiny-bignum-c
-          bear make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang -w -ferror-limit=0 -Wno-enum-conversion"
+          bear make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang"
 
       - name: Convert TinyBigNum
         run: |
@@ -559,7 +559,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes_only_g_sol/tiny-bignum-c
           if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang -w -ferror-limit=0 -Wno-enum-conversion" -k 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py
 
   test_TinyBigNum_expand_macros_alltypes_only_l_sol:
     name: Test TinyBigNum (macro-expanded, -alltypes, least solution)
@@ -572,7 +572,7 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes_only_l_sol
           tar -xvzf ${{env.benchmark_tar_dir}}/tiny-bignum-c.tar.gz
           cd tiny-bignum-c
-          bear make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang -w -ferror-limit=0 -Wno-enum-conversion"
+          bear make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang"
 
       - name: Convert TinyBigNum
         run: |
@@ -601,7 +601,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes_only_l_sol/tiny-bignum-c
           if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang -w -ferror-limit=0 -Wno-enum-conversion" -k 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-bounds-inference-errors.py
 
   test_Olden_no_expand_macros_alltypes_only_g_sol:
     name: Test Olden (not macro-expanded, -alltypes, greatest solution)
