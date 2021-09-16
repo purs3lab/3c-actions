@@ -1,0 +1,4 @@
+isError,tag,regex
+false,unknown_bounds,"^expression has unknown bounds$"
+true,unmet_bounds,"^argument does not meet declared bounds for (.*) parameter$"
+
