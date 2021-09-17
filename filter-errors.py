@@ -49,7 +49,7 @@ for line in sys.stdin:
 output_tags = set()
 print('Encountered errors:')
 for e in error_list:
-    if e['tag'] in output_tags: continue
+    if (e['tag'] in output_tags) or (seen_tags[e['tag']] == 0): continue
     output_tags.add(e['tag'])
     ignored = "" if e['isError']=="true" else "(ignored)"
     print('  {0}{1}: {2}'.format(e['tag'],ignored,seen_tags[e['tag']]))
