@@ -159,7 +159,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/vsftpd-3.0.3
           if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang -w -ferror-limit=0 -Wno-enum-conversion" -k 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-errors.py
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang -w -ferror-limit=0 -Wno-enum-conversion" -k 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-errors.py ${{github.workspace}}/vsftpd_errors.csv ${{github.workspace}}/benchmark_errors.csv
 
   test_vsftpd_expand_macros_no_alltypes:
     name: Test Vsftpd (macro-expanded, no -alltypes)
@@ -214,7 +214,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes/vsftpd-3.0.3
           if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang -w -ferror-limit=0 -Wno-enum-conversion" -k 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-errors.py
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang -w -ferror-limit=0 -Wno-enum-conversion" -k 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-errors.py ${{github.workspace}}/vsftpd_errors.csv ${{github.workspace}}/benchmark_errors.csv
 
   test_Parson_no_expand_macros_no_alltypes:
     name: Test Parson (not macro-expanded, no -alltypes)
@@ -267,7 +267,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/parson
           if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-errors.py
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-errors.py ${{github.workspace}}/Parson_errors.csv ${{github.workspace}}/benchmark_errors.csv
 
   test_Parson_expand_macros_no_alltypes:
     name: Test Parson (macro-expanded, no -alltypes)
@@ -322,7 +322,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes/parson
           if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-errors.py
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-errors.py ${{github.workspace}}/Parson_errors.csv ${{github.workspace}}/benchmark_errors.csv
 
   test_Olden_no_expand_macros_no_alltypes:
     name: Test Olden (not macro-expanded, no -alltypes)
@@ -515,7 +515,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Olden/bh
           if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-errors.py || echo bh >>${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Olden/failed-components-list.txt
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-errors.py ${{github.workspace}}/Olden_errors.csv ${{github.workspace}}/benchmark_errors.csv || echo bh >>${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Olden/failed-components-list.txt
 
       - name: Convert bisort
         run: |
@@ -530,7 +530,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Olden/bisort
           if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-errors.py || echo bisort >>${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Olden/failed-components-list.txt
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-errors.py ${{github.workspace}}/Olden_errors.csv ${{github.workspace}}/benchmark_errors.csv || echo bisort >>${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Olden/failed-components-list.txt
 
       - name: Convert em3d
         run: |
@@ -545,7 +545,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Olden/em3d
           if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-errors.py || echo em3d >>${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Olden/failed-components-list.txt
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-errors.py ${{github.workspace}}/Olden_errors.csv ${{github.workspace}}/benchmark_errors.csv || echo em3d >>${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Olden/failed-components-list.txt
 
       - name: Convert health
         run: |
@@ -560,7 +560,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Olden/health
           if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-errors.py || echo health >>${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Olden/failed-components-list.txt
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-errors.py ${{github.workspace}}/Olden_errors.csv ${{github.workspace}}/benchmark_errors.csv || echo health >>${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Olden/failed-components-list.txt
 
       - name: Convert mst
         run: |
@@ -575,7 +575,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Olden/mst
           if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-errors.py || echo mst >>${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Olden/failed-components-list.txt
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-errors.py ${{github.workspace}}/Olden_errors.csv ${{github.workspace}}/benchmark_errors.csv || echo mst >>${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Olden/failed-components-list.txt
 
       - name: Convert perimeter
         run: |
@@ -590,7 +590,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Olden/perimeter
           if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-errors.py || echo perimeter >>${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Olden/failed-components-list.txt
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-errors.py ${{github.workspace}}/Olden_errors.csv ${{github.workspace}}/benchmark_errors.csv || echo perimeter >>${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Olden/failed-components-list.txt
 
       - name: Convert power
         run: |
@@ -605,7 +605,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Olden/power
           if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-errors.py || echo power >>${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Olden/failed-components-list.txt
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-errors.py ${{github.workspace}}/Olden_errors.csv ${{github.workspace}}/benchmark_errors.csv || echo power >>${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Olden/failed-components-list.txt
 
       - name: Convert treeadd
         run: |
@@ -620,7 +620,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Olden/treeadd
           if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-errors.py || echo treeadd >>${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Olden/failed-components-list.txt
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-errors.py ${{github.workspace}}/Olden_errors.csv ${{github.workspace}}/benchmark_errors.csv || echo treeadd >>${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Olden/failed-components-list.txt
 
       - name: Convert tsp
         run: |
@@ -635,7 +635,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Olden/tsp
           if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-errors.py || echo tsp >>${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Olden/failed-components-list.txt
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-errors.py ${{github.workspace}}/Olden_errors.csv ${{github.workspace}}/benchmark_errors.csv || echo tsp >>${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Olden/failed-components-list.txt
 
       - name: Convert voronoi
         run: |
@@ -650,7 +650,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Olden/voronoi
           if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-errors.py || echo voronoi >>${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Olden/failed-components-list.txt
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-errors.py ${{github.workspace}}/Olden_errors.csv ${{github.workspace}}/benchmark_errors.csv || echo voronoi >>${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/Olden/failed-components-list.txt
 
       - name: Check for deferred post-conversion build failures
         run: |
@@ -862,7 +862,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes/Olden/bh
           if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-errors.py || echo bh >>${{env.benchmark_conv_dir}}/expand_macros_alltypes/Olden/failed-components-list.txt
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-errors.py ${{github.workspace}}/Olden_errors.csv ${{github.workspace}}/benchmark_errors.csv || echo bh >>${{env.benchmark_conv_dir}}/expand_macros_alltypes/Olden/failed-components-list.txt
 
       - name: Convert bisort
         run: |
@@ -878,7 +878,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes/Olden/bisort
           if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-errors.py || echo bisort >>${{env.benchmark_conv_dir}}/expand_macros_alltypes/Olden/failed-components-list.txt
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-errors.py ${{github.workspace}}/Olden_errors.csv ${{github.workspace}}/benchmark_errors.csv || echo bisort >>${{env.benchmark_conv_dir}}/expand_macros_alltypes/Olden/failed-components-list.txt
 
       - name: Convert em3d
         run: |
@@ -894,7 +894,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes/Olden/em3d
           if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-errors.py || echo em3d >>${{env.benchmark_conv_dir}}/expand_macros_alltypes/Olden/failed-components-list.txt
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-errors.py ${{github.workspace}}/Olden_errors.csv ${{github.workspace}}/benchmark_errors.csv || echo em3d >>${{env.benchmark_conv_dir}}/expand_macros_alltypes/Olden/failed-components-list.txt
 
       - name: Convert health
         run: |
@@ -910,7 +910,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes/Olden/health
           if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-errors.py || echo health >>${{env.benchmark_conv_dir}}/expand_macros_alltypes/Olden/failed-components-list.txt
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-errors.py ${{github.workspace}}/Olden_errors.csv ${{github.workspace}}/benchmark_errors.csv || echo health >>${{env.benchmark_conv_dir}}/expand_macros_alltypes/Olden/failed-components-list.txt
 
       - name: Convert mst
         run: |
@@ -926,7 +926,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes/Olden/mst
           if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-errors.py || echo mst >>${{env.benchmark_conv_dir}}/expand_macros_alltypes/Olden/failed-components-list.txt
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-errors.py ${{github.workspace}}/Olden_errors.csv ${{github.workspace}}/benchmark_errors.csv || echo mst >>${{env.benchmark_conv_dir}}/expand_macros_alltypes/Olden/failed-components-list.txt
 
       - name: Convert perimeter
         run: |
@@ -942,7 +942,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes/Olden/perimeter
           if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-errors.py || echo perimeter >>${{env.benchmark_conv_dir}}/expand_macros_alltypes/Olden/failed-components-list.txt
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-errors.py ${{github.workspace}}/Olden_errors.csv ${{github.workspace}}/benchmark_errors.csv || echo perimeter >>${{env.benchmark_conv_dir}}/expand_macros_alltypes/Olden/failed-components-list.txt
 
       - name: Convert power
         run: |
@@ -958,7 +958,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes/Olden/power
           if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-errors.py || echo power >>${{env.benchmark_conv_dir}}/expand_macros_alltypes/Olden/failed-components-list.txt
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-errors.py ${{github.workspace}}/Olden_errors.csv ${{github.workspace}}/benchmark_errors.csv || echo power >>${{env.benchmark_conv_dir}}/expand_macros_alltypes/Olden/failed-components-list.txt
 
       - name: Convert treeadd
         run: |
@@ -974,7 +974,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes/Olden/treeadd
           if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-errors.py || echo treeadd >>${{env.benchmark_conv_dir}}/expand_macros_alltypes/Olden/failed-components-list.txt
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-errors.py ${{github.workspace}}/Olden_errors.csv ${{github.workspace}}/benchmark_errors.csv || echo treeadd >>${{env.benchmark_conv_dir}}/expand_macros_alltypes/Olden/failed-components-list.txt
 
       - name: Convert tsp
         run: |
@@ -990,7 +990,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes/Olden/tsp
           if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-errors.py || echo tsp >>${{env.benchmark_conv_dir}}/expand_macros_alltypes/Olden/failed-components-list.txt
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-errors.py ${{github.workspace}}/Olden_errors.csv ${{github.workspace}}/benchmark_errors.csv || echo tsp >>${{env.benchmark_conv_dir}}/expand_macros_alltypes/Olden/failed-components-list.txt
 
       - name: Convert voronoi
         run: |
@@ -1006,7 +1006,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes/Olden/voronoi
           if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-errors.py || echo voronoi >>${{env.benchmark_conv_dir}}/expand_macros_alltypes/Olden/failed-components-list.txt
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-errors.py ${{github.workspace}}/Olden_errors.csv ${{github.workspace}}/benchmark_errors.csv || echo voronoi >>${{env.benchmark_conv_dir}}/expand_macros_alltypes/Olden/failed-components-list.txt
 
       - name: Check for deferred post-conversion build failures
         run: |
@@ -1149,7 +1149,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/ptrdist-1.1/anagram
           if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-errors.py || echo anagram >>${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/ptrdist-1.1/failed-components-list.txt
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-errors.py ${{github.workspace}}/ptrdist_errors.csv ${{github.workspace}}/benchmark_errors.csv || echo anagram >>${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/ptrdist-1.1/failed-components-list.txt
 
       - name: Convert bc
         run: |
@@ -1163,7 +1163,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/ptrdist-1.1/bc
           if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-errors.py || echo bc >>${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/ptrdist-1.1/failed-components-list.txt
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-errors.py ${{github.workspace}}/ptrdist_errors.csv ${{github.workspace}}/benchmark_errors.csv || echo bc >>${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/ptrdist-1.1/failed-components-list.txt
 
       - name: Convert ft
         run: |
@@ -1177,7 +1177,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/ptrdist-1.1/ft
           if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-errors.py || echo ft >>${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/ptrdist-1.1/failed-components-list.txt
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-errors.py ${{github.workspace}}/ptrdist_errors.csv ${{github.workspace}}/benchmark_errors.csv || echo ft >>${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/ptrdist-1.1/failed-components-list.txt
 
       - name: Convert ks
         run: |
@@ -1191,7 +1191,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/ptrdist-1.1/ks
           if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-errors.py || echo ks >>${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/ptrdist-1.1/failed-components-list.txt
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-errors.py ${{github.workspace}}/ptrdist_errors.csv ${{github.workspace}}/benchmark_errors.csv || echo ks >>${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/ptrdist-1.1/failed-components-list.txt
 
       - name: Convert yacr2
         run: |
@@ -1205,7 +1205,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/ptrdist-1.1/yacr2
           if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-errors.py || echo yacr2 >>${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/ptrdist-1.1/failed-components-list.txt
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-errors.py ${{github.workspace}}/ptrdist_errors.csv ${{github.workspace}}/benchmark_errors.csv || echo yacr2 >>${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/ptrdist-1.1/failed-components-list.txt
 
       - name: Check for deferred post-conversion build failures
         run: |
@@ -1354,7 +1354,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes/ptrdist-1.1/anagram
           if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-errors.py || echo anagram >>${{env.benchmark_conv_dir}}/expand_macros_alltypes/ptrdist-1.1/failed-components-list.txt
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-errors.py ${{github.workspace}}/ptrdist_errors.csv ${{github.workspace}}/benchmark_errors.csv || echo anagram >>${{env.benchmark_conv_dir}}/expand_macros_alltypes/ptrdist-1.1/failed-components-list.txt
 
       - name: Convert bc
         run: |
@@ -1369,7 +1369,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes/ptrdist-1.1/bc
           if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-errors.py || echo bc >>${{env.benchmark_conv_dir}}/expand_macros_alltypes/ptrdist-1.1/failed-components-list.txt
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-errors.py ${{github.workspace}}/ptrdist_errors.csv ${{github.workspace}}/benchmark_errors.csv || echo bc >>${{env.benchmark_conv_dir}}/expand_macros_alltypes/ptrdist-1.1/failed-components-list.txt
 
       - name: Convert ft
         run: |
@@ -1384,7 +1384,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes/ptrdist-1.1/ft
           if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-errors.py || echo ft >>${{env.benchmark_conv_dir}}/expand_macros_alltypes/ptrdist-1.1/failed-components-list.txt
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-errors.py ${{github.workspace}}/ptrdist_errors.csv ${{github.workspace}}/benchmark_errors.csv || echo ft >>${{env.benchmark_conv_dir}}/expand_macros_alltypes/ptrdist-1.1/failed-components-list.txt
 
       - name: Convert ks
         run: |
@@ -1399,7 +1399,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes/ptrdist-1.1/ks
           if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-errors.py || echo ks >>${{env.benchmark_conv_dir}}/expand_macros_alltypes/ptrdist-1.1/failed-components-list.txt
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-errors.py ${{github.workspace}}/ptrdist_errors.csv ${{github.workspace}}/benchmark_errors.csv || echo ks >>${{env.benchmark_conv_dir}}/expand_macros_alltypes/ptrdist-1.1/failed-components-list.txt
 
       - name: Convert yacr2
         run: |
@@ -1414,7 +1414,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes/ptrdist-1.1/yacr2
           if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-errors.py || echo yacr2 >>${{env.benchmark_conv_dir}}/expand_macros_alltypes/ptrdist-1.1/failed-components-list.txt
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k LOCAL_CFLAGS="-w -ferror-limit=0 -D_ISOC99_SOURCE" 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-errors.py ${{github.workspace}}/ptrdist_errors.csv ${{github.workspace}}/benchmark_errors.csv || echo yacr2 >>${{env.benchmark_conv_dir}}/expand_macros_alltypes/ptrdist-1.1/failed-components-list.txt
 
       - name: Check for deferred post-conversion build failures
         run: |
@@ -1485,7 +1485,7 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/libarchive-3.4.3
           if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
           cd build
-          ninja -l $(nproc) -k 0 archive 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-errors.py
+          ninja -l $(nproc) -k 0 archive 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-errors.py ${{github.workspace}}/libarchive_errors.csv ${{github.workspace}}/benchmark_errors.csv
 
   test_libarchive_expand_macros_no_alltypes:
     name: Test LibArchive (macro-expanded, no -alltypes)
@@ -1550,7 +1550,7 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes/libarchive-3.4.3
           if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
           cd build
-          ninja -l $(nproc) -k 0 archive 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-errors.py
+          ninja -l $(nproc) -k 0 archive 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-errors.py ${{github.workspace}}/libarchive_errors.csv ${{github.workspace}}/benchmark_errors.csv
 
   test_lua_no_expand_macros_no_alltypes:
     name: Test Lua (not macro-expanded, no -alltypes)
@@ -1615,7 +1615,7 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/lua-5.4.1
           if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
           sed -i "s/luac_main/main/" src/luac.c
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k CFLAGS="-w -ferror-limit=0" linux 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-errors.py
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k CFLAGS="-w -ferror-limit=0" linux 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-errors.py ${{github.workspace}}/lua_errors.csv ${{github.workspace}}/benchmark_errors.csv
 
   test_lua_expand_macros_no_alltypes:
     name: Test Lua (macro-expanded, no -alltypes)
@@ -1682,7 +1682,7 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes/lua-5.4.1
           if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
           sed -i "s/luac_main/main/" src/luac.c
-          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k CFLAGS="-w -ferror-limit=0" linux 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-errors.py
+          make -j $(nproc) -l $(nproc) --output-sync CC="${{env.builddir}}/bin/clang" -k CFLAGS="-w -ferror-limit=0" linux 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-errors.py ${{github.workspace}}/lua_errors.csv ${{github.workspace}}/benchmark_errors.csv
 
   test_libtiff_no_expand_macros_no_alltypes:
     name: Test LibTiff (not macro-expanded, no -alltypes)
@@ -1757,7 +1757,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/tiff-4.1.0
           if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
-          ninja -l $(nproc) -k 0 tiff 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-errors.py
+          ninja -l $(nproc) -k 0 tiff 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-errors.py ${{github.workspace}}/libtiff_errors.csv ${{github.workspace}}/benchmark_errors.csv
 
   test_libtiff_expand_macros_no_alltypes:
     name: Test LibTiff (macro-expanded, no -alltypes)
@@ -1834,7 +1834,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes/tiff-4.1.0
           if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
-          ninja -l $(nproc) -k 0 tiff 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-errors.py
+          ninja -l $(nproc) -k 0 tiff 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-errors.py ${{github.workspace}}/libtiff_errors.csv ${{github.workspace}}/benchmark_errors.csv
 
   test_zlib_no_expand_macros_no_alltypes:
     name: Test ZLib (not macro-expanded, no -alltypes)
@@ -1899,7 +1899,7 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/zlib-1.2.11
           if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
           cd build
-          ninja -l $(nproc) -k 0 zlib 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-errors.py
+          ninja -l $(nproc) -k 0 zlib 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-errors.py ${{github.workspace}}/zlib_errors.csv ${{github.workspace}}/benchmark_errors.csv
 
   test_zlib_expand_macros_no_alltypes:
     name: Test ZLib (macro-expanded, no -alltypes)
@@ -1966,7 +1966,7 @@ jobs:
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes/zlib-1.2.11
           if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
           cd build
-          ninja -l $(nproc) -k 0 zlib 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-errors.py
+          ninja -l $(nproc) -k 0 zlib 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-errors.py ${{github.workspace}}/zlib_errors.csv ${{github.workspace}}/benchmark_errors.csv
 
   test_icecast_no_expand_macros_no_alltypes:
     name: Test Icecast (not macro-expanded, no -alltypes)
@@ -2023,7 +2023,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/icecast-2.4.4
           if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
-          make -j $(nproc) -l $(nproc) --output-sync -k 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-errors.py
+          make -j $(nproc) -l $(nproc) --output-sync -k 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-errors.py ${{github.workspace}}/icecast_errors.csv ${{github.workspace}}/benchmark_errors.csv
 
   test_icecast_expand_macros_no_alltypes:
     name: Test Icecast (macro-expanded, no -alltypes)
@@ -2082,7 +2082,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes/icecast-2.4.4
           if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
-          make -j $(nproc) -l $(nproc) --output-sync -k 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-errors.py
+          make -j $(nproc) -l $(nproc) --output-sync -k 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-errors.py ${{github.workspace}}/icecast_errors.csv ${{github.workspace}}/benchmark_errors.csv
 
   test_thttpd_no_expand_macros_no_alltypes:
     name: Test Thttpd (not macro-expanded, no -alltypes)
@@ -2141,7 +2141,7 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/no_expand_macros_alltypes/thttpd-2.29
           if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
-          make CC="${{env.builddir}}/bin/clang -w -ferror-limit=0" -k 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-errors.py
+          make CC="${{env.builddir}}/bin/clang -w -ferror-limit=0" -k 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-errors.py ${{github.workspace}}/thttpd_errors.csv ${{github.workspace}}/benchmark_errors.csv
 
   test_thttpd_expand_macros_no_alltypes:
     name: Test Thttpd (macro-expanded, no -alltypes)
@@ -2202,4 +2202,4 @@ jobs:
         run: |
           cd ${{env.benchmark_conv_dir}}/expand_macros_alltypes/thttpd-2.29
           if [ -e "out.checked" ]; then cp -r out.checked/* . && rm -r out.checked; fi
-          make CC="${{env.builddir}}/bin/clang -w -ferror-limit=0" -k 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-errors.py
+          make CC="${{env.builddir}}/bin/clang -w -ferror-limit=0" -k 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-errors.py ${{github.workspace}}/thttpd_errors.csv ${{github.workspace}}/benchmark_errors.csv
