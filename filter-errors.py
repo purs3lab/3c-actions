@@ -16,11 +16,14 @@ ERROR_LINE_RE = re.compile(r'^(.*): error: (.*)$')
 seen_tags = {}
 seen_errors = 0
 error_list = []
-try:
-    with open("benchmark_errors.csv",'r') as errors:
-        error_list.extend([line for line in csv.DictReader(errors)])
-except Exception:
-    pass
+error_files = sys.argv[1:]
+error_files.append("benchmark_errors.csv")
+for file in error_files:
+    try:
+        with open(file,'r') as errors:
+            error_list.extend([line for line in csv.DictReader(errors)])
+    except Exception:
+        pass
 # prior whitelisted error for compatability
 error_list.append({'isError': "false", 'tag':"unknown_bounds", 'regex':"^expression has unknown bounds$"})
 # final default error
