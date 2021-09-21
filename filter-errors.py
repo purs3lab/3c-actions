@@ -60,7 +60,7 @@ for e in error_list:
     else:
         seen_errors += seen_tags[e['tag']]
         category = "(error)"
-    print('  {0}{1}: {2}     {3}'.format(category,e['tag'],seen_tags[e['tag']],e['issue']))
+    print('  {0}{1}: {2}     {3}'.format(category,e['tag'],seen_tags[e['tag']],e['note']))
 if seen_errors > 0:
     print("Benchmark failed - {} errors not acceptable".format(seen_errors))
     sys.exit(1)

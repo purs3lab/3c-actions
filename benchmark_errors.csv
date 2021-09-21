@@ -1,4 +1,4 @@
-category,tag,regex,issue
+category,tag,regex,note
 bounds,expr_unknown_bounds,"^expression has unknown bounds(.*)$",
 bounds,unmet_bounds,"^argument does not meet declared bounds for (.*) parameter$",
 error,ifdef,"^#endif without #if$",
