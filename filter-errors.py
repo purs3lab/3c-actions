@@ -14,7 +14,7 @@ import csv
 # initialize counters and compile regexes
 ERROR_LINE_RE = re.compile(r'^(.*): error: (.*)$')
 seen_tags = {}
-seen_errors = 0
+accepable_tags = {'ignore','bounds','inprogress'}
 error_list = []
 error_files = sys.argv[1:]
 error_files.append("benchmark_errors.csv")
@@ -25,9 +25,9 @@ for file in error_files:
     except Exception:
         pass
 # prior whitelisted error for compatability
-error_list.append({'isError': "false", 'tag':"unknown_bounds", 'regex':"^expression has unknown bounds$"})
+error_list.append({'category': "bounds", 'tag':"unknown_bounds", 'regex':"^expression has unknown bounds$"})
 # final default error
-error_list.append({'isError': "true", 'tag':"UNKNOWN", 'regex':".*"})
+error_list.append({'category': "error", 'tag':"UNKNOWN", 'regex':".*"})
 for line in error_list:
     line['RE'] = re.compile(line['regex'])
     seen_tags[line['tag']] = 0
@@ -41,25 +41,30 @@ for line in sys.stdin:
             if (error['RE'].search(at_error[2]) is not None):
                 line = ERROR_LINE_RE.sub(r'\1: error ({}): \2'.format(error['tag']), line)
                 seen_tags[error['tag']] += 1
-                seen_errors += 1 if error['isError']=="true" else 0
                 break
     # It probably makes more sense to write what was originally stderr output to
     # stderr rather than make all callers redirect it, even if unix convention
     # would normally be that the main data we process should go to stdout.
     sys.stderr.write(line + '\n')
 
-# stats
+# print out stats
 output_tags = set()
+seen_errors = 0
+print()
 print('Encountered errors:')
 for e in error_list:
     if (e['tag'] in output_tags) or (seen_tags[e['tag']] == 0): continue
     output_tags.add(e['tag'])
-    ignored = "" if e['isError']=="true" else "(ignored)"
-    print('  {0}{1}: {2}'.format(e['tag'],ignored,seen_tags[e['tag']]))
+    if e['category'] in accepable_tags:
+        category = "(" + e['category'] + ")"
+    else:
+        seen_errors += seen_tags[e['tag']]
+        category = "(error)"
+    print('  {0}{1}: {2}     {3}'.format(category,e['tag'],seen_tags[e['tag']],e['issue']))
 if seen_errors > 0:
-    print("Benchmark failed - {} errors not ignored".format(seen_errors))
+    print("Benchmark failed - {} errors not acceptable".format(seen_errors))
     sys.exit(1)
 else:
-    print("Benchmark succeeded")
+    print("Benchmark succeeded - all errors acceptable")
     sys.exit(0)
 

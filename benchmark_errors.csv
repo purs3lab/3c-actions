@@ -1,39 +1,39 @@
-isError,tag,regex
-false,expr_unknown_bounds,"^expression has unknown bounds(.*)$"
-false,unmet_bounds,"^argument does not meet declared bounds for (.*) parameter$"
-true,ifdef,"^#endif without #if$"
-true,func_array,"^(.*) declared as array of functions of type (.*)$"
-false,arg_unknown_bounds,"^argument has unknown bounds, bounds expected because the (.*) parameter has bounds$"
-true,math_incomplete,"^arithmetic on a pointer to an incomplete type (.*)$"
-true,array_incomplete,"^array has incomplete element type (.*)$"
-true,assign_incompatable,"^assigning to (.*) from incompatible type (.*)$"
-true,call_not_allowed,"^call expression not allowed in argument for parameter used in function parameter bounds expression$"
-true,call_non_function,"^(called object type (.*) is not a function or function pointer)|(cannot guarantee operand of cast to checked function pointer type (.*) is a function pointer)$"
-false,address_of_bounds,"^cannot take address of member used in member bounds$"
-false,narrow_bounds,"^cast source bounds are too narrow for (.*)$"
-true,decl_anon_struct,"^declaration of anonymous struct must be a definition$"
-false,invalidated_bounds,"^declared bounds for (.*) are invalid after (assignment|initialization)$"
-true,failed_expectation,"^expected (.*)$"
-true,illegal_postfix,"^expression cannot be followed by a postfix (.*) operator; add parentheses$"
-true,extraneous,"^extraneous (.*)$"
-true,incomplete_def,"^incomplete definition of type (.*)$"
-false,inferred_bounds_fail,"^inferred bounds (.*)$"
-true,init_incompatible,"^initializing (.*) with an expression of incompatible type (.*)$"
-true,invalid_app,"^invalid application of (.*) to an incomplete type (.*)$"
-false,invalid_arg,"^invalid argument type (.*) to count expression$"
-false,not_provable,"^it is not possible to prove (.*)$"
-true,mref_not_struct,"^member reference base type (.*) is not a structure or union$"
-true,mref_not_ptr,"^member reference type (.*) is not a pointer$"
-true,need_tag,"^must use (.*) tag to refer to type (.*)$"
-true,no_member,"^no member (.*)$"
-false,out_of_bounds,"^out-of-bounds (.*)$"
-true,parameter_incompatible,"^passing (.*) to parameter of incompatible type (.*)$"
-true,redefinition,"^redefinition of (.*) with a different type: (.*)$"
-false,return_bounds,"^(return value bounds do not)|(return value has unknown bounds)(.*)$"
-true,return_incompatible,"^returning (.*) from a function with incompatible result type (.*)$"
-true,subscript_incompatible,"^subscript of pointer to incomplete type (.*)$"
-true,subscript_illegal,"^subscripted value is not an array, pointer, or vector$"
-true,use_undecl,"^use of undeclared (.*)$"
-true,incomplete_type,"^variable has incomplete type (.*)$"
-false,redecl_bounds,"^variable redeclaration added bounds$"
+category,tag,regex,issue
+bounds,expr_unknown_bounds,"^expression has unknown bounds(.*)$",
+bounds,unmet_bounds,"^argument does not meet declared bounds for (.*) parameter$",
+error,ifdef,"^#endif without #if$",
+error,func_array,"^(.*) declared as array of functions of type (.*)$",
+bounds,arg_unknown_bounds,"^argument has unknown bounds, bounds expected because the (.*) parameter has bounds$",
+error,math_incomplete,"^arithmetic on a pointer to an incomplete type (.*)$",
+error,array_incomplete,"^array has incomplete element type (.*)$",
+error,assign_incompatable,"^assigning to (.*) from incompatible type (.*)$",
+error,call_not_allowed,"^call expression not allowed in argument for parameter used in function parameter bounds expression$",
+error,call_non_function,"^(called object type (.*) is not a function or function pointer)|(cannot guarantee operand of cast to checked function pointer type (.*) is a function pointer)$",
+bounds,address_of_bounds,"^cannot take address of member used in member bounds$",
+bounds,narrow_bounds,"^cast source bounds are too narrow for (.*)$",
+error,decl_anon_struct,"^declaration of anonymous struct must be a definition$",
+bounds,invalidated_bounds,"^declared bounds for (.*) are invalid after (assignment|initialization)$",
+error,failed_expectation,"^expected (.*)$",
+error,illegal_postfix,"^expression cannot be followed by a postfix (.*) operator; add parentheses$",
+error,extraneous,"^extraneous (.*)$",
+error,incomplete_def,"^incomplete definition of type (.*)$",
+bounds,inferred_bounds_fail,"^inferred bounds (.*)$",
+error,init_incompatible,"^initializing (.*) with an expression of incompatible type (.*)$",
+error,invalid_app,"^invalid application of (.*) to an incomplete type (.*)$",
+bounds,invalid_arg,"^invalid argument type (.*) to count expression$",
+bounds,not_provable,"^it is not possible to prove (.*)$",
+error,mref_not_struct,"^member reference base type (.*) is not a structure or union$",
+error,mref_not_ptr,"^member reference type (.*) is not a pointer$",
+error,need_tag,"^must use (.*) tag to refer to type (.*)$",
+error,no_member,"^no member (.*)$",
+bounds,out_of_bounds,"^out-of-bounds (.*)$",
+error,parameter_incompatible,"^passing (.*) to parameter of incompatible type (.*)$",
+error,redefinition,"^redefinition of (.*) with a different type: (.*)$",
+bounds,return_bounds,"^(return value bounds do not)|(return value has unknown bounds)(.*)$",
+error,return_incompatible,"^returning (.*) from a function with incompatible result type (.*)$",
+error,subscript_incompatible,"^subscript of pointer to incomplete type (.*)$",
+error,subscript_illegal,"^subscripted value is not an array, pointer, or vector$",
+error,use_undecl,"^use of undeclared (.*)$",
+error,incomplete_type,"^variable has incomplete type (.*)$",
+bounds,redecl_bounds,"^variable redeclaration added bounds$",
 
