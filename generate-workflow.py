@@ -539,8 +539,8 @@ def generate_benchmark_job(out: TextIO,
     # turn it back off here.
     at_filter_code = ('''\
  2>&1 | ${{github.workspace}}/depsfolder/actions/filter-errors.py ''' +
-    '''${{github.workspace}}''' + f'''/{binfo.name}_errors.csv ''' +
-    '''${{github.workspace}}/benchmark_errors.csv'''
+        '''${{github.workspace}}/depsfolder/actions''' + f'''/{binfo.name}_errors.csv ''' +
+        '''${{github.workspace}}/depsfolder/actions/benchmark_errors.csv'''
                       if variant.alltypes else '')
 
     # The blank line below is important: it gets us blank lines between jobs
