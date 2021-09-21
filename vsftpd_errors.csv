@@ -1,2 +1,0 @@
-category,tag,regex,issue
-ignore,catch-all,".*", "http://fake.com/fakeyfakey"
