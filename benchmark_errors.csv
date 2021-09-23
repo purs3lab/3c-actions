@@ -1,7 +1,7 @@
 category,tag,regex,note
 bounds,expr_unknown_bounds,"^expression has unknown bounds(.*)$",
 bounds,unmet_bounds,"^argument does not meet declared bounds for (.*) parameter$",
-error,ifdef,"^#endif without #if$",
+inprogress,ifdef,"^#endif without #if$","https://github.com/correctcomputation/checkedc-clang/issues/502"
 error,func_array,"^(.*) declared as array of functions of type (.*)$",
 bounds,arg_unknown_bounds,"^argument has unknown bounds, bounds expected because the (.*) parameter has bounds$",
 error,math_incomplete,"^arithmetic on a pointer to an incomplete type (.*)$",

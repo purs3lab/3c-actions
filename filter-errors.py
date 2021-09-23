@@ -1,11 +1,26 @@
 #!/usr/bin/env python3
 # Filter the output of a build command for errors that should be ignored as
-# likely reflecting known limitations of 3C bounds inference.
+# likely reflecting known limitations of 3C.
 #
-# usage: BUILD_COMMAND 2>&1 | filter-bounds-inference-errors.py
+# usage: BUILD_COMMAND 2>&1 | filter-errors.py
 #
 # Exits 1 if the input contains errors that should not be ignored. For this to
 # be useful, the original pipeline should be run with `pipefail` off.
+#
+# This script uses a csv database, defaulting to "benchmark_errors.csv" in the
+# current directory. Multiple databases can be loaded by adding them as
+# arguments to the script. Non-existing files will be ignored.
+#
+# The database consists of "category,tag,regex,note". Errors are matched
+# by regex and assigned the related tag. A tag's category determines whether
+# it counts as an error or is ignored. Notes are printed out by their tag
+# in the final summary.
+#
+# Earlier entries will override later entries, both in tag and in the tag's
+# category. That means that if two regexes match an error, the first will
+# have the tag that is reported. If an earlier entry has a different
+# category for a tag, that category will be used for all instances of the tag.
+#
 
 import re
 import sys
@@ -13,34 +28,32 @@ import csv
 
 # initialize counters and compile regexes
 ERROR_LINE_RE = re.compile(r'^(.*): error: (.*)$')
-seen_tags = {}
-accepable_tags = {'ignore','bounds','inprogress'}
-error_list = []
-error_files = sys.argv[1:]
-error_files.append("benchmark_errors.csv")
-for file in error_files:
+error_count_by_tag = {}
+acceptable_categories = {'ignore','bounds','inprogress'}
+filter_rules = []
+database_files = sys.argv[1:]
+database_files.append("benchmark_errors.csv")
+for file in database_files:
     try:
         with open(file,'r') as errors:
-            error_list.extend([line for line in csv.DictReader(errors)])
-    except Exception:
+            filter_rules.extend([line for line in csv.DictReader(errors)])
+    except FileNotFoundError:
         pass
-# prior whitelisted error for compatability
-error_list.append({'category': "bounds", 'tag':"unknown_bounds", 'regex':"^expression has unknown bounds$"})
 # final default error
-error_list.append({'category': "error", 'tag':"UNKNOWN", 'regex':".*"})
-for line in error_list:
+filter_rules.append({'category': "error", 'tag':"UNKNOWN", 'regex':".*"})
+for line in filter_rules:
     line['RE'] = re.compile(line['regex'])
-    seen_tags[line['tag']] = 0
+    error_count_by_tag[line['tag']] = 0
 
 # read through errors incrementally, keeping stats
 for line in sys.stdin:
     line = line.rstrip('\n')
-    at_error = ERROR_LINE_RE.search(line)
-    if at_error is not None:
-        for error in error_list:
-            if (error['RE'].search(at_error[2]) is not None):
+    at_error_match = ERROR_LINE_RE.search(line)
+    if at_error_match is not None:
+        for error in filter_rules:
+            if (error['RE'].search(at_error_match[2]) is not None):
                 line = ERROR_LINE_RE.sub(r'\1: error ({}): \2'.format(error['tag']), line)
-                seen_tags[error['tag']] += 1
+                error_count_by_tag[error['tag']] += 1
                 break
     # It probably makes more sense to write what was originally stderr output to
     # stderr rather than make all callers redirect it, even if unix convention
@@ -49,20 +62,19 @@ for line in sys.stdin:
 
 # print out stats
 output_tags = set()
-seen_errors = 0
-print()
-print('Encountered errors:')
-for e in error_list:
-    if (e['tag'] in output_tags) or (seen_tags[e['tag']] == 0): continue
+unacceptable_error_count = 0
+print('Benchmark error report:')
+for e in filter_rules:
+    if (e['tag'] in output_tags) or (error_count_by_tag[e['tag']] == 0): continue
     output_tags.add(e['tag'])
-    if e['category'] in accepable_tags:
+    if e['category'] in acceptable_categories:
         category = "(" + e['category'] + ")"
     else:
-        seen_errors += seen_tags[e['tag']]
+        unacceptable_error_count += error_count_by_tag[e['tag']]
         category = "(error)"
-    print('  {0}{1}: {2}     {3}'.format(category,e['tag'],seen_tags[e['tag']],e['note']))
-if seen_errors > 0:
-    print("Benchmark failed - {} errors not acceptable".format(seen_errors))
+    print('  {0}{1}: {2}     {3}'.format(category,e['tag'],error_count_by_tag[e['tag']],e['note']))
+if unacceptable_error_count > 0:
+    print("Benchmark failed - {} errors not acceptable".format(unacceptable_error_count))
     sys.exit(1)
 else:
     print("Benchmark succeeded - all errors acceptable")
