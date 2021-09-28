@@ -59,6 +59,8 @@ for line in sys.stdin:
     # stderr rather than make all callers redirect it, even if unix convention
     # would normally be that the main data we process should go to stdout.
     sys.stderr.write(line + '\n')
+# finalize stderr before writing to stdout for viewers that may interleave
+sys.stderr.flush()
 
 # print out stats
 output_tags = set()
