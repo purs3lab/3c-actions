@@ -1,5 +1,5 @@
 category,tag,regex,note
 inprogress,use_undecl,"^use of undeclared (.*)$","https://github.com/correctcomputation/checkedc-clang/issues/524"
-inprogress,init_incompatible,"^initializing 'str_netfd_read_t'(.*) with an expression of incompatible type (.*)$","https://github.com/correctcomputation/checkedc-clang/issues/719"
+inprogress,init_incompatible-netfd,"^initializing 'str_netfd_read_t'(.*) with an expression of incompatible type (.*)$","https://github.com/correctcomputation/checkedc-clang/issues/719"
 inprogress,assign_incompatable,"^assigning to (.*) from incompatible type (.*)$","https://github.com/correctcomputation/checkedc-clang/issues/719"
 

@@ -537,11 +537,9 @@ def generate_benchmark_job(out: TextIO,
     # fail regardless of the result of filter-errors.py. But we
     # might want to turn on `pipefail` in general, in which case we'd need to
     # turn it back off here.
-    at_filter_code = ('''\
- 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-errors.py ''' +
+    at_filter_code = (''' 2>&1 | ${{github.workspace}}/depsfolder/actions/filter-errors.py ''' +
         '''${{github.workspace}}/depsfolder/actions''' + f'''/{binfo.name}_errors.csv ''' +
-        '''${{github.workspace}}/depsfolder/actions/benchmark_errors.csv'''
-                      if variant.alltypes else '')
+        '''${{github.workspace}}/depsfolder/actions/benchmark_errors.csv''')
 
     # The blank line below is important: it gets us blank lines between jobs
     # without a blank line at the very end of the workflow file.
