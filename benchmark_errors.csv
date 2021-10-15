@@ -7,7 +7,7 @@ bounds,arg_unknown_bounds,"^argument has unknown bounds, bounds expected because
 error,math_incomplete,"^arithmetic on a pointer to an incomplete type",
 error,array_incomplete,"^array has incomplete element type",
 error,assign_incompatable,"^assigning to (.*) from incompatible type",
-error,call_not_allowed,"^call expression not allowed in argument for parameter used in function parameter bounds expression",
+bounds,call_not_allowed,"^call expression not allowed in argument for parameter used in function parameter bounds expression",
 error,call_non_function,"^(called object type (.*) is not a function or function pointer)|(cannot guarantee operand of cast to checked function pointer type (.*) is a function pointer)",
 bounds,address_of_bounds,"^cannot take address of member used in member bounds",
 bounds,narrow_bounds,"^cast source bounds are too narrow for",

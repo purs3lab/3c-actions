@@ -1,0 +1,4 @@
+category,tag,regex,note
+inprogress,parameter_incompatible_const_nt,"^passing 'const char(.*) to parameter of incompatible type '_Nt_array_ptr<const char>'","https://github.com/correctcomputation/checkedc-clang/issues/727"
+inprogress,use_undecl_count,"^use of undeclared identifier 'dst'","https://github.com/correctcomputation/checkedc-clang/issues/726"
+
