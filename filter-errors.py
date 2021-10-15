@@ -40,7 +40,7 @@ for file in database_files:
     except FileNotFoundError:
         pass
 # final default error
-filter_rules.append({'category': "error", 'tag':"UNKNOWN", 'regex':".*"})
+filter_rules.append({'category': "error", 'tag':"UNKNOWN", 'regex':".*", "note":""})
 for line in filter_rules:
     line['RE'] = re.compile(line['regex'])
     error_count_by_tag[line['tag']] = 0
