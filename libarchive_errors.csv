@@ -1,0 +1,6 @@
+category,tag,regex,note
+inprogress,use_undecl_count,"^use of undeclared identifier","https://github.com/correctcomputation/checkedc-clang/issues/726"
+inprogress,assign_incompatable_fnptr,"^assigning to '_Ptr<int \((.*)' from incompatible type 'int \(","https://github.com/correctcomputation/checkedc-clang/issues/719"
+inprogress,failed_expectation_assume_bounds,"^expected _Array_ptr type","https://github.com/correctcomputation/checkedc-clang/issues/728"
+inprogress,init_incompatible_ternary,"initializing '_Nt_array_ptr<const char>' with an expression of incompatible type 'char \*'","https://github.com/correctcomputation/checkedc-clang/issues/729"
+

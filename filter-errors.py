@@ -40,7 +40,7 @@ for file in database_files:
     except FileNotFoundError:
         pass
 # final default error
-filter_rules.append({'category': "error", 'tag':"UNKNOWN", 'regex':".*", "note":""})
+filter_rules.append({'category': "error", 'tag':"UNKNOWN_ERROR", 'regex':".*", "note":""})
 for line in filter_rules:
     line['RE'] = re.compile(line['regex'])
     error_count_by_tag[line['tag']] = 0
@@ -74,7 +74,7 @@ for e in filter_rules:
     else:
         unacceptable_error_count += error_count_by_tag[e['tag']]
         category = "(error)"
-    print('  {0}{1}: {2}     {3}'.format(category,e['tag'],error_count_by_tag[e['tag']],e['note']))
+    print('  {0} {1}: {2}     {3}'.format(category,e['tag'],error_count_by_tag[e['tag']],e['note']))
 if unacceptable_error_count > 0:
     print("Benchmark failed - {} errors not acceptable".format(unacceptable_error_count))
     sys.exit(1)

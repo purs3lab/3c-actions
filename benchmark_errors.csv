@@ -1,7 +1,7 @@
 category,tag,regex,note
 bounds,expr_unknown_bounds,"^expression has unknown bounds",
 bounds,unmet_bounds,"^argument does not meet declared bounds for (.*) parameter",
-inprogress,ifdef,"^#endif without #if$","https://github.com/correctcomputation/checkedc-clang/issues/502"
+inprogress,ifdef,"^#endif without #if","https://github.com/correctcomputation/checkedc-clang/issues/502"
 error,func_array,"^(.*) declared as array of functions of type",
 bounds,arg_unknown_bounds,"^argument has unknown bounds, bounds expected because the (.*) parameter has bounds",
 error,math_incomplete,"^arithmetic on a pointer to an incomplete type",
@@ -13,7 +13,7 @@ bounds,address_of_bounds,"^cannot take address of member used in member bounds",
 bounds,narrow_bounds,"^cast source bounds are too narrow for",
 error,decl_anon_struct,"^declaration of anonymous struct must be a definition",
 bounds,invalidated_bounds,"^declared bounds for (.*) are invalid after (assignment|initialization)",
-error,failed_expectation,"^expected (.*)$",
+error,failed_expectation,"^expected",
 error,illegal_postfix,"^expression cannot be followed by a postfix (.*) operator; add parentheses",
 error,extraneous,"^extraneous",
 error,incomplete_def,"^incomplete definition of type",
