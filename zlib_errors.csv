@@ -1,0 +1,4 @@
+category,tag,regex,note
+inprogress,use_undecl_param,"^use of undeclared identifier 'NONAMEPARAM_2'","https://github.com/correctcomputation/checkedc-clang/issues/726"
+inprogress,parameter_incompatible_ternary,"passing '_Array_ptr<char>' to parameter of incompatible type '_Nt_array_ptr<const char>'","https://github.com/correctcomputation/checkedc-clang/issues/729"
+

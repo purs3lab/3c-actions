@@ -1,0 +1,5 @@
+category,tag,regex,note
+inprogress,assign_incompatible_fnptr,"^assigning to 'TIFFPostMethod'","https://github.com/correctcomputation/checkedc-clang/issues/719"
+inprogress,assign_incompatible_fnptr,"^assigning to '_Ptr<int \(TIFFRGBAImage","https://github.com/correctcomputation/checkedc-clang/issues/719"
+inprogress,parameter_incompatible_ternary,"^passing 'char \*' to parameter of incompatible type '_Nt_array_ptr<const char>'","https://github.com/correctcomputation/checkedc-clang/issues/729"
+
