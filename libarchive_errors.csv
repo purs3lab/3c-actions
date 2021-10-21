@@ -1,6 +1,6 @@
 category,tag,regex,note
 inprogress,assign_incompatible_fnptr,"^assigning to '_Ptr<int \((.*) from incompatible type 'int \(","https://github.com/correctcomputation/checkedc-clang/issues/719"
-inprogress,assign_incompatible_fnptr,"^assigning to '_Ptr<size_t \((.*)' from incompatible type 'size_t \(","https://github.com/correctcomputation/checkedc-clang/issues/719"
+inprogress,assign_incompatible_fnptr,"^assigning to '_Ptr<size_t \((.*) from incompatible type 'size_t \(","https://github.com/correctcomputation/checkedc-clang/issues/719"
 inprogress,init_incompatible_fnptr,"^initializing '_Ptr<int \((.*) with an expression of incompatible type 'int \(\*\)\((.*)","https://github.com/correctcomputation/checkedc-clang/issues/719"
 inprogress,parameter_incompatible_fnptr,"^passing 'void \((.*) to parameter of incompatible type '_Ptr<void \((.*)'","https://github.com/correctcomputation/checkedc-clang/issues/719"
 inprogress,parameter_incompatible_fnptr,"^passing 'int \((.*) to parameter of incompatible type '_Ptr<int \((.*)'","https://github.com/correctcomputation/checkedc-clang/issues/719"
