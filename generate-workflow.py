@@ -257,7 +257,7 @@ benchmarks = [
         build_cmds=textwrap.dedent(f'''\
         bear {make_checkedc} CFLAGS="{common_cflags}" linux
         ( cd src ; \\
-          clang-rename-10 -pl -i \\
+          ${{{{env.builddir}}}}/bin/clang-rename -pl -i \\
             --qualified-name=main \\
             --new-name=luac_main \\
             luac.c )
@@ -282,7 +282,7 @@ benchmarks = [
         bear {ninja_std} tiff
         ( cd tools ; \\
           for i in *.c ; do \\
-            clang-rename-10 -pl -i \\
+            ${{{{env.builddir}}}}/bin/clang-rename -pl -i \\
               --qualified-name=main \\
               --new-name=$(basename -s .c $i)_main $i ; \\
           done)
@@ -435,7 +435,7 @@ jobs:
             -DLLVM_USE_SPLIT_DWARF=ON \\
             -DLLVM_ENABLE_PROJECTS="clang" \\
             ${{github.workspace}}/depsfolder/checkedc-clang/llvm
-          {ninja_std} 3c clang
+          {ninja_std} 3c clang clang-rename
           chmod -R 777 ${{github.workspace}}/depsfolder
           chmod -R 777 ${{env.builddir}}
 
