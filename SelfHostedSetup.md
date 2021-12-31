@@ -1,8 +1,9 @@
 ## Setting up machine for self-hosting
 The following steps are verified on `ubuntu 20.04` machine.
 ### Install dependencies
+These are the dependcies required to run our workflows.
 #### Packages
-These are the packages required to build our benchmarks.
+The following commands will install the packages required for our benchmarks.
 ```
 sudo apt-get update
 sudo apt-get install libboost-all-dev git python cmake build-essential wget tar ninja-build liblzma-dev libreadline-dev libvorbis-dev libxslt1-dev
