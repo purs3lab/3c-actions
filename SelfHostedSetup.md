@@ -43,5 +43,12 @@ Now you need to configure the machine to be a runner for the reporsitory workflo
 
 > Note: The GitHub will recognize the machine only when the `./run.sh` is running. So, it is important to ensure that the script is always running. One way to do this would be to execute using no hangup, i.e., `nohup ./run.sh > /dev/null 2>&1 &`. So that the GitHub runner will continue to run even when you logout of the machine.
 
+### Tweaks
+
+You may need to create symbolic link for certain benchmarks to properly compile.
+
+```
+sudo ln -s /usr/include/x86_64-linux-gnu/sys /usr/include/sys
+```
 
 Thats it. You machine is all ready and configured as self-hosted runner. You should be able to run the workflows from the repository page.
