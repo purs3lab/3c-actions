@@ -6,7 +6,7 @@ These are the dependcies required to run our workflows.
 The following commands will install the packages required for our benchmarks.
 ```
 sudo apt-get update
-sudo apt-get install libboost-all-dev git python cmake build-essential wget tar ninja-build liblzma-dev libreadline-dev libvorbis-dev libxslt1-dev libgl-dev
+sudo apt-get install libboost-all-dev git python cmake build-essential wget tar ninja-build liblzma-dev libreadline-dev libvorbis-dev libxslt1-dev libgl-dev freeglut3-dev
 ```
 #### Install Bear
 We use `bear` to capture the build commands. The following steps install bear from its github repo.
