@@ -1,0 +1,12 @@
+name: Example workflow
+
+on: [workflow_dispatch, pull_request]
+
+jobs:
+  hello:
+    name: Hello world
+    runs-on: self-hosted
+    steps:
+      - name: Say hello
+        run: |
+	  echo 'Hello world'
