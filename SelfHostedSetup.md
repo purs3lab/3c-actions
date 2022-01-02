@@ -52,3 +52,5 @@ sudo ln -s /usr/include/x86_64-linux-gnu/sys /usr/include/sys
 ```
 
 Thats it. You machine is all ready and configured as self-hosted runner. You should be able to run the workflows from the repository page.
+
+You should see your machine under `Settings` -> `Actions - Runners`
