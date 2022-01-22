@@ -355,7 +355,7 @@ on:
 {optional_schedule_trigger}  workflow_dispatch:
     inputs:
       branch:
-        description: "Branch or commit ID of secure-sw-dev/checkedc-llvm-project to run workflow on"
+        description: "Branch or commit ID of Machiry/checkedc-llvm-project to run workflow on"
         required: true
         default: "main"
 
@@ -405,7 +405,7 @@ jobs:
         run: |
           git init ${{github.workspace}}/depsfolder/checkedc-clang
           cd ${{github.workspace}}/depsfolder/checkedc-clang
-          git remote add origin https://github.com/secure-sw-dev/checkedc-llvm-project
+          git remote add origin https://github.com/Machiry/checkedc-llvm-project
           git fetch --depth 1 origin "${{ github.event.inputs.branch || env.branch_for_scheduled_run }}"
           git checkout FETCH_HEAD
           # As of 2021-04-12, we're using CCI's `checkedc` repository because it
