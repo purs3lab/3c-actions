@@ -709,7 +709,7 @@ for config in workflow_file_configs:
 
         out.write(formatted_hdr)
         for binfo in benchmarks:
-            for expand_macros in (False, True):
+            for expand_macros in [True]:
                 for variant in config.variants:
                     generate_benchmark_job(out, binfo, expand_macros, variant,
                                            config.generate_stats)
